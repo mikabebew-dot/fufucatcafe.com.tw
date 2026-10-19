@@ -1,0 +1,232 @@
+{
+  "site": {
+    "name": "FUFU × NUKUNUKU",
+    "description": "대만의 고양이 카페 두 곳, FU FU CAT CAFE와 NUKU NUKU CAT CAFE 공식 사이트."
+  },
+  "nav": {
+    "home": "홈",
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "visit": "요금·영업시간·오시는 길",
+    "firstVisit": "처음 오시는 분",
+    "cats": "고양이",
+    "adoption": "입양",
+    "graduates": "졸업 이야기",
+    "news": "소식",
+    "faq": "자주 묻는 질문",
+    "playroom": "고양이 놀이방",
+    "about": "브랜드 이야기",
+    "privacy": "개인정보처리방침",
+    "menu": "메뉴",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "skip": "본문으로 건너뛰기",
+    "main": "주 메뉴",
+    "footerNav": "하단 메뉴",
+    "brandNav": "{brand} 페이지"
+  },
+  "common": {
+    "readMore": "더 보기",
+    "viewAll": "전체 보기",
+    "back": "뒤로",
+    "comingSoon": "곧 공개",
+    "openMap": "Google 지도",
+    "verifiedOn": "정보 확인일: {date}",
+    "untranslated": "이 페이지의 한국어 버전은 준비 중입니다. 지금은 중국어로 표시됩니다.",
+    "notFoundTitle": "페이지를 찾을 수 없습니다",
+    "notFoundText": "게시가 종료되었거나 주소가 잘못되었을 수 있습니다.",
+    "backHome": "홈으로",
+    "previewMode": "미리보기 모드: 게시되지 않은 초안을 보고 있습니다.",
+    "exitPreview": "미리보기 종료",
+    "prev": "이전",
+    "next": "다음",
+    "slide": "{n}번째",
+    "hero": "대표 사진",
+    "empty": "아직 내용이 없습니다.",
+    "external": "(새 탭에서 열림)"
+  },
+  "status": {
+    "openUntil": "영업 중 · {time}까지",
+    "closedToday": "오늘 휴무",
+    "opensAt": "오늘 {time} 오픈",
+    "closedNow": "오늘 영업 종료",
+    "special": "오늘은 특별 영업시간입니다"
+  },
+  "days": {
+    "mon": "월",
+    "tue": "화",
+    "wed": "수",
+    "thu": "목",
+    "fri": "금",
+    "sat": "토",
+    "sun": "일"
+  },
+  "visit": {
+    "title": "요금·영업시간·오시는 길",
+    "intro": "두 매장의 요금, 영업시간, 주소와 입장 규칙입니다.",
+    "info": "매장 정보",
+    "price": "요금",
+    "hours": "영업시간",
+    "address": "주소",
+    "entry": "입장",
+    "entryAge": "{age}세 이상 입장 가능",
+    "entryAll": "연령 제한 없음",
+    "noReservation": "예약 불필요",
+    "payment": "결제 수단",
+    "rules": "고양이와 지내는 약속",
+    "access": "오시는 길",
+    "mrt": "MRT",
+    "bus": "버스",
+    "parking": "주차",
+    "phone": "전화",
+    "plan": "요금제",
+    "weekday": "평일",
+    "holiday": "주말·공휴일",
+    "specialDates": "특별 영업일",
+    "closed": "휴무",
+    "details": "요금과 규칙",
+    "fullRules": "규칙과 오시는 길 자세히",
+    "notReady": "매장 정보를 확인 중입니다. SNS로 문의해 주세요."
+  },
+  "payments": {
+    "cash": "현금",
+    "card": "신용카드",
+    "linepay": "LINE Pay",
+    "jkopay": "JKOPAY",
+    "applepay": "Apple Pay",
+    "easycard": "이지카드"
+  },
+  "cats": {
+    "title": "고양이",
+    "intro": "FUFU와 NUKUNUKU의 고양이들을 소개합니다.",
+    "all": "전체",
+    "empty": "조건에 맞는 고양이가 없습니다.",
+    "gender": "성별",
+    "age": "나이",
+    "breed": "품종",
+    "color": "털색",
+    "shop": "매장",
+    "traits": "성격",
+    "arrived": "입점일",
+    "health": "건강 상태",
+    "neutered": "중성화 완료",
+    "vaccinated": "예방접종 완료",
+    "adoptCta": "입양 안내",
+    "photos": "사진 더 보기",
+    "male": "수컷",
+    "female": "암컷",
+    "unknownGender": "미확인",
+    "years": "{n}살",
+    "yearsMonths": "{y}살 {m}개월",
+    "months": "{n}개월",
+    "allCats": "모든 고양이",
+    "brandCats": "{brand}의 고양이"
+  },
+  "catStatus": {
+    "resident": "상주",
+    "adoptable": "입양 가능",
+    "matching": "입양 진행 중",
+    "graduated": "졸업",
+    "resting": "휴식 중"
+  },
+  "adoption": {
+    "title": "임시보호 고양이 입양",
+    "eyebrow": "NUKUNUKU 임시보호 고양이",
+    "waiting": "{count}마리가 가족을 기다리고 있어요",
+    "waitingTitle": "가족을 기다리는 아이들",
+    "steps": "입양 절차",
+    "requirements": "입양 조건",
+    "fees": "비용",
+    "apply": "입양 신청하기",
+    "applyNotReady": "신청서를 준비 중입니다. 매장을 방문하시거나 SNS로 문의해 주세요.",
+    "seeCats": "기다리는 고양이 보기",
+    "graduatedCount": "졸업",
+    "waitingCount": "현재 대기",
+    "since": "임시보호 시작"
+  },
+  "graduates": {
+    "title": "졸업 이야기",
+    "intro": "NUKUNUKU를 떠나 새 가족과 살고 있는 고양이들.",
+    "graduatedOn": "{date} 졸업",
+    "newLife": "{name}의 새로운 생활",
+    "family": "가족의 이야기",
+    "empty": "첫 번째 이야기가 곧 공개됩니다."
+  },
+  "news": {
+    "title": "소식",
+    "pinned": "고정",
+    "eventDate": "행사 기간",
+    "empty": "아직 소식이 없습니다.",
+    "category": {
+      "announcement": "공지",
+      "event": "이벤트",
+      "newCat": "새 고양이",
+      "adoption": "입양",
+      "media": "언론"
+    }
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "intro": "방문 전에 자주 받는 질문입니다.",
+    "all": "모든 질문",
+    "category": {
+      "visit": "방문",
+      "interaction": "고양이와 지내기",
+      "cats": "고양이에 대해",
+      "adoption": "입양"
+    }
+  },
+  "playroom": {
+    "title": "고양이 놀이방",
+    "intro": "집에서도 매장의 고양이들과 함께.",
+    "play": "플레이",
+    "platforms": "플랫폼",
+    "featuring": "등장 고양이",
+    "comingSoon": "곧 공개",
+    "teaser": "집에서도 매장 고양이와 함께"
+  },
+  "platform": {
+    "web": "웹",
+    "ios": "iOS",
+    "android": "Android",
+    "line": "LINE"
+  },
+  "brandScope": {
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "both": "공통"
+  },
+  "home": {
+    "today": "오늘 영업",
+    "details": "자세히",
+    "brandCta": "{brand} 보기",
+    "aboutEyebrow": "ABOUT",
+    "aboutCta": "브랜드 이야기 읽기",
+    "firstVisitTitle": "처음 오시나요?",
+    "firstVisitText": "방문 전 3분 안내",
+    "firstVisitCta": "방문 가이드 보기",
+    "catsTitle": "매장의 고양이들",
+    "newsTitle": "소식",
+    "faqTitle": "자주 묻는 질문",
+    "graduatesCta": "졸업 이야기"
+  },
+  "brand": {
+    "tabIntro": "소개",
+    "tabCats": "고양이",
+    "tabAdoption": "입양",
+    "tabVisit": "방문",
+    "story": "OUR STORY",
+    "spend": "매장에서의 시간",
+    "space": "공간",
+    "ourCats": "{brand}의 고양이",
+    "news": "{brand} 소식",
+    "alsoSee": "{brand}도 둘러보기",
+    "catsCount": "전체 {count}마리"
+  },
+  "footer": {
+    "onlineStore": "온라인 스토어",
+    "partners": "제휴 매장",
+    "language": "언어",
+    "follow": "팔로우"
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "site": {
+    "name": "FUFU × NUKUNUKU",
+    "description": "Two cat cafés in Taiwan: FU FU CAT CAFE and NUKU NUKU CAT CAFE."
+  },
+  "nav": {
+    "home": "Home",
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "visit": "Prices, Hours & Access",
+    "firstVisit": "First Visit",
+    "cats": "Cats",
+    "adoption": "Adoption",
+    "graduates": "Graduate Stories",
+    "news": "News",
+    "faq": "FAQ",
+    "playroom": "Cat Playroom",
+    "about": "About Us",
+    "privacy": "Privacy Policy",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skip": "Skip to main content",
+    "main": "Main menu",
+    "footerNav": "Footer menu",
+    "brandNav": "{brand} pages"
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "back": "Back",
+    "comingSoon": "Coming soon",
+    "openMap": "Google Maps",
+    "verifiedOn": "Information checked on {date}",
+    "untranslated": "This page is not yet available in English. It is shown in Chinese for now.",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "It may have been removed, or the address may be wrong.",
+    "backHome": "Back to home",
+    "previewMode": "Preview mode: you are seeing unpublished drafts.",
+    "exitPreview": "Exit preview",
+    "prev": "Previous",
+    "next": "Next",
+    "slide": "Slide {n}",
+    "hero": "Featured photos",
+    "empty": "Nothing here yet.",
+    "external": "(opens in a new tab)"
+  },
+  "status": {
+    "openUntil": "Open until {time}",
+    "closedToday": "Closed today",
+    "opensAt": "Opens today at {time}",
+    "closedNow": "Closed for today",
+    "special": "Special hours today"
+  },
+  "days": {
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
+  },
+  "visit": {
+    "title": "Prices, Hours & Access",
+    "intro": "Prices, opening hours, addresses and house rules for both cafés.",
+    "info": "Visit info",
+    "price": "Price",
+    "hours": "Hours",
+    "address": "Address",
+    "entry": "Entry",
+    "entryAge": "Ages {age} and up",
+    "entryAll": "All ages welcome",
+    "noReservation": "No reservation needed",
+    "payment": "Payment",
+    "rules": "How to be with the cats",
+    "access": "Getting here",
+    "mrt": "MRT",
+    "bus": "Bus",
+    "parking": "Parking",
+    "phone": "Phone",
+    "plan": "Plan",
+    "weekday": "Weekdays",
+    "holiday": "Weekends & holidays",
+    "specialDates": "Upcoming special hours",
+    "closed": "Closed",
+    "details": "Prices & rules",
+    "fullRules": "Full rules and directions",
+    "notReady": "Visit information is being confirmed. Please contact us on social media for now."
+  },
+  "payments": {
+    "cash": "Cash",
+    "card": "Credit card",
+    "linepay": "LINE Pay",
+    "jkopay": "JKOPAY",
+    "applepay": "Apple Pay",
+    "easycard": "EasyCard"
+  },
+  "cats": {
+    "title": "Cats",
+    "intro": "Meet every cat at FUFU and NUKUNUKU.",
+    "all": "All",
+    "empty": "No cats match this filter.",
+    "gender": "Sex",
+    "age": "Age",
+    "breed": "Breed",
+    "color": "Coat",
+    "shop": "Café",
+    "traits": "Personality",
+    "arrived": "Arrived",
+    "health": "Health",
+    "neutered": "Spayed/neutered",
+    "vaccinated": "Vaccinated",
+    "adoptCta": "How adoption works",
+    "photos": "More photos",
+    "male": "Male",
+    "female": "Female",
+    "unknownGender": "Unknown",
+    "years": "{n} yrs",
+    "yearsMonths": "{y} yrs {m} mos",
+    "months": "{n} mos",
+    "allCats": "All cats",
+    "brandCats": "{brand} cats"
+  },
+  "catStatus": {
+    "resident": "Resident",
+    "adoptable": "Available for adoption",
+    "matching": "Adoption pending",
+    "graduated": "Adopted",
+    "resting": "Resting"
+  },
+  "adoption": {
+    "title": "Foster Cat Adoption",
+    "eyebrow": "NUKUNUKU foster cats",
+    "waiting": "{count} cats are waiting for a home",
+    "waitingTitle": "Waiting for a home",
+    "steps": "How adoption works",
+    "requirements": "Requirements",
+    "fees": "Fees",
+    "apply": "Apply to adopt",
+    "applyNotReady": "The application form is being prepared. Please visit us or contact us on social media.",
+    "seeCats": "Meet the cats",
+    "graduatedCount": "Adopted",
+    "waitingCount": "Waiting now",
+    "since": "Fostering since"
+  },
+  "graduates": {
+    "title": "Graduate Stories",
+    "intro": "Cats who left NUKUNUKU for a home of their own.",
+    "graduatedOn": "Adopted {date}",
+    "newLife": "{name}'s new life",
+    "family": "From the family",
+    "empty": "The first story is coming soon."
+  },
+  "news": {
+    "title": "News",
+    "pinned": "Pinned",
+    "eventDate": "Event dates",
+    "empty": "No news yet.",
+    "category": {
+      "announcement": "Notice",
+      "event": "Event",
+      "newCat": "New cat",
+      "adoption": "Adoption",
+      "media": "Press"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "intro": "Questions we are often asked before a visit.",
+    "all": "All questions",
+    "category": {
+      "visit": "Visiting",
+      "interaction": "With the cats",
+      "cats": "About the cats",
+      "adoption": "Adoption"
+    }
+  },
+  "playroom": {
+    "title": "Cat Playroom",
+    "intro": "Spend time with our cats from home.",
+    "play": "Play",
+    "platforms": "Platforms",
+    "featuring": "Featuring",
+    "comingSoon": "Coming soon",
+    "teaser": "Our cats, at home with you"
+  },
+  "platform": {
+    "web": "Web",
+    "ios": "iOS",
+    "android": "Android",
+    "line": "LINE"
+  },
+  "brandScope": {
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "both": "Both"
+  },
+  "home": {
+    "today": "Today",
+    "details": "Details",
+    "brandCta": "Discover {brand}",
+    "aboutEyebrow": "ABOUT",
+    "aboutCta": "Read our story",
+    "firstVisitTitle": "First time here?",
+    "firstVisitText": "A three-minute read before you come",
+    "firstVisitCta": "Read the visitor guide",
+    "catsTitle": "Our cats",
+    "newsTitle": "News",
+    "faqTitle": "FAQ",
+    "graduatesCta": "Graduate stories"
+  },
+  "brand": {
+    "tabIntro": "About",
+    "tabCats": "Cats",
+    "tabAdoption": "Adopt",
+    "tabVisit": "Visit",
+    "story": "OUR STORY",
+    "spend": "Your time here",
+    "space": "The space",
+    "ourCats": "{brand} cats",
+    "news": "{brand} news",
+    "alsoSee": "Visit {brand} too",
+    "catsCount": "All {count}"
+  },
+  "footer": {
+    "onlineStore": "Online store",
+    "partners": "Partners",
+    "language": "Language",
+    "follow": "Follow us"
+  }
+}

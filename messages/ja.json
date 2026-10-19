@@ -1,0 +1,232 @@
+{
+  "site": {
+    "name": "FUFU × NUKUNUKU",
+    "description": "台湾の猫カフェ2店舗、FU FU CAT CAFE と NUKU NUKU CAT CAFE の公式サイト。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "visit": "料金・営業時間・アクセス",
+    "firstVisit": "はじめての方へ",
+    "cats": "猫たち",
+    "adoption": "譲渡",
+    "graduates": "卒業ストーリー",
+    "news": "お知らせ",
+    "faq": "よくある質問",
+    "playroom": "ねこのあそびば",
+    "about": "コンセプト",
+    "privacy": "プライバシーポリシー",
+    "menu": "メニュー",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "skip": "本文へ移動",
+    "main": "メインメニュー",
+    "footerNav": "フッターメニュー",
+    "brandNav": "{brand} のページ"
+  },
+  "common": {
+    "readMore": "もっと見る",
+    "viewAll": "すべて見る",
+    "back": "戻る",
+    "comingSoon": "近日公開",
+    "openMap": "Google マップ",
+    "verifiedOn": "情報確認日：{date}",
+    "untranslated": "このページの日本語版は準備中です。現在は中国語で表示しています。",
+    "notFoundTitle": "ページが見つかりません",
+    "notFoundText": "公開が終了したか、URL が間違っている可能性があります。",
+    "backHome": "ホームへ戻る",
+    "previewMode": "プレビューモード：未公開の下書きを表示しています。",
+    "exitPreview": "プレビューを終了",
+    "prev": "前へ",
+    "next": "次へ",
+    "slide": "{n} 枚目",
+    "hero": "メイン写真",
+    "empty": "まだ掲載はありません。",
+    "external": "（新しいタブで開きます）"
+  },
+  "status": {
+    "openUntil": "営業中・{time} まで",
+    "closedToday": "本日定休日",
+    "opensAt": "本日 {time} 開店",
+    "closedNow": "本日の営業は終了しました",
+    "special": "本日は特別営業時間です"
+  },
+  "days": {
+    "mon": "月",
+    "tue": "火",
+    "wed": "水",
+    "thu": "木",
+    "fri": "金",
+    "sat": "土",
+    "sun": "日"
+  },
+  "visit": {
+    "title": "料金・営業時間・アクセス",
+    "intro": "2店舗の料金、営業時間、住所、入店ルールのご案内です。",
+    "info": "店舗情報",
+    "price": "料金",
+    "hours": "営業時間",
+    "address": "住所",
+    "entry": "入店",
+    "entryAge": "{age} 歳以上入店可",
+    "entryAll": "年齢制限なし",
+    "noReservation": "予約不要",
+    "payment": "お支払い方法",
+    "rules": "猫と過ごすためのお約束",
+    "access": "アクセス",
+    "mrt": "MRT",
+    "bus": "バス",
+    "parking": "駐車場",
+    "phone": "電話",
+    "plan": "プラン",
+    "weekday": "平日",
+    "holiday": "土日祝",
+    "specialDates": "特別営業日",
+    "closed": "休業",
+    "details": "料金とルール",
+    "fullRules": "ルールとアクセスの詳細",
+    "notReady": "店舗情報を確認中です。SNS からお問い合わせください。"
+  },
+  "payments": {
+    "cash": "現金",
+    "card": "クレジットカード",
+    "linepay": "LINE Pay",
+    "jkopay": "街口支付（JKOPAY）",
+    "applepay": "Apple Pay",
+    "easycard": "悠遊カード"
+  },
+  "cats": {
+    "title": "猫たち",
+    "intro": "FUFU と NUKUNUKU の猫たちをご紹介します。",
+    "all": "すべて",
+    "empty": "条件に合う猫はいません。",
+    "gender": "性別",
+    "age": "年齢",
+    "breed": "猫種",
+    "color": "毛色",
+    "shop": "在籍店舗",
+    "traits": "性格",
+    "arrived": "入店日",
+    "health": "健康状態",
+    "neutered": "去勢・避妊済み",
+    "vaccinated": "ワクチン接種済み",
+    "adoptCta": "譲渡について",
+    "photos": "その他の写真",
+    "male": "オス",
+    "female": "メス",
+    "unknownGender": "不明",
+    "years": "{n} 歳",
+    "yearsMonths": "{y} 歳 {m} か月",
+    "months": "{n} か月",
+    "allCats": "すべての猫",
+    "brandCats": "{brand} の猫たち"
+  },
+  "catStatus": {
+    "resident": "在籍中",
+    "adoptable": "里親募集中",
+    "matching": "お見合い中",
+    "graduated": "卒業",
+    "resting": "おやすみ中"
+  },
+  "adoption": {
+    "title": "保護猫の譲渡",
+    "eyebrow": "NUKUNUKU の保護猫",
+    "waiting": "{count} 匹が家族を待っています",
+    "waitingTitle": "家族を待つ猫たち",
+    "steps": "譲渡の流れ",
+    "requirements": "譲渡条件",
+    "fees": "費用",
+    "apply": "譲渡を申し込む",
+    "applyNotReady": "申込フォームは準備中です。ご来店または SNS からお問い合わせください。",
+    "seeCats": "家族を待つ猫たち",
+    "graduatedCount": "卒業",
+    "waitingCount": "現在募集中",
+    "since": "保護活動開始"
+  },
+  "graduates": {
+    "title": "卒業ストーリー",
+    "intro": "NUKUNUKU を卒業し、新しい家族と暮らす猫たち。",
+    "graduatedOn": "{date} 卒業",
+    "newLife": "{name} の新しい暮らし",
+    "family": "ご家族より",
+    "empty": "最初のストーリーはまもなく公開します。"
+  },
+  "news": {
+    "title": "お知らせ",
+    "pinned": "固定",
+    "eventDate": "開催期間",
+    "empty": "お知らせはまだありません。",
+    "category": {
+      "announcement": "お知らせ",
+      "event": "イベント",
+      "newCat": "新入り",
+      "adoption": "譲渡",
+      "media": "メディア"
+    }
+  },
+  "faq": {
+    "title": "よくある質問",
+    "intro": "ご来店前によくいただく質問です。",
+    "all": "すべての質問",
+    "category": {
+      "visit": "ご来店",
+      "interaction": "猫との過ごし方",
+      "cats": "猫について",
+      "adoption": "譲渡"
+    }
+  },
+  "playroom": {
+    "title": "ねこのあそびば",
+    "intro": "おうちでも、お店の猫たちと。",
+    "play": "あそぶ",
+    "platforms": "対応",
+    "featuring": "登場する猫",
+    "comingSoon": "近日公開",
+    "teaser": "おうちでも店の猫たちと"
+  },
+  "platform": {
+    "web": "Web",
+    "ios": "iOS",
+    "android": "Android",
+    "line": "LINE"
+  },
+  "brandScope": {
+    "fufu": "FUFU",
+    "nukunuku": "NUKUNUKU",
+    "both": "共通"
+  },
+  "home": {
+    "today": "本日の営業",
+    "details": "詳細",
+    "brandCta": "{brand} を見る",
+    "aboutEyebrow": "ABOUT",
+    "aboutCta": "コンセプトを読む",
+    "firstVisitTitle": "はじめての方へ",
+    "firstVisitText": "3分で読める来店ガイド",
+    "firstVisitCta": "来店ガイドを見る",
+    "catsTitle": "お店の猫たち",
+    "newsTitle": "お知らせ",
+    "faqTitle": "よくある質問",
+    "graduatesCta": "卒業ストーリー"
+  },
+  "brand": {
+    "tabIntro": "紹介",
+    "tabCats": "猫たち",
+    "tabAdoption": "譲渡",
+    "tabVisit": "来店",
+    "story": "OUR STORY",
+    "spend": "お店での過ごし方",
+    "space": "店内",
+    "ourCats": "{brand} の猫たち",
+    "news": "{brand} のお知らせ",
+    "alsoSee": "{brand} もどうぞ",
+    "catsCount": "全 {count} 匹"
+  },
+  "footer": {
+    "onlineStore": "オンラインストア",
+    "partners": "提携店",
+    "language": "言語",
+    "follow": "フォロー"
+  }
+}
