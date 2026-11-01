@@ -34,6 +34,7 @@ const STEP = `{ _key, "title": ${T("title")}, "text": ${T("text")}, image${IMG} 
 export const SHOP = /* groq */ `{
   brand,
   "address": ${T("address")},
+  "addressZh": address.zh,
   postalCode, city, location, mapUrl, phone, lineUrl,
   hours[]{ day, closed, open, close },
   "specialDates": specialDates[date >= $today] | order(date asc)[0...6]{ date, closed, open, close, "note": ${T("note")} },
@@ -83,7 +84,7 @@ export const LAYOUT_QUERY = /* groq */ `{
     "footerLinks": footerLinks[]{ _key, category, url, "name": ${T("name")} },
     "defaultSeo": { "title": ${T("defaultSeo.title")}, "description": ${T("defaultSeo.description")}, "image": defaultSeo.ogImage }
   },
-  "shops": *[_type == "shopInfo" && _id in ["shop-fufu", "shop-nukunuku"]]{ brand, "address": ${T("address")}, phone, mapUrl, hours[]{ day, closed, open, close } }
+  "shops": *[_type == "shopInfo" && _id in ["shop-fufu", "shop-nukunuku"]]{ brand, "address": ${T("address")}, "addressZh": address.zh, location, lineUrl, phone, mapUrl, hours[]{ day, closed, open, close } }
 }`;
 
 export const SEO_DEFAULTS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{

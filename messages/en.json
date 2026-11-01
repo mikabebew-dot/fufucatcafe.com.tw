@@ -43,7 +43,10 @@
     "slide": "Slide {n}",
     "hero": "Featured photos",
     "empty": "Nothing here yet.",
-    "external": "(opens in a new tab)"
+    "external": "(opens in a new tab)",
+    "directions": "Directions",
+    "line": "Message on LINE",
+    "call": "Call"
   },
   "status": {
     "openUntil": "Open until {time}",

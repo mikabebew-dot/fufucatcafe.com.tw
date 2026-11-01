@@ -43,7 +43,10 @@
     "slide": "第 {n} 張",
     "hero": "主視覺",
     "empty": "目前沒有內容。",
-    "external": "（開啟新分頁）"
+    "external": "（開啟新分頁）",
+    "directions": "導航前往",
+    "line": "LINE 詢問",
+    "call": "打電話"
   },
   "status": {
     "openUntil": "營業中・至 {time}",

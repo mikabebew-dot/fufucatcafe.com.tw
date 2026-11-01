@@ -21,6 +21,7 @@ export type SpecialDate = { date: string; closed?: boolean; open?: string; close
 export type Shop = {
   brand: BrandId;
   address?: string;
+  addressZh?: string;
   postalCode?: string;
   city?: string;
   location?: { lat: number; lng: number };

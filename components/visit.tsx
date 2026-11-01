@@ -1,6 +1,7 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DAYS } from "@/lib/constants";
+import { directionsUrl, lineUrl, telUrl } from "@/lib/contact";
 import { groupHours } from "@/lib/hours";
 import type { Shop } from "@/lib/types";
 import { OpenStatus } from "./OpenStatus";
@@ -29,7 +30,6 @@ function priceSummary(shop: Shop) {
 /** 營業資訊卡：兩品牌結構一致、只換識別 */
 export function InfoCard({ shop, brand, headingLevel = 2 }: { shop: Shop | null; brand: string; headingLevel?: 2 | 3 }) {
   const t = useTranslations("visit");
-  const tc = useTranslations("common");
   const hoursText = useHoursText();
   const H = headingLevel === 2 ? "h2" : "h3";
   if (!shop) return <p className="notice">{t("notReady")}</p>;
@@ -65,12 +65,9 @@ export function InfoCard({ shop, brand, headingLevel = 2 }: { shop: Shop | null;
           {shop.noReservation !== false && `・${t("noReservation")}`}
         </dd>
       </dl>
+      <ContactButtons shop={shop} brand={brand} />
       <div className="btn-row">
-        {shop.mapUrl ? (
-          <a className="btn" href={shop.mapUrl} target="_blank" rel="noopener noreferrer">{tc("openMap")} ↗</a>
-        ) : (
-          <span />
-        )}
+        <span />
         <Link className="btn btn-ghost" href={`/${brand}/visit`}>{t("details")}</Link>
       </div>
     </section>
@@ -216,8 +213,24 @@ export function VisitFull({ shop, headingLevel = 2 }: { shop: Shop; headingLevel
           {shop.parking && (<div><dt>{t("visit.parking")}</dt><dd>{shop.parking}</dd></div>)}
           {shop.phone && (<div><dt>{t("visit.phone")}</dt><dd className="tabular">{shop.phone}</dd></div>)}
         </dl>
-        {shop.mapUrl && <a className="btn" href={shop.mapUrl} target="_blank" rel="noopener noreferrer">{t("common.openMap")} ↗</a>}
+        <ContactButtons shop={shop} brand={shop.brand} />
       </section>
+    </div>
+  );
+}
+
+/** 導航、LINE、電話三個大按鈕（手機一鍵開啟地圖 App／LINE／撥號） */
+export function ContactButtons({ shop, brand }: { shop: Shop; brand: string }) {
+  const tc = useTranslations("common");
+  const nav = directionsUrl(shop);
+  const line = lineUrl(shop, brand);
+  const tel = telUrl(shop.phone);
+  if (!nav && !line && !tel) return null;
+  return (
+    <div className="contact-row">
+      {nav && <a className="btn contact-btn" href={nav} target="_blank" rel="noopener noreferrer">📍 {tc("directions")}</a>}
+      {line && <a className="btn contact-btn contact-line" href={line} target="_blank" rel="noopener noreferrer">💬 {tc("line")}</a>}
+      {tel && <a className="btn btn-ghost contact-btn" href={tel}>📞 {tc("call")}</a>}
     </div>
   );
 }

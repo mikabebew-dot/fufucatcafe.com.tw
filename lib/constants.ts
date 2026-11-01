@@ -4,8 +4,8 @@
  */
 
 export const BRANDS = [
-  { id: "fufu", name: "FUFU", official: "FU FU CAT CAFE", logo: "/brand/fufu-logo.png" },
-  { id: "nukunuku", name: "NUKUNUKU", official: "NUKU NUKU CAT CAFE", logo: "/brand/nukunuku-logo.jpg" },
+  { id: "fufu", name: "FUFU", official: "FU FU CAT CAFE", logo: "/brand/fufu-logo.png", line: "@qvy2066j" },
+  { id: "nukunuku", name: "NUKUNUKU", official: "NUKU NUKU CAT CAFE", logo: "/brand/nukunuku-logo.jpg", line: "@808gupte" },
 ] as const;
 export type BrandId = (typeof BRANDS)[number]["id"];
 export const isBrand = (v: string): v is BrandId => BRANDS.some((b) => b.id === v);

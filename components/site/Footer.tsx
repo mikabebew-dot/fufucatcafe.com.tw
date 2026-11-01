@@ -1,11 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BRANDS } from "@/lib/constants";
+import { directionsUrl, lineUrl } from "@/lib/contact";
 import { LangSwitcher } from "./LangSwitcher";
 
 type FooterData = {
   siteName: string;
-  shops: { brand: string; address?: string; phone?: string; mapUrl?: string }[];
+  shops: { brand: string; address?: string; addressZh?: string; location?: { lat: number; lng: number } | null; lineUrl?: string; phone?: string; mapUrl?: string }[];
   socials: { platform: string; url: string }[];
   footerLinks: { _key: string; category: "store" | "partner"; url: string; name: string }[];
 };
@@ -29,7 +30,8 @@ export async function SiteFooter({ data }: { data: FooterData }) {
                   {shop?.address && <p>{shop.address}</p>}
                   {shop?.phone && <p className="tabular">{shop.phone}</p>}
                   <p style={{ display: "flex", gap: 12, marginTop: 4 }}>
-                    {shop?.mapUrl && <a href={shop.mapUrl} target="_blank" rel="noopener noreferrer">{t("common.openMap")} ↗</a>}
+                    {directionsUrl(shop) && <a href={directionsUrl(shop)} target="_blank" rel="noopener noreferrer">{t("common.directions")} ↗</a>}
+                    {lineUrl(shop, b.id) && <a href={lineUrl(shop, b.id)} target="_blank" rel="noopener noreferrer">LINE ↗</a>}
                     <Link href={`/${b.id}/visit`}>{t("visit.details")}</Link>
                   </p>
                 </div>

@@ -43,7 +43,10 @@
     "slide": "{n} 枚目",
     "hero": "メイン写真",
     "empty": "まだ掲載はありません。",
-    "external": "（新しいタブで開きます）"
+    "external": "（新しいタブで開きます）",
+    "directions": "ルート案内",
+    "line": "LINEで問い合わせ",
+    "call": "電話する"
   },
   "status": {
     "openUntil": "営業中・{time} まで",

@@ -43,7 +43,10 @@
     "slide": "{n}번째",
     "hero": "대표 사진",
     "empty": "아직 내용이 없습니다.",
-    "external": "(새 탭에서 열림)"
+    "external": "(새 탭에서 열림)",
+    "directions": "길찾기",
+    "line": "LINE 문의",
+    "call": "전화하기"
   },
   "status": {
     "openUntil": "영업 중 · {time}까지",

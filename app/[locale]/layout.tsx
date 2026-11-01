@@ -35,7 +35,7 @@ type LayoutData = {
     socials?: { platform: string; url: string }[];
     footerLinks?: { _key: string; category: "store" | "partner"; url: string; name: string }[];
   } | null;
-  shops: { brand: string; address?: string; phone?: string; mapUrl?: string }[];
+  shops: { brand: string; address?: string; addressZh?: string; location?: { lat: number; lng: number } | null; lineUrl?: string; phone?: string; mapUrl?: string }[];
 };
 
 export default async function LocaleLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string }> }) {
