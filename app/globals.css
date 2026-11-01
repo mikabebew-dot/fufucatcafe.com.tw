@@ -293,9 +293,9 @@ p { margin: 0; }
 
 /* 品牌頁 */
 .brand-hero { padding-top: 16px; }
-.brand-hero .img { position: relative; aspect-ratio: 4 / 5; max-height: 70vh; border-radius: var(--r-hero); overflow: hidden; background: var(--ph); }
-@media (min-width: 768px) { .brand-hero .img { aspect-ratio: 16 / 8; } }
-.brand-hero h1 { margin-top: 24px; font-size: clamp(26px, 5vw, 46px); }
+.brand-hero .img { position: relative; aspect-ratio: 4 / 3; max-height: 52vh; border-radius: var(--r-hero); overflow: hidden; background: var(--ph); }
+@media (min-width: 768px) { .brand-hero .img { aspect-ratio: 16 / 7; max-height: 480px; } }
+.brand-hero h1 { margin-top: 20px; font-size: clamp(26px, 5vw, 46px); }
 .brand-hero p { margin-top: 6px; color: var(--muted); }
 .story { display: grid; gap: 20px; }
 @media (min-width: 900px) { .story { grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; } }

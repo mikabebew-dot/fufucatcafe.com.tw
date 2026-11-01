@@ -71,7 +71,9 @@ export default async function BrandPage({ params }: Props) {
     <>
       {/* 主視覺 */}
       <section className="wrap brand-hero">
-        <div className="img">{page?.hero?.asset && <SanityImage image={page.hero} fill sizes="(max-width: 1180px) 100vw, 1180px" priority />}</div>
+        {page?.hero?.asset && (
+          <div className="img"><SanityImage image={page.hero} fill sizes="(max-width: 1180px) 100vw, 1180px" priority /></div>
+        )}
         <Untranslated show={page?.translated === false} />
         <h1>{page?.headline || b.official}</h1>
         {page?.subheadline && <p>{page.subheadline}</p>}
