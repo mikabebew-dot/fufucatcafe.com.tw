@@ -3,7 +3,7 @@
   "short_name": "貓咪後台",
   "description": "FUFU × NUKUNUKU 官網內容管理",
   "lang": "zh-Hant-TW",
-  "start_url": "/studio",
+  "start_url": "/studio/upload",
   "scope": "/studio",
   "display": "standalone",
   "orientation": "any",

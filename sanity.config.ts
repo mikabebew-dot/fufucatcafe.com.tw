@@ -13,6 +13,8 @@ import { dataset, projectId } from "./sanity/env";
 import { SINGLETON_TYPES, schemaTypes } from "./sanity/schemaTypes";
 import { resolve } from "./sanity/studio/presentation";
 import { PublishWithVerify } from "./sanity/studio/publishWithVerify";
+import { QuickUpload } from "./sanity/studio/QuickUpload";
+import { ImageIcon } from "@sanity/icons";
 import { structure } from "./sanity/studio/structure";
 import { StudioIcon, studioTheme } from "./sanity/studio/theme";
 
@@ -58,6 +60,9 @@ export default defineConfig({
     newDocumentOptions: (prev, { creationContext }) =>
       creationContext.type === "global" ? prev.filter((t) => !HIDDEN_TEMPLATE(t.templateId)) : prev,
   },
+
+  // 手機上傳：網址 /studio/upload（手機桌面圖示也會直接開這一頁）
+  tools: (prev) => [...prev, { name: "upload", title: "手機上傳", icon: ImageIcon, component: QuickUpload }],
 
   plugins: [
     structureTool({ title: "編輯內容", structure }),
