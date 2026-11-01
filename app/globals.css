@@ -454,3 +454,4 @@ p { margin: 0; }
 .contact-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; }
 .contact-btn { justify-content: center; min-height: 48px; white-space: nowrap; }
 .contact-line { background: #06c755; color: #fff; border-color: #06c755; }
+.contact-row + .btn-row { margin-top: 10px; }
