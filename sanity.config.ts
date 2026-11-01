@@ -5,16 +5,16 @@
  * 登入、帳號、權限由 Sanity 處理（不自行開發會員系統）。
  */
 import { zhHantLocale } from "@sanity/locale-zh-hant";
-import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { BRANDS, LISTING_PAGES, SINGLETON, brandDocId, shopDocId } from "./lib/constants";
-import { apiVersion, dataset, projectId } from "./sanity/env";
+import { dataset, projectId } from "./sanity/env";
 import { SINGLETON_TYPES, schemaTypes } from "./sanity/schemaTypes";
 import { resolve } from "./sanity/studio/presentation";
 import { PublishWithVerify } from "./sanity/studio/publishWithVerify";
 import { structure } from "./sanity/studio/structure";
+import { StudioIcon, studioTheme } from "./sanity/studio/theme";
 
 /** 固定頁只允許：發布、捨棄草稿、還原舊版本（不可刪除、複製、下架） */
 const SINGLETON_ACTIONS = new Set(["publish", "discardChanges", "restore"]);
@@ -28,6 +28,8 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
+  theme: studioTheme,
+  icon: StudioIcon,
 
   schema: {
     types: schemaTypes,
@@ -58,13 +60,12 @@ export default defineConfig({
   },
 
   plugins: [
-    structureTool({ title: "內容", structure }),
+    structureTool({ title: "編輯內容", structure }),
     presentationTool({
-      title: "預覽",
+      title: "邊看邊改",
       resolve,
       previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
     }),
     zhHantLocale(),
-    visionTool({ defaultApiVersion: apiVersion, title: "查詢" }),
   ],
 });
