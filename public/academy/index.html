@@ -2164,6 +2164,17 @@ for(const k in Q2){ ZONES.find(z=>z.id===k).stages.push(...Q2[k].stages); ZONES.
      ['先帶去動物醫院檢查、驅蟲，回家後和原本的貓隔離一段時間','直接放進家裡和其他貓一起','先幫牠洗澡','先放在陽台幾週'],
      '街貓可能帶有寄生蟲、黴菌或傳染病，先健檢、隔離，能保護家裡的貓和人。隔離期間也能觀察牠的健康和個性，作為之後送養的參考。'));
 })();
+/* 秘書長決定：不提到府保母 */
+(function(){
+  const get=(zid,q)=>{const s=ZONES.find(z=>z.id===zid).stages.find(s=>s.q===q);if(!s)throw new Error('not found: '+q);return s;};
+  const trip=get('home','你要出國兩週，貓要怎麼安排？');
+  trip.options=trip.options.map(o=>o.startsWith('請可信任的保母')?'請信任的家人或朋友每天來照顧，或送到有合法寄養許可的業者，並留下獸醫聯絡方式':o);
+  trip.explain='貓獨自在家太久，可能遇到水打翻、生病沒人發現等狀況。請熟悉的家人或朋友每天來看一次，或選擇合法的寄養業者，並留下貓的病史、飲食習慣和常去的動物醫院資訊。';
+  const biz=get('home','工作常常要出差好幾天，適合養貓嗎？');
+  biz.explain='貓需要每天有人確認吃喝、清砂盆、注意健康。有固定可以幫忙的家人或朋友，養貓才不會變成負擔。';
+  const feeder=get('food','使用自動餵食器出門，要注意什麼？');
+  feeder.explain='餵食器可能卡糧、斷電或故障，貓就會一整天沒吃。出門超過一天，還是要請家人或朋友每天來看貓、清砂盆。';
+})();
 
 const INTRO=[
  {who:'努酷貓',av:'nuku',text:'歡迎來到努酷貓養貓學院！最近愛貓魔人在城市各處放出了迷思之霧。'},
