@@ -14,7 +14,8 @@ import { SINGLETON_TYPES, schemaTypes } from "./sanity/schemaTypes";
 import { resolve } from "./sanity/studio/presentation";
 import { PublishWithVerify } from "./sanity/studio/publishWithVerify";
 import { QuickUpload } from "./sanity/studio/QuickUpload";
-import { ImageIcon } from "@sanity/icons";
+import { ChartUpwardIcon, ImageIcon } from "@sanity/icons";
+import { AcademyDashboard } from "./sanity/studio/AcademyDashboard";
 import { structure } from "./sanity/studio/structure";
 import { StudioIcon, studioTheme } from "./sanity/studio/theme";
 
@@ -62,7 +63,12 @@ export default defineConfig({
   },
 
   // 手機上傳：網址 /studio/upload（手機桌面圖示也會直接開這一頁）
-  tools: (prev) => [...prev, { name: "upload", title: "手機上傳", icon: ImageIcon, component: QuickUpload }],
+  // 必修課紀錄：網址 /studio/academy（養貓前必修課的玩家與答題統計，只有後台看得到）
+  tools: (prev) => [
+    ...prev,
+    { name: "upload", title: "手機上傳", icon: ImageIcon, component: QuickUpload },
+    { name: "academy", title: "必修課紀錄", icon: ChartUpwardIcon, component: AcademyDashboard },
+  ],
 
   plugins: [
     structureTool({ title: "編輯內容", structure }),

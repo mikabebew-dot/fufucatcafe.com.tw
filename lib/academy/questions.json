@@ -1,0 +1,793 @@
+{
+ "zones": [
+  {
+   "id": "home",
+   "name": "新手之家"
+  },
+  {
+   "id": "law",
+   "name": "律法神殿"
+  },
+  {
+   "id": "safe",
+   "name": "安全堡壘"
+  },
+  {
+   "id": "food",
+   "name": "美食市集"
+  },
+  {
+   "id": "heal",
+   "name": "療癒之森"
+  },
+  {
+   "id": "mind",
+   "name": "心語山谷"
+  },
+  {
+   "id": "tribe",
+   "name": "貓群部落"
+  },
+  {
+   "id": "shrine",
+   "name": "守護者聖殿"
+  }
+ ],
+ "questions": {
+  "home-01": {
+   "zone": "home",
+   "text": "家貓的平均壽命大約是多久？",
+   "type": "choice"
+  },
+  "home-02": {
+   "zone": "home",
+   "text": "決定認養前，下面哪件事最需要先確認？",
+   "type": "choice"
+  },
+  "home-03": {
+   "zone": "home",
+   "text": "貓咪到家前，哪些東西一定要先準備好？選好後按「射箭」。",
+   "type": "find"
+  },
+  "home-04": {
+   "zone": "home",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "home-05": {
+   "zone": "home",
+   "text": "住在租屋處，想要認養貓，應該怎麼做？",
+   "type": "choice"
+  },
+  "home-06": {
+   "zone": "home",
+   "text": "家裡有人懷孕了，貓該怎麼辦？",
+   "type": "choice"
+  },
+  "home-07": {
+   "zone": "home",
+   "text": "你要出國兩週，貓要怎麼安排？",
+   "type": "choice"
+  },
+  "home-08": {
+   "zone": "home",
+   "text": "上班族第一次養貓，幼貓和成貓哪個比較適合？",
+   "type": "choice"
+  },
+  "home-09": {
+   "zone": "home",
+   "text": "中途常說黑貓比較難送養，主要原因是？",
+   "type": "choice"
+  },
+  "home-10": {
+   "zone": "home",
+   "text": "孩子吵著要養貓，答應他「你要自己負責照顧」，這樣可以嗎？",
+   "type": "choice"
+  },
+  "home-11": {
+   "zone": "home",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "home-12": {
+   "zone": "home",
+   "text": "有些人說某些品種是「不會過敏的貓」，這個說法正確嗎？",
+   "type": "choice"
+  },
+  "home-13": {
+   "zone": "home",
+   "text": "新貓到家後，一般需要多久才會完全放鬆、展現真正的個性？",
+   "type": "choice"
+  },
+  "home-14": {
+   "zone": "home",
+   "text": "認養時，哪些是應該問中途的好問題？選好後按「射箭」。",
+   "type": "find"
+  },
+  "home-15": {
+   "zone": "home",
+   "text": "中途協會要求認養前家訪、簽認養契約，最主要的目的是？",
+   "type": "choice"
+  },
+  "home-b1": {
+   "zone": "home",
+   "text": "貓突然要急診住院，費用可能要好幾萬元。認養前應該怎麼準備？",
+   "type": "boss"
+  },
+  "home-b2": {
+   "zone": "home",
+   "text": "如果有一天真的沒辦法再養貓了，應該怎麼做？",
+   "type": "boss"
+  },
+  "home-b3": {
+   "zone": "home",
+   "text": "貓咪剛到家，第一件和健康有關的事是什麼？",
+   "type": "boss"
+  },
+  "home-b4": {
+   "zone": "home",
+   "text": "認養後經濟突然變差，貓又生病了，應該怎麼做？",
+   "type": "boss"
+  },
+  "home-b5": {
+   "zone": "home",
+   "text": "要搬家了，新家不能養寵物，應該怎麼做？",
+   "type": "boss"
+  },
+  "law-01": {
+   "zone": "law",
+   "text": "2026 年起，家裡養的貓需要登記嗎？",
+   "type": "choice"
+  },
+  "law-02": {
+   "zone": "law",
+   "text": "依照動物保護法，飼主應該提供哪些基本照顧？選好後按「射箭」。",
+   "type": "find"
+  },
+  "law-03": {
+   "zone": "law",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "law-04": {
+   "zone": "law",
+   "text": "完全養在室內、不會出門的貓，狂犬病疫苗的規定是？",
+   "type": "choice"
+  },
+  "law-05": {
+   "zone": "law",
+   "text": "搬家換了地址和電話，貓的晶片登記要怎麼處理？",
+   "type": "choice"
+  },
+  "law-06": {
+   "zone": "law",
+   "text": "在路上撿到一隻親人、看起來像家貓的貓，第一步該做什麼？",
+   "type": "choice"
+  },
+  "law-07": {
+   "zone": "law",
+   "text": "關於幫貓絕育，下列哪個說法正確？",
+   "type": "choice"
+  },
+  "law-08": {
+   "zone": "law",
+   "text": "帶貓去公共場所，法律上有什麼規定？",
+   "type": "choice"
+  },
+  "law-09": {
+   "zone": "law",
+   "text": "貓身上植入的晶片，可以用 GPS 定位找到走失的貓嗎？",
+   "type": "choice"
+  },
+  "law-10": {
+   "zone": "law",
+   "text": "想幫忙照顧社區的街貓，比較好的方式是？",
+   "type": "choice"
+  },
+  "law-11": {
+   "zone": "law",
+   "text": "很多街貓的耳朵尖端被剪掉一小角，代表什麼？",
+   "type": "choice"
+  },
+  "law-12": {
+   "zone": "law",
+   "text": "搬進社區大樓，想養貓之前，應該先確認什麼？",
+   "type": "choice"
+  },
+  "law-13": {
+   "zone": "law",
+   "text": "帶貓搭乘大眾運輸，例如捷運，一般要注意什麼？",
+   "type": "choice"
+  },
+  "law-14": {
+   "zone": "law",
+   "text": "想幫貓絕育，可以怎麼減輕費用？",
+   "type": "choice"
+  },
+  "law-15": {
+   "zone": "law",
+   "text": "家裡的貓過世後，寵物登記資料需要處理嗎？",
+   "type": "choice"
+  },
+  "law-b1": {
+   "zone": "law",
+   "text": "讓家貓自由進出家門，最大的問題是什麼？",
+   "type": "boss"
+  },
+  "law-b2": {
+   "zone": "law",
+   "text": "你看到有人在虐待貓，應該怎麼做？",
+   "type": "boss"
+  },
+  "law-b3": {
+   "zone": "law",
+   "text": "家裡的室內貓跑出門走失了，第一時間該怎麼做？",
+   "type": "boss"
+  },
+  "law-b4": {
+   "zone": "law",
+   "text": "冬天早上，你發現社區有貓常躲在汽機車的引擎附近取暖。發動車子前應該？",
+   "type": "boss"
+  },
+  "safe-01": {
+   "zone": "safe",
+   "text": "點出客廳裡所有對貓危險的東西，選好後按「射箭」。",
+   "type": "find"
+  },
+  "safe-02": {
+   "zone": "safe",
+   "text": "家裡有幼貓，浴室要注意什麼？",
+   "type": "choice"
+  },
+  "safe-03": {
+   "zone": "safe",
+   "text": "按下洗衣機或烘衣機的開關前，應該先做什麼？",
+   "type": "choice"
+  },
+  "safe-04": {
+   "zone": "safe",
+   "text": "貓嘴邊露出一截線，另一端好像吞進去了。你會？",
+   "type": "timed"
+  },
+  "safe-05": {
+   "zone": "safe",
+   "text": "家裡的電線、充電線，怎麼處理比較安全？",
+   "type": "choice"
+  },
+  "safe-06": {
+   "zone": "safe",
+   "text": "新貓剛到家，最好的安排是？",
+   "type": "choice"
+  },
+  "safe-07": {
+   "zone": "safe",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "safe-08": {
+   "zone": "safe",
+   "text": "下面哪些植物對貓有毒？選好後按「射箭」。",
+   "type": "find"
+  },
+  "safe-09": {
+   "zone": "safe",
+   "text": "帶貓去看醫生，最安全的方式是？",
+   "type": "choice"
+  },
+  "safe-10": {
+   "zone": "safe",
+   "text": "夏天悶熱的房間裡，貓張口喘氣、流口水、牙齦變得很紅。你會？",
+   "type": "timed"
+  },
+  "safe-11": {
+   "zone": "safe",
+   "text": "冬天給老貓用電熱毯或暖墊，要注意什麼？",
+   "type": "choice"
+  },
+  "safe-12": {
+   "zone": "safe",
+   "text": "家裡有電動躺椅、沙發床這類會折疊或升降的家具，要注意什麼？",
+   "type": "choice"
+  },
+  "safe-13": {
+   "zone": "safe",
+   "text": "玩完逗貓棒或有繩子的玩具後，應該怎麼收？",
+   "type": "choice"
+  },
+  "safe-14": {
+   "zone": "safe",
+   "text": "家裡要噴殺蟲劑或使用除蟲煙霧時，貓應該怎麼安排？",
+   "type": "choice"
+  },
+  "safe-15": {
+   "zone": "safe",
+   "text": "貓很喜歡舔、咬塑膠袋，甚至吃下去，應該怎麼辦？",
+   "type": "choice"
+  },
+  "safe-b1": {
+   "zone": "safe",
+   "text": "貓咬了幾口餐桌上的新鮮金針花，看起來沒事。你會？",
+   "type": "boss"
+  },
+  "safe-b2": {
+   "zone": "safe",
+   "text": "可以用狗狗的除蚤滴劑幫貓除蚤嗎？",
+   "type": "boss"
+  },
+  "safe-b3": {
+   "zone": "safe",
+   "text": "我家貓從來沒有跳過窗，裝防護網又醜又麻煩，開窗不加防護也沒關係？",
+   "type": "boss"
+  },
+  "safe-b4": {
+   "zone": "safe",
+   "text": "貓舔到地上漏出來的汽車水箱精（防凍液），看起來沒事。你會？",
+   "type": "boss"
+  },
+  "food-01": {
+   "zone": "food",
+   "text": "貓是哪一種食性的動物？",
+   "type": "choice"
+  },
+  "food-02": {
+   "zone": "food",
+   "text": "三個月大的幼貓應該怎麼吃？",
+   "type": "choice"
+  },
+  "food-03": {
+   "zone": "food",
+   "text": "下面哪些東西不能給貓吃？選好後按「射箭」。",
+   "type": "find"
+  },
+  "food-04": {
+   "zone": "food",
+   "text": "想幫貓換一款新飼料，正確做法是？",
+   "type": "choice"
+  },
+  "food-05": {
+   "zone": "food",
+   "text": "這隻貓的體態最可能是？",
+   "type": "read"
+  },
+  "food-06": {
+   "zone": "food",
+   "text": "罐頭包裝上寫「副食罐」或「點心」，代表什麼？",
+   "type": "choice"
+  },
+  "food-07": {
+   "zone": "food",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "food-08": {
+   "zone": "food",
+   "text": "零食和點心最多大約佔貓每天總熱量的多少？",
+   "type": "timed"
+  },
+  "food-09": {
+   "zone": "food",
+   "text": "長期大量餵貓吃生魚，可能造成什麼問題？",
+   "type": "choice"
+  },
+  "food-10": {
+   "zone": "food",
+   "text": "把人吃的鮪魚罐頭當貓的正餐，有什麼問題？",
+   "type": "choice"
+  },
+  "food-11": {
+   "zone": "food",
+   "text": "乾飼料開封後，怎麼保存比較好？",
+   "type": "choice"
+  },
+  "food-12": {
+   "zone": "food",
+   "text": "貓的食碗和水碗，哪一種材質比較推薦？",
+   "type": "choice"
+  },
+  "food-13": {
+   "zone": "food",
+   "text": "你會怎麼建議？",
+   "type": "talk"
+  },
+  "food-14": {
+   "zone": "food",
+   "text": "哪些是讓貓多喝水的好方法？選好後按「射箭」。",
+   "type": "find"
+  },
+  "food-15": {
+   "zone": "food",
+   "text": "成貓一天的餵食方式，哪一個比較理想？",
+   "type": "choice"
+  },
+  "food-b1": {
+   "zone": "food",
+   "text": "可以給成貓喝一般的鮮奶嗎？",
+   "type": "boss"
+  },
+  "food-b2": {
+   "zone": "food",
+   "text": "胖貓需要減重，下面哪個做法正確？",
+   "type": "boss"
+  },
+  "food-b3": {
+   "zone": "food",
+   "text": "飼主吃素，可以讓貓跟著吃全素嗎？",
+   "type": "boss"
+  },
+  "food-b4": {
+   "zone": "food",
+   "text": "貓吃魚後一直抓嘴巴、流口水、作嘔，好像有東西卡住。你會？",
+   "type": "boss"
+  },
+  "food-b5": {
+   "zone": "food",
+   "text": "烤肉後，貓偷吃了整串連著竹籤的烤肉。你會？",
+   "type": "boss"
+  },
+  "heal-01": {
+   "zone": "heal",
+   "text": "一隻成貓突然完全不吃東西，最晚什麼時候該帶去看醫生？",
+   "type": "choice"
+  },
+  "heal-02": {
+   "zone": "heal",
+   "text": "下面哪些狀況應該盡快帶去看醫生？選好後按「射箭」。",
+   "type": "find"
+  },
+  "heal-03": {
+   "zone": "heal",
+   "text": "貓沒有剛劇烈運動，卻趴著張口呼吸、肚子起伏很大。你會？",
+   "type": "timed"
+  },
+  "heal-04": {
+   "zone": "heal",
+   "text": "牠現在最可能是？",
+   "type": "read"
+  },
+  "heal-05": {
+   "zone": "heal",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "heal-06": {
+   "zone": "heal",
+   "text": "貓咪一週吐了三、四次，你的判斷是？",
+   "type": "choice"
+  },
+  "heal-07": {
+   "zone": "heal",
+   "text": "家裡的老貓最近喝水量明顯變多，砂盆裡的尿塊也變大變多，該注意什麼？",
+   "type": "choice"
+  },
+  "heal-08": {
+   "zone": "heal",
+   "text": "10 歲以上的老貓，一般建議多久做一次健康檢查？",
+   "type": "choice"
+  },
+  "heal-09": {
+   "zone": "heal",
+   "text": "貓在熟睡時，每分鐘的呼吸次數大約超過多少，就應該請獸醫檢查？",
+   "type": "choice"
+  },
+  "heal-10": {
+   "zone": "heal",
+   "text": "貓打完疫苗後，注射的地方摸到一個腫塊，什麼情況要回去檢查？",
+   "type": "choice"
+  },
+  "heal-11": {
+   "zone": "heal",
+   "text": "幫貓刷牙，下列哪個做法正確？",
+   "type": "choice"
+  },
+  "heal-12": {
+   "zone": "heal",
+   "text": "貓打完疫苗後，出現哪種狀況要立即回醫院？",
+   "type": "choice"
+  },
+  "heal-13": {
+   "zone": "heal",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "heal-14": {
+   "zone": "heal",
+   "text": "貓的一隻眼睛突然睜不開、一直流淚。你會？",
+   "type": "timed"
+  },
+  "heal-b1": {
+   "zone": "heal",
+   "text": "公貓一直進出砂盆，蹲很久只滴出幾滴尿，還一直舔下體。你會？",
+   "type": "boss"
+  },
+  "heal-b2": {
+   "zone": "heal",
+   "text": "貓突然慘叫，兩隻後腳拖著走、無法站立，摸起來比前腳冰冷。你會？",
+   "type": "boss"
+  },
+  "heal-b3": {
+   "zone": "heal",
+   "text": "兩個月大的幼貓從早上開始拉水便，下午變得沒精神、不太吃。你會？",
+   "type": "boss"
+  },
+  "heal-b4": {
+   "zone": "heal",
+   "text": "母貓生完小貓兩週，突然發抖、走路不穩、喘氣，甚至抽搐。你會？",
+   "type": "boss"
+  },
+  "heal-b5": {
+   "zone": "heal",
+   "text": "貓從二樓陽台摔下去，看起來走路正常、沒有外傷。你會？",
+   "type": "boss"
+  },
+  "mind-01": {
+   "zone": "mind",
+   "text": "牠現在的心情最可能是？",
+   "type": "read"
+  },
+  "mind-02": {
+   "zone": "mind",
+   "text": "牠在表達什麼？",
+   "type": "read"
+  },
+  "mind-03": {
+   "zone": "mind",
+   "text": "貓看著你，慢慢地眨眼睛，代表什麼？",
+   "type": "choice"
+  },
+  "mind-04": {
+   "zone": "mind",
+   "text": "貓在你面前翻身露出肚子，最適合怎麼做？",
+   "type": "choice"
+  },
+  "mind-05": {
+   "zone": "mind",
+   "text": "貓一直抓沙發，最好的處理方式是？",
+   "type": "choice"
+  },
+  "mind-06": {
+   "zone": "mind",
+   "text": "你會怎麼建議？",
+   "type": "talk"
+  },
+  "mind-07": {
+   "zone": "mind",
+   "text": "貓每天半夜在家裡暴衝、吵醒人，可以怎麼改善？",
+   "type": "choice"
+  },
+  "mind-08": {
+   "zone": "mind",
+   "text": "哪些是讓室內貓生活更豐富的好方法？選好後按「射箭」。",
+   "type": "find"
+  },
+  "mind-09": {
+   "zone": "mind",
+   "text": "貓發出呼嚕聲，一定代表牠很開心嗎？",
+   "type": "choice"
+  },
+  "mind-10": {
+   "zone": "mind",
+   "text": "貓被摸得好好的，突然轉頭咬你一口，最可能的原因是？",
+   "type": "choice"
+  },
+  "mind-11": {
+   "zone": "mind",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "mind-12": {
+   "zone": "mind",
+   "text": "貓把抓到的蟑螂或玩具叼到你面前，最好的反應是？",
+   "type": "choice"
+  },
+  "mind-13": {
+   "zone": "mind",
+   "text": "這是什麼行為？",
+   "type": "read"
+  },
+  "mind-14": {
+   "zone": "mind",
+   "text": "砂盆放在哪裡比較好？",
+   "type": "choice"
+  },
+  "mind-b1": {
+   "zone": "mind",
+   "text": "貓開始在床上或砂盆外尿尿，第一步該做什麼？",
+   "type": "boss"
+  },
+  "mind-b2": {
+   "zone": "mind",
+   "text": "貓做了你不喜歡的事，用打、用水噴處罰，會怎樣？",
+   "type": "boss"
+  },
+  "mind-b3": {
+   "zone": "mind",
+   "text": "貓會抓家具，可以帶去做「去爪手術」嗎？",
+   "type": "boss"
+  },
+  "mind-b4": {
+   "zone": "mind",
+   "text": "你罵了貓之後，牠尿在你的衣服上。這代表？",
+   "type": "boss"
+  },
+  "tribe-01": {
+   "zone": "tribe",
+   "text": "家裡有兩隻貓，一般建議準備幾個砂盆？",
+   "type": "choice"
+  },
+  "tribe-02": {
+   "zone": "tribe",
+   "text": "新貓帶回家，和原本的貓引見的第一步是？",
+   "type": "choice"
+  },
+  "tribe-03": {
+   "zone": "tribe",
+   "text": "牠們在做什麼？",
+   "type": "read"
+  },
+  "tribe-04": {
+   "zone": "tribe",
+   "text": "多貓家庭的食物、水、砂盆、睡覺的地方要怎麼安排？",
+   "type": "choice"
+  },
+  "tribe-05": {
+   "zone": "tribe",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "tribe-06": {
+   "zone": "tribe",
+   "text": "家裡有一隻 14 歲、喜歡安靜的老貓，想再認養一隻，怎麼選比較好？",
+   "type": "choice"
+  },
+  "tribe-07": {
+   "zone": "tribe",
+   "text": "兩隻貓突然真的打起來，毛炸開、尖叫。你會？",
+   "type": "timed"
+  },
+  "tribe-08": {
+   "zone": "tribe",
+   "text": "家裡來了新貓後，原本的貓常常躲起來、不太吃飯，該怎麼辦？",
+   "type": "choice"
+  },
+  "tribe-09": {
+   "zone": "tribe",
+   "text": "一隻貓看完醫生回家，另一隻貓卻對牠哈氣、好像不認得牠。可以怎麼做？",
+   "type": "choice"
+  },
+  "tribe-10": {
+   "zone": "tribe",
+   "text": "家裡有狗，想再養貓，要注意什麼？",
+   "type": "choice"
+  },
+  "tribe-11": {
+   "zone": "tribe",
+   "text": "哪些是多貓家庭裡，貓可能有壓力的訊號？選好後按「射箭」。",
+   "type": "find"
+  },
+  "tribe-12": {
+   "zone": "tribe",
+   "text": "家裡有好幾隻貓，用一支逗貓棒一起玩，常會發生什麼？",
+   "type": "choice"
+  },
+  "tribe-13": {
+   "zone": "tribe",
+   "text": "家裡一隻貓得了上呼吸道感染（打噴嚏、流鼻水、眼屎多），應該怎麼做？",
+   "type": "choice"
+  },
+  "tribe-14": {
+   "zone": "tribe",
+   "text": "多貓家庭共用飼料和砂盆，最大的照顧盲點是什麼？",
+   "type": "choice"
+  },
+  "tribe-b1": {
+   "zone": "tribe",
+   "text": "新貓帶回家，直接和原本的貓關在同一個空間，會怎樣？",
+   "type": "boss"
+  },
+  "tribe-b2": {
+   "zone": "tribe",
+   "text": "新貓還沒有健康檢查，可以先和家裡的貓接觸嗎？",
+   "type": "boss"
+  },
+  "tribe-b3": {
+   "zone": "tribe",
+   "text": "引見好幾週了，兩隻貓還是會打到流血。你會？",
+   "type": "boss"
+  },
+  "tribe-b4": {
+   "zone": "tribe",
+   "text": "家裡的狗開始追著新來的貓跑，貓嚇得到處逃。你會？",
+   "type": "boss"
+  },
+  "shrine-01": {
+   "zone": "shrine",
+   "text": "貓免疫缺乏病毒（FIV，俗稱貓愛滋）主要怎麼傳染？",
+   "type": "choice"
+  },
+  "shrine-02": {
+   "zone": "shrine",
+   "text": "貓白血病（FeLV）和 FIV 有什麼不同？",
+   "type": "choice"
+  },
+  "shrine-03": {
+   "zone": "shrine",
+   "text": "老貓不再跳上沙發，有時在砂盆外面上廁所，可能是什麼原因？",
+   "type": "choice"
+  },
+  "shrine-04": {
+   "zone": "shrine",
+   "text": "比較可能是什麼情況？",
+   "type": "read"
+  },
+  "shrine-05": {
+   "zone": "shrine",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "shrine-06": {
+   "zone": "shrine",
+   "text": "醫生建議慢性腎病的貓在家打皮下點滴，這是？",
+   "type": "choice"
+  },
+  "shrine-07": {
+   "zone": "shrine",
+   "text": "貓嘴巴很臭、流口水、想吃又不敢吃，可能是？",
+   "type": "choice"
+  },
+  "shrine-08": {
+   "zone": "shrine",
+   "text": "哪些是對老貓友善的居家安排？選好後按「射箭」。",
+   "type": "find"
+  },
+  "shrine-09": {
+   "zone": "shrine",
+   "text": "老貓的瞳孔一直放得很大，走路開始撞到東西，可能是什麼原因？",
+   "type": "choice"
+  },
+  "shrine-10": {
+   "zone": "shrine",
+   "text": "貓得了糖尿病，下列哪個說法正確？",
+   "type": "choice"
+  },
+  "shrine-11": {
+   "zone": "shrine",
+   "text": "老貓的指甲需要特別注意什麼？",
+   "type": "choice"
+  },
+  "shrine-12": {
+   "zone": "shrine",
+   "text": "藍眼睛的白貓，比較常有哪種先天狀況？",
+   "type": "choice"
+  },
+  "shrine-13": {
+   "zone": "shrine",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "shrine-14": {
+   "zone": "shrine",
+   "text": "要怎麼評估一隻老病貓的生活品質？",
+   "type": "choice"
+  },
+  "shrine-b1": {
+   "zone": "shrine",
+   "text": "FIV（貓愛滋）會傳染給人嗎？",
+   "type": "boss"
+  },
+  "shrine-b2": {
+   "zone": "shrine",
+   "text": "被診斷為 FIV 陽性的貓，通常能活多久？",
+   "type": "boss"
+  },
+  "shrine-b3": {
+   "zone": "shrine",
+   "text": "糖尿病貓打完胰島素後，開始發抖、站不穩、意識模糊。你會？",
+   "type": "boss"
+  },
+  "shrine-b4": {
+   "zone": "shrine",
+   "text": "腎病貓突然不吃、一直嘔吐，嘴巴有一股尿騷味，精神很差。你會？",
+   "type": "boss"
+  }
+ }
+}

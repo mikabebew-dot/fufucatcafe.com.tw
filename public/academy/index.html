@@ -1,0 +1,1249 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="努酷貓養貓學院：跟著努酷貓闖關，學會認養前該知道的照顧知識。"><link rel="icon" href="/academy/head.jpg"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>養貓前必修課</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<style>
+/* Layout: one phone-width storybook column — HUD band, forest stage (monster vs 努酷貓), parchment question card */
+:root{
+  --ground:#e3ecd9;      /* moss clearing */
+  --forest:#28412f;      /* deep forest ink */
+  --forest-2:#4c6b52;
+  --paper:#fffdf6;       /* scroll / card */
+  --paper-edge:#d9d2b8;
+  --cape:#c8352b;        /* 努酷貓 cape red */
+  --cape-dk:#9b241d;
+  --amber:#eaa520;       /* collar amber */
+  --fog:#7d6fa8;         /* myth fog */
+  --fog-lt:#c9c0e4;
+  --stone:#7b7f86;
+  --kuku:#9fd3ec;        /* 酷酷 blue */
+  --nunu:#f4b3cb;        /* 努努 pink */
+  --ok:#2f8f55;
+  --bad:#c8352b;
+  --f-display:"LXGW WenKai TC","Kaiti TC","STKaiti","Noto Serif TC",serif;
+  --f-body:"Huninn","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+html{background:var(--ground)}
+body{
+  background:var(--ground);
+  background-image:radial-gradient(circle at 15% 0%, #f0f5e8 0, transparent 45%),radial-gradient(circle at 100% 100%, #cfdcc3 0, transparent 50%);
+  color:var(--forest);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap{max-width:560px;margin:0 auto;padding-block:16px 32px;display:flex;flex-direction:column;gap:14px;min-height:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.tile:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+
+/* buttons */
+.btn{border:0;border-radius:14px;padding:12px 22px;font-size:17px;font-weight:700;background:var(--cape);color:#fff;
+  box-shadow:0 4px 0 var(--cape-dk);transition:transform .08s, box-shadow .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--cape-dk)}
+.btn.ghost{background:var(--paper);color:var(--forest);box-shadow:0 4px 0 var(--paper-edge);border:1.5px solid var(--paper-edge)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* title screen */
+.title{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-top:8px}
+.eyebrow{font-size:13px;letter-spacing:.2em;color:var(--forest-2)}
+.title h1{font-size:clamp(30px,8vw,44px);color:var(--forest)}
+.title h1 .h1main{display:inline;font-size:1em;letter-spacing:.04em;color:var(--forest);margin:0;white-space:nowrap}
+.title h1 span:not(.h1main){display:block;font-size:.5em;letter-spacing:.3em;color:var(--cape);margin-top:6px}
+.hero-art{width:min(340px,86%);filter:drop-shadow(0 10px 0 rgba(40,65,47,.12));animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.title p{margin:0;max-width:30em;color:var(--forest-2)}
+.org{font-size:12px;color:var(--forest-2);opacity:.8}
+.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--forest);color:var(--paper);letter-spacing:.1em}
+
+/* dialogue */
+.dialog{background:var(--paper);border:2px solid var(--forest);border-radius:18px;padding:16px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 6px 0 rgba(40,65,47,.18)}
+.avatar{flex:0 0 64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid var(--forest);display:grid;place-items:center}
+.avatar img{width:100%;height:100%;object-fit:contain}
+.avatar.nuku{background:#000}
+.avatar.nuku img{object-fit:cover}
+.avatar.nunu{background:#fde8f0}
+.avatar.kuku{background:#e3f4fb}
+.dialog .who{font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--cape)}
+.dialog .line{margin:2px 0 0;font-size:16px}
+.dialog-col{display:flex;flex-direction:column;gap:12px;min-width:0;flex:1}
+.dialog-actions{display:flex;justify-content:flex-end}
+
+/* full-screen intro */
+.vn{position:fixed;inset:0;z-index:20;background:linear-gradient(#b8d6a8,#9cc28c 58%,#7aa56c 58%,#6c9a5f);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  cursor:pointer;overflow:hidden;user-select:none;-webkit-user-select:none}
+.vn .trees{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.vn-inner{position:relative;max-width:720px;height:100%;margin:0 auto;display:flex;flex-direction:column}
+.vn-top{display:flex;justify-content:space-between;align-items:center;padding-block:12px 0}
+.vn-step{font-size:13px;background:rgba(255,253,246,.8);border-radius:99px;padding:2px 12px;font-variant-numeric:tabular-nums}
+.vn-skip{border:1.5px solid var(--forest);background:rgba(255,253,246,.85);border-radius:99px;padding:4px 14px;font-size:14px}
+.vn-char{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;padding-top:8px}
+.vn-char img{max-height:100%;max-width:min(94%,500px);object-fit:contain;animation:pop .35s ease-out;filter:drop-shadow(0 10px 0 rgba(40,65,47,.15))}
+.vn-char img.nunu,.vn-char img.kuku{height:min(38vh,260px);width:auto;margin-bottom:12px}
+@keyframes pop{from{transform:translateY(16px) scale(.96);opacity:0}}
+.vn-box{position:relative;background:var(--paper);border:3px solid var(--forest);border-radius:22px;padding:26px 20px 16px;margin-block:4px 16px;min-height:168px;box-shadow:0 8px 0 rgba(40,65,47,.25);display:flex;flex-direction:column}
+.vn-name{position:absolute;top:-18px;left:18px;font-family:var(--f-display);font-weight:700;font-size:17px;padding:3px 18px;border-radius:12px;border:2.5px solid var(--forest);background:var(--cape);color:#fff}
+.vn-name.nunu{background:var(--nunu);color:var(--forest)}
+.vn-name.kuku{background:var(--kuku);color:var(--forest)}
+.vn-text{margin:0;font-size:19px;line-height:1.75;flex:1}
+.vn-next{align-self:flex-end;font-size:13px;color:var(--forest-2);animation:blink 1.2s infinite;visibility:hidden}
+.vn-next.show{visibility:visible}
+@keyframes blink{50%{opacity:.3}}
+
+/* HUD */
+.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.zone{font-family:var(--f-display);font-weight:700;font-size:18px}
+.zone small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--forest-2)}
+.quiver{display:flex;gap:2px;align-items:flex-end;background:var(--paper);border:1.5px solid var(--paper-edge);border-radius:12px;padding:6px 10px}
+.quiver svg{width:12px;height:30px;transition:opacity .3s, transform .3s}
+.quiver svg.gone{opacity:.15;transform:translateY(6px)}
+.quiver .lbl{font-size:12px;margin-right:6px;align-self:center;color:var(--forest-2)}
+.track{display:flex;gap:6px;align-items:center}
+.pip{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--forest-2)}
+.pip.done{background:var(--amber);border-color:var(--forest)}
+.pip.now{box-shadow:0 0 0 3px rgba(234,165,32,.45)}
+.pip.boss{width:20px;height:20px;border-radius:5px;background:var(--stone);border-color:var(--forest)}
+.pip.boss.done{background:var(--amber)}
+
+/* stage */
+.stage{position:relative;height:230px;border-radius:20px;overflow:hidden;border:2px solid var(--forest);
+  background:linear-gradient(#b8d6a8,#9cc28c 62%,#7aa56c 62%,#6c9a5f)}
+.stage .trees{position:absolute;inset:0;pointer-events:none}
+.stage.fogged::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 40%, rgba(125,111,168,.28), transparent 60%);pointer-events:none}
+.hero{position:absolute;left:6px;bottom:4px;height:150px;z-index:2}
+.hero.shoot{animation:recoil .35s}
+@keyframes recoil{30%{transform:translateX(-6px) rotate(-3deg)}}
+.monster{position:absolute;right:18px;top:62px;width:120px;height:120px;z-index:2;transition:opacity .4s, transform .4s}
+.monster.hit{animation:shake .4s}
+.monster.poof{opacity:0;transform:scale(1.4) translateY(-10px)}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+.myth{position:absolute;right:12px;top:10px;max-width:68%;background:var(--paper);border:2px solid var(--fog);color:#463a6b;border-radius:14px;padding:6px 12px;font-size:14px;z-index:3;line-height:1.4}
+.myth b{font-family:var(--f-display);color:var(--fog);margin-right:4px}
+.hp{position:absolute;right:20px;top:186px;width:116px;height:10px;border-radius:6px;background:rgba(0,0,0,.25);overflow:hidden;z-index:3}
+.hp i{display:block;height:100%;background:var(--cape);transition:width .4s}
+.flyer{position:absolute;left:0;top:0;width:60px;height:12px;z-index:5;pointer-events:none}
+.stamp{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-8deg);font-family:var(--f-display);font-weight:700;font-size:26px;padding:4px 16px;border:3px solid currentColor;border-radius:10px;background:rgba(255,253,246,.88);z-index:6;animation:stampin .35s ease-out}
+.stamp.ok{color:var(--ok)}.stamp.no{color:var(--bad)}
+@keyframes stampin{from{transform:translate(-50%,-50%) rotate(-8deg) scale(1.8);opacity:0}}
+
+/* question card */
+.card{background:var(--paper);border:2px solid var(--forest);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 0 rgba(40,65,47,.18)}
+.qmeta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--forest-2)}
+.qtype{background:var(--forest);color:var(--paper);border-radius:99px;padding:1px 10px;letter-spacing:.08em}
+.qtype.must{background:var(--cape)}
+.qtext{font-size:18px;font-weight:700;margin:0;line-height:1.5}
+.scene{background:#f3efe0;border-left:4px solid var(--amber);padding:10px 12px;border-radius:8px;margin:0;font-size:15px}
+.chat{display:flex;flex-direction:column;gap:6px}
+.bubble{background:#eef4fa;border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:15px;max-width:90%}
+.bubble b{font-size:12px;color:var(--forest-2);display:block}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--paper-edge);background:#fff;border-radius:14px;padding:11px 14px;font-size:16px;transition:border-color .15s, background .15s, transform .1s}
+.opt:hover:not([disabled]){border-color:var(--forest);transform:translateX(3px)}
+.opt .tip{flex:0 0 28px;height:12px}
+.opt.right{border-color:var(--ok);background:#e6f4ea}
+.opt.wrong{border-color:var(--bad);background:#fbe7e5}
+.opt.out{opacity:.35;text-decoration:line-through}
+.opt[disabled]{cursor:default}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{border:2px solid var(--paper-edge);background:#fff;border-radius:14px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;line-height:1.3;text-align:center;min-width:0}
+.tile .ic{font-size:28px;line-height:1.2}
+.tile.sel{border-color:var(--cape);background:#fdecea;box-shadow:inset 0 0 0 2px var(--cape)}
+.tile.hinted{border-style:dashed;border-color:#d97aa0}
+.tile.reveal-bad{border-color:var(--bad);background:#fbe7e5}
+.tile.reveal-miss{border-color:var(--bad);background:#fff;outline:3px dashed var(--bad);outline-offset:-6px}
+.tile.reveal-ok{opacity:.5}
+.timer{height:8px;border-radius:6px;background:#eadfcf;overflow:hidden}
+.timer i{display:block;height:100%;background:var(--amber);width:100%}
+.timer.low i{background:var(--cape)}
+.row{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.hintbtn{display:flex;align-items:center;gap:8px;background:#fde8f0;border:2px solid var(--nunu);border-radius:99px;padding:4px 14px 4px 4px;font-size:14px}
+.hintbtn img{width:32px;height:32px;object-fit:contain}
+.hintbtn[disabled]{opacity:.45;cursor:not-allowed}
+.explain{display:flex;gap:12px;background:#eaf6fc;border:2px solid var(--kuku);border-radius:16px;padding:12px}
+.explain .avatar{flex-basis:52px;height:52px}
+.explain .who{font-family:var(--f-display);font-weight:700;color:#2b6a88;font-size:14px}
+.explain p{margin:2px 0 0;font-size:15px}
+.note{font-size:13px;color:var(--forest-2);margin:0}
+
+/* result */
+.result{display:flex;flex-direction:column;gap:14px}
+.medal{display:flex;gap:16px;align-items:center;background:var(--paper);border:2px solid var(--forest);border-radius:20px;padding:16px}
+.medal svg{flex:0 0 88px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--paper);border:1.5px solid var(--paper-edge);border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-family:var(--f-display);font-size:26px;font-variant-numeric:tabular-nums;color:var(--cape)}
+.stat span{font-size:12px;color:var(--forest-2)}
+.passport{background:#5b2a24;color:#f6e7c8;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;border:2px solid #3d1b17}
+.passport h3{font-size:18px;color:#f6e7c8;letter-spacing:.1em}
+.passport .sub{font-size:12px;opacity:.8}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.slot{aspect-ratio:1;max-width:100%;border:1.5px dashed rgba(246,231,200,.45);border-radius:50%;display:grid;place-items:center;font-size:11px;text-align:center;line-height:1.2;padding:4px;color:rgba(246,231,200,.6)}
+.slot.lit{border:2px solid var(--amber);background:var(--amber);color:#3d1b17;font-weight:700;animation:stampin .5s ease-out}
+.rescue{display:flex;gap:14px;align-items:center;background:var(--paper);border:2px solid var(--forest);border-radius:20px;padding:14px}
+.rescue .pic{flex:0 0 76px;height:76px;border-radius:16px;background:repeating-linear-gradient(45deg,#f2c27d 0 8px,#eab062 8px 16px);display:grid;place-items:center;font-family:var(--f-display);font-size:28px;color:#7a4a12;border:2px solid var(--forest)}
+.rescue .ex{font-size:11px;background:#eee6cf;border-radius:6px;padding:0 6px;color:var(--forest-2)}
+.small{font-size:13px;color:var(--forest-2)}
+.center{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+/* hub / course map */
+.hubwrap{display:flex;flex-direction:column;gap:16px}
+.hubhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.hubhead h2{font-size:clamp(26px,7vw,34px);margin-top:6px}
+.hubhead .small{margin:4px 0 0;max-width:24em}
+.prog{flex:0 0 auto;background:var(--paper);border:2px solid var(--forest);border-radius:16px;padding:6px 14px;text-align:center;line-height:1.1}
+.prog b{display:block;font-family:var(--f-display);font-size:30px;color:var(--cape);font-variant-numeric:tabular-nums}
+.prog span{font-size:12px;color:var(--forest-2)}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:420px){.zones{grid-template-columns:1fr}}
+.zcard{position:relative;display:flex;align-items:center;gap:12px;text-align:left;background:var(--paper);border:2px solid var(--forest);border-radius:18px;padding:10px 12px;box-shadow:0 5px 0 rgba(40,65,47,.18);transition:transform .12s;min-width:0}
+.zcard:hover{transform:translateY(-2px)}
+.zcard:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.zart{flex:0 0 58px;height:58px;border-radius:14px;background:var(--zbg);border:2px solid var(--forest);display:grid;place-items:center;overflow:hidden}
+.zart .monster{position:static;width:46px;height:46px}
+.zinfo{display:flex;flex-direction:column;min-width:0;flex:1}
+.znum{font-size:12px;color:var(--forest-2);letter-spacing:.08em}
+.zname{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.25}
+.ztopic{font-size:13px;color:var(--forest-2)}
+.zstat{align-self:flex-start;font-size:11px;border-radius:99px;padding:1px 8px;background:#eee6cf;color:var(--forest-2);white-space:nowrap}
+.zcard.done .zstat{background:var(--amber);color:var(--forest);font-weight:700}
+.zcard.done{border-color:var(--zc)}
+.back{border:1.5px solid var(--forest);background:var(--paper);border-radius:99px;padding:4px 12px;font-size:14px}
+.hud .zone{flex:1}
+.fog{position:absolute;inset:0;pointer-events:none}
+.tile.reveal-hit{border-color:var(--ok);background:#e6f4ea}
+.tile.reveal-wrong{border-color:var(--bad);background:#fbe7e5;text-decoration:line-through}
+.dialog-actions{gap:10px;flex-wrap:wrap}
+
+
+/* account */
+.acct{font-size:13px;color:var(--forest-2);text-align:center;max-width:30em}
+.acct.in{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--paper-edge);border-radius:99px;padding:4px 14px}
+.acct .dot{width:8px;height:8px;border-radius:50%;background:#06c755}
+.acct a{color:inherit}
+.acct.out{display:flex;flex-direction:column;align-items:center;gap:6px}
+.acct.out p{margin:0;line-height:1.5}
+.linebtn{display:inline-block;background:#06c755;color:#fff!important;text-decoration:none;font-weight:700;border-radius:12px;padding:9px 20px;font-size:15px}
+.linebtn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.hubhead .acct{text-align:left;margin-top:8px}
+.hubhead .acct.out{align-items:flex-start}
+.toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--forest);color:var(--paper);border-radius:14px;padding:10px 16px;font-size:14px;max-width:calc(100% - 32px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const IMG={nuku:"/academy/nuku.png",nunu:"/academy/nunu.png",kuku:"/academy/kuku.png",head:"/academy/head.jpg"};
+const ZONES=[
+{id:'home',name:'新手之家',topic:'認養責任與準備',color:'#e8a33d',sky:['#f6e3b8','#ecd39b','#d9b877','#c9a463'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'三分鐘霧精',myth:'養貓就幾年的事，之後再說',
+  q:'家貓的平均壽命大約是多久？',
+  options:['3 到 5 年','5 到 8 年','15 年左右，甚至更久','差不多 2 年'],answer:2,
+  explain:'室內飼養、照顧得好的貓，常常活到 15 歲以上，20 歲的貓也不少見。認養一隻貓，等於做一個十幾年的承諾，要想想未來搬家、換工作、成家時牠怎麼辦。'},
+ {type:'choice',label:'選擇題',monster:'獨斷霧精',myth:'我想養就好，家人會慢慢習慣',
+  q:'決定認養前，下面哪件事最需要先確認？',
+  options:['挑好貓咪的名字','同住家人都同意，也確認沒有人對貓嚴重過敏','先買最貴的跳台','先開好貓咪的社群帳號'],answer:1,
+  explain:'很多退養的原因是「家人反對」或「家人過敏」。認養前先和同住的人取得共識，有過敏疑慮的人可以先到貓咪友善的場所待一段時間試試看。'},
+ {type:'find',label:'找碴題',monster:'空手霧精',myth:'貓來了再慢慢買東西就好',
+  q:'貓咪到家前，哪些東西一定要先準備好？選好後按「射箭」。',
+  items:[{t:'外出籠',e:'🧺',pick:1},{t:'貓砂盆',e:'🟫',pick:1},{t:'貓砂',e:'🪣',pick:1},{t:'主食飼料或罐頭',e:'🥫',pick:1},{t:'水碗',e:'🥣',pick:1},{t:'貓抓板',e:'🪵',pick:1},{t:'牛奶',e:'🥛',pick:0},{t:'狗飼料',e:'🦴',pick:0},{t:'伸縮牽繩',e:'🪢',pick:0}],
+  explain:'外出籠、砂盆、貓砂、主食、水碗、抓板是第一天就用得到的。牛奶多數成貓喝了會拉肚子；狗飼料營養不適合貓；伸縮牽繩容易讓貓受驚掙脫，不建議使用。'},
+ {type:'talk',label:'情境對話',monster:'試用霧精',myth:'先養看看，不適合再退回去',
+  chat:[{who:'朋友',text:'我想先領一隻回家試試看，不適合再還給中途就好了吧？'}],
+  q:'你會怎麼回？',
+  options:['對啊，退回去很正常','認養是長期承諾，貓被退回會再受一次打擊，想清楚再決定','先養兩個月看看','反正貓很快就會忘記'],answer:1,
+  explain:'貓對環境改變很敏感，被退養的貓常變得更膽小、更難再被認養。如果還不確定，可以先當志工或短期中途，了解自己是否適合養貓。'},
+ {type:'choice',label:'選擇題',monster:'違約霧精',myth:'租屋處偷偷養，房東不會發現',
+  q:'住在租屋處，想要認養貓，應該怎麼做？',
+  options:['偷偷養就好','先確認租約和房東是否同意養寵物','等被發現再說','養在陽台就不算在屋內'],answer:1,
+  explain:'因為房東不同意而被迫送走貓，是常見的退養原因。認養前先確認租約，最好取得書面同意，未來搬家時也要優先找可以養寵物的房子。'},
+ {type:'choice',label:'選擇題',monster:'孕婦霧精',myth:'懷孕了就一定要把貓送走',
+  q:'家裡有人懷孕了，貓該怎麼辦？',
+  options:['一定要送走','不用送走；孕期由其他人清貓砂，或戴手套每天清，並勤洗手','把貓關在籠子裡直到生產','改成每週清一次貓砂'],answer:1,
+  explain:'大家擔心的是弓漿蟲。貓糞便裡的卵囊通常要排出 1 到 5 天後才有感染力，所以每天清砂盆、戴手套、洗手就能大幅降低風險。只吃飼料罐頭的室內貓，感染機會本來就低。有疑慮可以請婦產科醫師安排檢查。'},
+ {type:'choice',label:'選擇題',monster:'放生霧精',myth:'出國兩週，放一大盆飼料就好',
+  q:'你要出國兩週，貓要怎麼安排？',
+  options:['放一大盆飼料和水就出門','請可信任的保母每天到府照顧，或找合格的寄宿，並留下獸醫聯絡方式','帶去公園讓牠自己找吃的','請鄰居一週來看一次'],answer:1,
+  explain:'貓獨自在家太久，可能遇到水打翻、生病沒人發現等狀況。到府保母每天至少來一次最理想，並留下貓的病史、飲食習慣和熟悉的動物醫院資訊。'},
+ {type:'choice',label:'選擇題',monster:'只要小貓霧精',myth:'一定要從小貓開始養，才會親人',
+  q:'上班族第一次養貓，幼貓和成貓哪個比較適合？',
+  options:['一定要幼貓','成貓個性已經穩定，比較容易知道合不合得來，很適合新手','只能養老貓','都不適合，上班族不能養貓'],answer:1,
+  explain:'成貓很多一樣親人，而且個性看得出來，中途也能告訴你牠的習慣。幼貓精力旺盛，需要更多陪伴和教導，長時間不在家時，常會建議兩隻一起認養。'}
+ ],
+ boss:{monster:'衝動領養獸',myth:'好可愛！先帶回家再說',phases:[
+ {q:'貓突然要急診住院，費用可能要好幾萬元。認養前應該怎麼準備？',
+  options:['到時候再說','預留一筆緊急醫療預算，或評估寵物保險','生病就不要治療了'],answer:1,
+  explain:'貓的急症（例如尿道阻塞、異物開刀）醫療費常常要數萬元。認養前先準備一筆緊急醫療預算，關鍵時刻才不會因為錢而延誤治療。'},
+ {q:'如果有一天真的沒辦法再養貓了，應該怎麼做？',
+  options:['把貓放到外面讓牠自己生活','聯絡原本的中途或協會，協助重新找家','送給路上第一個說想要的人'],answer:1,
+  explain:'棄養是違法的，貓在外面也很難生存。先聯絡原本的中途或協會，他們可以協助評估和送養，確保下一個家是合適的。'},
+ {q:'貓咪剛到家，第一件和健康有關的事是什麼？',
+  options:['帶去動物醫院健康檢查，確認疫苗和驅蟲','等牠生病再去','先幫牠洗澡'],answer:0,
+  explain:'先做一次健康檢查，確認疫苗、驅蟲紀錄，也讓醫生建立病歷。剛到家的貓壓力大，不建議急著洗澡。'}
+ ]}},
+
+{id:'law',name:'律法神殿',topic:'法規與飼主責任',color:'#6d7fb5',sky:['#dfe3f2','#c9d0ea','#a9b3d6','#97a2c8'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'無名霧精',myth:'貓不用登記，那是狗的事',
+  q:'2026 年起，家裡養的貓需要登記嗎？',
+  options:['不用，只有狗要登記','需要植入晶片並完成寵物登記，沒登記可能被罰款','只有品種貓要登記','只有會出門的貓要登記'],answer:1,
+  explain:'貓已納入寵物登記，緩衝期在 2025 年底結束。2026 年起，家貓沒有植入晶片並登記，可處新台幣 3,000 到 15,000 元罰鍰。已絕育的貓登記費通常比較便宜。'},
+ {type:'find',label:'找碴題',monster:'疏忽霧精',myth:'有給飯吃就算有在養了',
+  q:'依照動物保護法，飼主應該提供哪些基本照顧？選好後按「射箭」。',
+  items:[{t:'適當的食物',e:'🍽️',pick:1},{t:'充足的飲水',e:'💧',pick:1},{t:'足夠的活動空間',e:'🏠',pick:1},{t:'生病時就醫',e:'🩺',pick:1},{t:'安全衛生的環境',e:'🧼',pick:1},{t:'每週洗澡',e:'🛁',pick:0},{t:'穿可愛衣服',e:'👕',pick:0},{t:'只吃名牌飼料',e:'🏷️',pick:0}],
+  explain:'動物保護法要求飼主提供適當的食物、充足的飲水和活動空間，注意安全與衛生，生病時給予醫療。洗澡、穿衣服、飼料品牌都不是法定義務，多數貓也不需要經常洗澡。'},
+ {type:'talk',label:'情境對話',monster:'棄養霧精',myth:'不想養了，放公園牠自己會活',
+  chat:[{who:'鄰居',text:'我家貓最近一直亂叫，我不想養了，想放到公園，貓本來就是野生動物，自己會活吧？'}],
+  q:'你會怎麼回？',
+  options:['公園有很多人餵，應該沒問題','這是棄養，違法會被罰，家貓在外面也很難生存；我陪你問問協會怎麼辦','放到山上比較好','先關在陽台就好'],answer:1,
+  explain:'把貓丟到外面就是棄養，依動物保護法會被處罰。家貓在外面容易遇到車禍、傳染病和打架。亂叫可能是發情或生病，先絕育或就醫，常常問題就解決了。'},
+ {type:'choice',label:'選擇題',monster:'疫苗霧精',myth:'所有貓每年都一定要打狂犬病疫苗',
+  q:'完全養在室內、不會出門的貓，狂犬病疫苗的規定是？',
+  options:['每年都一定要打','2025 年 7 月起，室內貓不強制施打；會出門或放養的貓仍要打','所有貓都不用打','只有幼貓要打'],answer:1,
+  explain:'2025 年 7 月起，完全室內飼養的貓不強制施打狂犬病疫苗。會自由出入、放養的貓仍須施打。其他核心疫苗（例如三合一）是否施打，可以和獸醫討論。'},
+ {type:'choice',label:'選擇題',monster:'失聯霧精',myth:'晶片登記好就一輩子不用管',
+  q:'搬家換了地址和電話，貓的晶片登記要怎麼處理？',
+  options:['不用處理','到寵物登記系統或登記站更新飼主資料','重新植入一顆晶片','等貓走失再說'],answer:1,
+  explain:'晶片裡只有一組號碼，對應的是登記系統裡的飼主資料。資料沒更新，貓走失被掃到晶片也聯絡不上你。轉讓給別人時，也要辦理飼主變更。'},
+ {type:'choice',label:'選擇題',monster:'撿到就養霧精',myth:'撿到的貓就是我的了',
+  q:'在路上撿到一隻親人、看起來像家貓的貓，第一步該做什麼？',
+  options:['直接帶回家養','帶到動物醫院或登記站掃描晶片，看有沒有飼主','放回原地不管','在網路上賣掉'],answer:1,
+  explain:'親人的貓很可能是走失的家貓。先掃晶片找飼主，也可以在附近張貼招領。確認沒有飼主後，再考慮認養或找協會協助。'},
+ {type:'choice',label:'選擇題',monster:'不結紮霧精',myth:'讓貓生一胎比較健康',
+  q:'關於幫貓絕育，下列哪個說法正確？',
+  options:['讓母貓生過一胎再絕育比較健康','絕育能降低乳腺腫瘤、子宮蓄膿等風險，也能減少發情嚎叫和噴尿','絕育會讓貓變笨','公貓不需要絕育'],answer:1,
+  explain:'「生一胎比較健康」是迷思。母貓越早絕育，乳腺腫瘤風險越低；公貓絕育能減少噴尿標記和打架。絕育也能減少意外出生的小貓。很多縣市都有絕育補助。'},
+ {type:'choice',label:'選擇題',monster:'亂跑霧精',myth:'帶貓去公共場所，抱著就好',
+  q:'帶貓去公共場所，法律上有什麼規定？',
+  options:['沒有任何規定','要有 7 歲以上的人陪同；最好放在外出籠裡','小孩自己帶就可以','可以讓貓自己走'],answer:1,
+  explain:'動物保護法規定，寵物出入公共場所要由 7 歲以上的人陪同。貓在外面容易受驚掙脫，放在堅固的外出籠裡最安全。'}
+ ],
+ boss:{monster:'放養幽靈',myth:'貓就該自由出門，晚上自己會回來',phases:[
+ {q:'讓家貓自由進出家門，最大的問題是什麼？',
+  options:['貓會比較開心，沒有問題','容易遇到車禍、傳染病、打架受傷、中毒和走失','只是會比較髒'],answer:1,
+  explain:'放養的貓平均壽命明顯比室內貓短。完全室內飼養，再用遊戲和跳台讓牠有足夠活動量，是最安全的方式。'},
+ {q:'你看到有人在虐待貓，應該怎麼做？',
+  options:['不關我的事','在安全的前提下拍照錄影蒐證，撥打 1959 動物保護專線或報警','自己衝上去打架'],answer:1,
+  explain:'1959 是全國動物保護專線。先確保自己安全，記下時間地點並蒐證，再通報主管機關或警察處理。'},
+ {q:'家裡的室內貓跑出門走失了，第一時間該怎麼做？',
+  options:['等牠自己回來','馬上在住家附近仔細找，並通報收容所、確認晶片資料，張貼協尋','三天後再開始找'],answer:1,
+  explain:'室內貓走失後，常常就躲在住家附近的車底、樓梯間或草叢，越早找越容易找回。同時聯絡收容所和動物醫院，並確認晶片上的聯絡資料是正確的。'}
+ ]}},
+
+{id:'safe',name:'安全堡壘',topic:'居家安全',color:'#c9583d',sky:['#f3d9cf','#ecc6b6','#cf9f8a','#bf8f7a'],
+ stages:[
+ {type:'find',label:'找碴題',monster:'危機霧精',myth:'家裡這些東西都很安全啦',
+  q:'點出客廳裡所有對貓危險的東西，選好後按「射箭」。',
+  items:[{t:'精油擴香',e:'🧴',pick:1},{t:'毛線球',e:'🧶',pick:1},{t:'衣櫃裡的樟腦丸',e:'⚪',pick:1},{t:'沒裝防護的窗戶',e:'🪟',pick:1},{t:'開著的漂白水',e:'🧪',pick:1},{t:'貓抓板',e:'🪵',pick:0},{t:'紙箱',e:'📦',pick:0},{t:'貓草',e:'🌱',pick:0},{t:'循環飲水機',e:'⛲',pick:0}],
+  explain:'危險的有五樣：精油（茶樹、柑橘等精油貓的肝臟難以代謝）、毛線（吞下可能卡在腸子）、樟腦丸（傷害紅血球和肝臟，貓愛鑽衣櫃要特別小心）、沒裝防護的窗戶（墜樓，一般紗窗擋不住貓）、漂白水（舔到或吸入會灼傷）。貓抓板、紙箱、貓草、飲水機都是好東西。'},
+ {type:'choice',label:'選擇題',monster:'積水霧精',myth:'小貓不會靠近水',
+  q:'家裡有幼貓，浴室要注意什麼？',
+  options:['不用注意','浴缸不要留水、馬桶蓋要蓋好，避免幼貓掉進去溺水','把幼貓關在浴室最安全','在浴缸放水讓牠玩'],answer:1,
+  explain:'幼貓好奇心強、力氣小，掉進積水的浴缸或水桶可能爬不出來。洗衣精、清潔劑也要收好。'},
+ {type:'choice',label:'選擇題',monster:'滾筒霧精',myth:'洗衣機關門前不用檢查',
+  q:'按下洗衣機或烘衣機的開關前，應該先做什麼？',
+  options:['直接啟動','先確認裡面沒有貓','先放貓草進去','沒差，貓不會鑽進去'],answer:1,
+  explain:'貓喜歡溫暖、狹小的地方，烘衣機剛用完特別吸引牠們。養成習慣，關門前先看一眼，必要時平常就把門關上。'},
+ {type:'timed',label:'急救計時題',seconds:15,monster:'拉線霧精',myth:'線卡在嘴巴，拉出來就好',
+  q:'貓嘴邊露出一截線，另一端好像吞進去了。你會？',
+  options:['慢慢把線拉出來','剪掉露出來的部分','不要拉，立即就醫'],answer:2,
+  explain:'線的另一端可能纏在舌根或已經進到腸子裡，硬拉會割傷腸道，非常危險。保持原狀、立刻就醫。如果線上有縫衣針，更要馬上處理。'},
+ {type:'choice',label:'選擇題',monster:'電線霧精',myth:'貓不會去咬電線',
+  q:'家裡的電線、充電線，怎麼處理比較安全？',
+  options:['不用處理','收納起來或加保護套，尤其是家裡有愛咬東西的幼貓','塗上辣椒醬就好','把電線都放地上讓牠習慣'],answer:1,
+  explain:'貓咬電線可能觸電，造成口腔灼傷，甚至肺水腫。電線用保護套或收線盒包起來，不用的充電線拔掉收好。'},
+ {type:'choice',label:'選擇題',monster:'放任霧精',myth:'新貓到家，讓牠整間屋子自由跑',
+  q:'新貓剛到家，最好的安排是？',
+  options:['一到家就放出來逛整間房子','先待在一個安靜的小房間，裡面有砂盆、水、食物和躲藏處，熟悉後再慢慢擴大範圍','關在外出籠裡一週','讓家裡所有人圍著牠看'],answer:1,
+  explain:'小空間讓貓比較有安全感，也比較容易找到砂盆。等牠會出來吃飯、探索、主動找人，再一次開放一個區域。'},
+ {type:'talk',label:'情境對話',monster:'溜門霧精',myth:'貓自己出門逛逛會回來',
+  chat:[{who:'朋友',text:'我家貓很聰明，每次我開門牠都會衝去樓梯間逛一圈，再自己跑回來，很可愛吧？'}],
+  q:'你會怎麼回？',
+  options:['好聰明！','很危險，牠可能嚇到跑丟或跑到馬路上；可以在門口加裝防逃門','讓牠多出去練習','帶牠去更遠的地方逛'],answer:1,
+  explain:'門口是貓走失最常見的地方。加裝防逃門或柵欄，進出門前先確認貓的位置，也可以教家人養成隨手關門的習慣。'},
+ {type:'find',label:'找碴題',monster:'花草霧精',myth:'只要不是百合，其他花草都很安全',
+  q:'下面哪些植物對貓有毒？選好後按「射箭」。',
+  items:[{t:'鈴蘭',e:'🔔',pick:1},{t:'夾竹桃',e:'🌸',pick:1},{t:'蘇鐵（鐵樹）',e:'🌴',pick:1},{t:'杜鵑花',e:'🌺',pick:1},{t:'鬱金香球根',e:'🌷',pick:1},{t:'貓草',e:'🌱',pick:0},{t:'吊蘭',e:'🪴',pick:0},{t:'波士頓腎蕨',e:'🌿',pick:0},{t:'羅勒',e:'🍃',pick:0}],
+  explain:'鈴蘭和夾竹桃會影響心臟，造成心律不整；蘇鐵的種子可能造成肝衰竭；杜鵑會引起嘔吐和心律問題；鬱金香的球根毒性最強。夾竹桃和杜鵑在台灣的庭院、路邊很常見。貓草、吊蘭、波士頓腎蕨、羅勒相對安全。買植物前，可以先查美國防止虐待動物協會（ASPCA）的有毒植物清單。'},
+ {type:'choice',label:'選擇題',monster:'抱抱霧精',myth:'帶貓出門抱在手上就好',
+  q:'帶貓去看醫生，最安全的方式是？',
+  options:['抱在手上','放在堅固、關得好的外出籠裡','放在環保袋裡','讓牠坐在機車踏板上'],answer:1,
+  explain:'就算再乖的貓，在外面被喇叭聲或狗嚇到，也可能瞬間掙脫跑走。外出籠要能確實關好，上下都能打開的款式，看診時也比較方便。'}
+ ],
+ boss:{monster:'毒草花妖',myth:'花草都是天然的，對貓不會有害',phases:[
+ {q:'貓咬了幾口餐桌上的新鮮金針花，看起來沒事。你會？',
+  options:['金針花是食物，沒關係','立即就醫，金針花和百合一樣可能造成急性腎衰竭','觀察一週再說'],answer:1,
+  explain:'金針花（萱草）和百合一樣，少量就可能造成貓的急性腎衰竭，花、葉都有毒。很多人知道百合危險，卻不知道金針花也是。接觸後越早就醫越有機會救回，看起來沒事也不能等。'},
+ {q:'可以用狗狗的除蚤滴劑幫貓除蚤嗎？',
+  options:['可以，用少一點就好','絕對不行，部分狗用除蚤藥對貓有劇毒','可以，狗貓都一樣'],answer:1,
+  explain:'有些狗用除蚤藥含有除蟲菊精類成分（例如 permethrin），貓接觸到可能抽搐甚至死亡。一定要用標示貓專用的產品，並依體重使用。'},
+ {q:'我家貓從來沒有跳過窗，裝防護網又醜又麻煩，開窗不加防護也沒關係？',
+  options:['對，牠很乖','不行，貓可能追蟲鳥或受到驚嚇時突然跳出去','開一半就沒問題'],answer:1,
+  explain:'貓墜樓常常是一瞬間的事，例如追飛蟲、被聲音嚇到，很多墜樓的貓都是「從來沒跳過」的貓。一般紗窗也可能被推開或抓破。不想裝鐵窗，也有透明防護網、免鑽孔的伸縮式防護網、窗戶限位器可以選，租屋也能裝。'}
+ ]}},
+
+{id:'food',name:'美食市集',topic:'營養與飲食',color:'#d07a2e',sky:['#f9e4c8','#f1d2a8','#dcae76','#cd9e66'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'吃素霧精',myth:'貓什麼都吃，跟人一樣就好',
+  q:'貓是哪一種食性的動物？',
+  options:['雜食，跟人一樣','肉食動物，需要大量動物性蛋白質','草食動物','什麼都可以'],answer:1,
+  explain:'貓是「真正的肉食動物」，需要從動物組織取得牛磺酸、某些維生素和胺基酸。人吃的飯菜通常太鹹、太油，不適合貓。'},
+ {type:'choice',label:'選擇題',monster:'大人飯霧精',myth:'小貓吃成貓飼料就可以',
+  q:'三個月大的幼貓應該怎麼吃？',
+  options:['跟成貓吃一樣的量，一天一餐','吃幼貓配方，少量多餐','只喝奶','吃人吃的稀飯'],answer:1,
+  explain:'幼貓長得很快，需要比較多的熱量、蛋白質和礦物質。幼貓配方營養密度比較高，胃又小，所以要少量多餐。'},
+ {type:'find',label:'找碴題',monster:'亂餵霧精',myth:'人能吃的，貓也能吃一點',
+  q:'下面哪些東西不能給貓吃？選好後按「射箭」。',
+  items:[{t:'加了蔥的蛋花湯',e:'🍲',pick:1},{t:'蒜味肉鬆',e:'🧄',pick:1},{t:'咖啡',e:'☕',pick:1},{t:'生麵團',e:'🥟',pick:1},{t:'煮過的雞骨頭',e:'🍗',pick:1},{t:'無調味水煮雞胸',e:'🍖',pick:0},{t:'主食罐頭',e:'🥫',pick:0},{t:'貓用凍乾',e:'🧊',pick:0},{t:'乾淨的飲水',e:'💧',pick:0}],
+  explain:'蔥、韭菜、洋蔥、大蒜同一家族，連粉末和煮過的湯汁都會破壞紅血球，肉鬆、高湯、調味料裡常常有；咖啡、茶的咖啡因會影響心臟和神經；生麵團會在胃裡發酵膨脹並產生酒精；煮過的骨頭容易碎裂，刺傷腸胃。無調味的水煮雞胸可以當點心，但不能取代主食。'},
+ {type:'choice',label:'選擇題',monster:'急換霧精',myth:'換飼料直接換就好',
+  q:'想幫貓換一款新飼料，正確做法是？',
+  options:['今天開始直接換','大約 7 到 10 天，逐步提高新飼料的比例','先餓兩天再換','新舊飼料分兩個碗放'],answer:1,
+  explain:'突然換糧容易造成嘔吐、拉肚子，也可能讓貓拒吃。從混入少量新飼料開始，每隔幾天增加比例。貓如果完全不吃，不要硬撐，要找回原本的食物並請教獸醫。'},
+ {type:'read',label:'讀貓題',monster:'胖胖霧精',myth:'胖胖的貓才可愛、才健康',
+  scene:'從上往下看，貓沒有明顯的腰身；用手摸身體側邊，要用力壓才摸得到肋骨；肚子圓滾滾。',
+  q:'這隻貓的體態最可能是？',
+  options:['剛剛好','偏瘦','偏胖，該和獸醫討論飲食','看不出來'],answer:2,
+  explain:'理想體態是從上面看得到腰身，輕摸就能感覺到肋骨。肥胖會增加糖尿病、關節炎和泌尿道疾病的風險。減重要在獸醫指導下慢慢來。'},
+ {type:'choice',label:'選擇題',monster:'副食霧精',myth:'貓愛吃的罐頭都可以當正餐',
+  q:'罐頭包裝上寫「副食罐」或「點心」，代表什麼？',
+  options:['營養完整，可以每天當主食','營養不完整，不能長期當主食','跟主食罐一模一樣','比較高級'],answer:1,
+  explain:'副食罐、點心罐常常只有肉和水，缺少貓需要的維生素和礦物質，長期當主食可能營養不良。買罐頭時，認明標示「主食」或「營養完整」的產品。'},
+ {type:'talk',label:'情境對話',monster:'不喝水霧精',myth:'貓不太喝水是正常的，沒差',
+  chat:[{who:'朋友',text:'我家貓只吃乾乾，幾乎沒看過牠喝水，貓本來就不太喝水，應該沒差吧？'}],
+  q:'你會怎麼回？',
+  options:['對啊，沒差','貓天生喝水少，水分不夠和泌尿道問題有關；可以加濕食、多放幾個水碗或用飲水機','給牠喝牛奶補水','把乾乾泡在鹽水裡'],answer:1,
+  explain:'貓的祖先從獵物身上取得大部分水分，所以口渴感比較不敏感。只吃乾糧的貓更要注意水分。主食罐、多處放水、飲水機都能幫貓多喝一點。'},
+ {type:'timed',label:'限時挑戰',seconds:20,monster:'零食霧精',myth:'貓愛吃零食，多給一點沒關係',
+  q:'零食和點心最多大約佔貓每天總熱量的多少？',
+  options:['約 10%','約 30%','一半','沒有限制'],answer:0,
+  explain:'一般建議零食不超過每天總熱量的 10%，其他要來自營養完整的主食。零食給太多，貓容易變胖，也可能不吃正餐。'}
+ ],
+ boss:{monster:'牛奶貓怪',myth:'貓咪最愛喝牛奶，喝牛奶最營養',phases:[
+ {q:'可以給成貓喝一般的鮮奶嗎？',
+  options:['可以，每天一碗','不建議，多數成貓乳糖不耐，喝了容易拉肚子','可以，越多越好'],answer:1,
+  explain:'小貓斷奶後，分解乳糖的能力會下降，很多成貓喝鮮奶會脹氣、拉肚子。貓不需要喝牛奶，乾淨的水才是最好的飲料。'},
+ {q:'胖貓需要減重，下面哪個做法正確？',
+  options:['直接減半或停餵幾天','在獸醫指導下，慢慢減少熱量','只給水不給飯'],answer:1,
+  explain:'貓突然大幅減少進食，身體會快速分解脂肪，可能引發危險的脂肪肝，胖貓風險特別高。減重一定要慢慢來，請獸醫計算每天該吃多少。'},
+ {q:'飼主吃素，可以讓貓跟著吃全素嗎？',
+  options:['可以，比較健康','不行，貓需要動物性營養，例如牛磺酸','加點蔬菜就好'],answer:1,
+  explain:'貓無法自行合成足夠的牛磺酸，缺乏時可能造成心臟擴張型心肌病和視網膜退化，甚至失明。貓的飲食一定要以動物性蛋白為主。'}
+ ]}},
+
+{id:'heal',name:'療癒之森',topic:'健康與急症',color:'#4f8a55',sky:['#b8d6a8','#9cc28c','#7aa56c','#6c9a5f'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'挨餓霧精',myth:'貓兩三天不吃沒關係，餓了自然會吃',
+  q:'一隻成貓突然完全不吃東西，最晚什麼時候該帶去看醫生？',
+  options:['等三天看看再說','超過一天仍完全不吃，就要就醫','等牠明顯變瘦再去','換一罐比較貴的罐頭就好'],answer:1,
+  explain:'貓長時間不進食，身體會大量分解脂肪，容易引發脂肪肝。超過一天完全不吃就該就醫，不要等。'},
+ {type:'find',label:'找碴題',monster:'忽視霧精',myth:'貓的小毛病，觀察就好',
+  q:'下面哪些狀況應該盡快帶去看醫生？選好後按「射箭」。',
+  items:[{t:'牙齦變得很白',e:'👄',pick:1},{t:'眼白或耳朵發黃',e:'👁️',pick:1},{t:'尿裡有血',e:'🩸',pick:1},{t:'吃很多卻一直變瘦',e:'⚖️',pick:1},{t:'突然抽搐',e:'⚡',pick:1},{t:'一天睡十幾個小時',e:'😴',pick:0},{t:'換季時掉毛變多',e:'🐈',pick:0},{t:'偶爾打一個噴嚏',e:'🤧',pick:0},{t:'在窗邊曬太陽發呆',e:'☀️',pick:0}],
+  explain:'牙齦發白可能是貧血或休克；發黃可能是肝臟問題；血尿常和泌尿道疾病有關；吃多變瘦是甲狀腺亢進或糖尿病的典型表現；抽搐要立即就醫。貓本來一天就睡 12 到 16 小時，換季掉毛和偶爾打噴嚏都很常見。'},
+ {type:'timed',label:'急救計時題',seconds:15,monster:'喘喘霧精',myth:'貓張嘴喘氣，跟狗一樣是在散熱',
+  q:'貓沒有剛劇烈運動，卻趴著張口呼吸、肚子起伏很大。你會？',
+  options:['先觀察一個晚上','預約這週的門診','立即送急診'],answer:2,
+  explain:'貓平常幾乎只用鼻子呼吸。沒有運動卻張口呼吸，可能是心臟或肺部出問題，例如胸腔積液或心肌病，屬於緊急狀況。'},
+ {type:'read',label:'讀貓題',monster:'忍痛霧精',myth:'貓沒叫就代表不痛',
+  scene:'貓縮成一團坐著不動，眼睛瞇起來，耳朵往兩側攤開，鬍鬚繃直往前，頭垂得比肩膀低。',
+  q:'牠現在最可能是？',
+  options:['很放鬆，在打瞌睡','身體正在疼痛，需要就醫檢查','想要玩','肚子餓了'],answer:1,
+  explain:'貓很會忍痛，很少叫。瞇眼、耳朵往外、鬍鬚繃緊、低頭縮成一團，是獸醫用來判斷「貓咪疼痛臉」的特徵。看到這種表情，要找原因並就醫。'},
+ {type:'talk',label:'情境對話',monster:'偏方霧精',myth:'人吃的感冒藥，給貓吃一點點沒差',
+  chat:[{who:'朋友',text:'我家貓一直打噴嚏流鼻水，我想說磨半顆我的感冒藥給牠吃，你覺得呢？'}],
+  q:'你會怎麼回？',
+  options:['半顆太多了，四分之一顆就好','人的感冒藥對貓可能致命，先別給，帶去看醫生','拌在罐頭裡牠比較願意吃','等症狀更嚴重再給'],answer:1,
+  explain:'很多感冒藥含有乙醯胺酚（普拿疼的成分），貓的肝臟無法代謝，少量就可能中毒。貓打噴嚏流鼻水常見原因是上呼吸道感染，要由獸醫診斷用藥。'},
+ {type:'choice',label:'選擇題',monster:'毛球霧精',myth:'貓一週吐好幾次很正常，都是毛球',
+  q:'貓咪一週吐了三、四次，你的判斷是？',
+  options:['正常，貓本來就會吐','換個飼料就好','次數偏多，應該就醫找原因','少餵一點就不會吐了'],answer:2,
+  explain:'偶爾吐毛球可能發生，但頻繁嘔吐不是正常現象，可能和腸胃疾病、腎病、甲狀腺問題或異物有關。記下次數和嘔吐物的樣子，帶給獸醫參考。'},
+ {type:'choice',label:'選擇題',monster:'多喝霧精',myth:'貓喝很多水是好事，代表很健康',
+  q:'家裡的老貓最近喝水量明顯變多，砂盆裡的尿塊也變大變多，該注意什麼？',
+  options:['天氣熱而已，不用管','可能是腎臟病、糖尿病或甲狀腺問題，應就醫驗血','飼料太鹹，換飼料就好','代表牠變愛乾淨了'],answer:1,
+  explain:'「多喝多尿」是許多疾病的早期訊號，老貓尤其常見慢性腎病。早期發現能用飲食和治療延緩惡化，所以要抽血、驗尿。'},
+ {type:'choice',label:'選擇題',monster:'拖延霧精',myth:'貓看起來好好的，不用定期健檢',
+  q:'10 歲以上的老貓，一般建議多久做一次健康檢查？',
+  options:['不舒服再去就好','每三年一次','大約每半年一次','每五年一次'],answer:2,
+  explain:'貓很會隱藏不舒服，等看得出來時病情往往已經進展。老貓建議約每半年健檢一次，成貓至少每年一次。'}
+ ],
+ boss:{monster:'憋尿石魔',stone:1,myth:'公貓尿不出來，忍一忍就好了',phases:[
+ {q:'公貓一直進出砂盆，蹲很久只滴出幾滴尿，還一直舔下體。你會？',
+  options:['先觀察一兩天','改天預約門診','立即送急診'],answer:2,
+  explain:'這可能是尿道阻塞。尿排不出去，體內毒素和鉀離子會快速累積，可能在一兩天內危及生命。公貓尿道細，特別容易發生。'},
+ {q:'貓突然慘叫，兩隻後腳拖著走、無法站立，摸起來比前腳冰冷。你會？',
+  options:['可能是扭到，休息一晚看看','立即送急診','幫牠按摩後腳促進血液循環'],answer:1,
+  explain:'這是動脈血栓的典型表現，血塊卡住後腳的血管，非常疼痛，常和心臟病有關。黃金處理時間很短，要立刻送急診，不要自己按摩或拖延。'},
+ {q:'兩個月大的幼貓從早上開始拉水便，下午變得沒精神、不太吃。你會？',
+  options:['幼貓拉肚子很常見，明天再看','餵牠喝點牛奶補充營養','當天就醫，不要等'],answer:2,
+  explain:'幼貓體型小，拉肚子加上不吃，很快就會脫水和低血糖，狀況可能在幾小時內惡化。當天就要就醫。另外，牛奶裡的乳糖常讓貓拉得更嚴重。'}
+ ]}},
+
+{id:'mind',name:'心語山谷',topic:'行為與溝通',color:'#8a6bb0',sky:['#e6dcf0','#d7c8e8','#b9a3d1','#a993c4'],
+ stages:[
+ {type:'read',label:'讀貓題',monster:'誤讀霧精',myth:'貓尾巴在搖，就代表牠很開心',
+  scene:'貓咪蹲低身體，耳朵往旁邊、往後壓平，瞳孔放大成圓形，尾巴快速左右甩動。',
+  q:'牠現在的心情最可能是？',
+  options:['很開心，想被摸','害怕或煩躁，需要空間','肚子餓了','想睡覺'],answer:1,
+  explain:'貓尾巴快速甩動通常代表煩躁或緊張，和狗搖尾巴的意思不同。耳朵壓平加上瞳孔放大是害怕或防衛的訊號。這時候停止互動、讓牠躲起來，比硬要安撫更好。'},
+ {type:'read',label:'讀貓題',monster:'冷漠霧精',myth:'貓很冷淡，不會跟人打招呼',
+  scene:'貓看到你回家，尾巴高高豎起，尾巴尖端微微彎曲，一邊小跑步過來，一邊用頭蹭你的腳。',
+  q:'牠在表達什麼？',
+  options:['生氣，要攻擊','友善地打招呼，很開心見到你','肚子痛','想趕你走'],answer:1,
+  explain:'尾巴豎直是貓表達友善、打招呼的訊號。用頭和臉頰蹭你，是在留下自己的氣味，代表把你當成自己人。'},
+ {type:'choice',label:'選擇題',monster:'瞪眼霧精',myth:'貓盯著你慢慢眨眼，是想睡了',
+  q:'貓看著你，慢慢地眨眼睛，代表什麼？',
+  options:['眼睛不舒服','表示放鬆和信任，你也可以慢慢眨眼回應','想要挑釁','肚子餓'],answer:1,
+  explain:'慢眨眼常被稱為「貓咪的飛吻」，是放鬆和信任的表現。對貓直直瞪視反而可能讓牠感到威脅，慢慢眨眼回應，是和貓建立關係的好方法。'},
+ {type:'choice',label:'選擇題',monster:'摸肚霧精',myth:'貓翻肚子，就是要你摸肚子',
+  q:'貓在你面前翻身露出肚子，最適合怎麼做？',
+  options:['馬上用力摸肚子','知道牠很信任你，可以輕摸頭和臉頰，不一定要摸肚子','把牠翻回來','大聲叫牠的名字'],answer:1,
+  explain:'肚子是貓最脆弱的地方，願意露出來代表信任。但很多貓不喜歡被摸肚子，摸了可能被抱住咬。先從牠喜歡的頭、下巴、臉頰開始。'},
+ {type:'choice',label:'選擇題',monster:'沙發霧精',myth:'貓抓沙發就是故意搗蛋',
+  q:'貓一直抓沙發，最好的處理方式是？',
+  options:['打牠的手','在牠常抓的位置旁邊放直立和平放的抓板，抓板時給獎勵','把貓關起來','什麼都不做'],answer:1,
+  explain:'抓東西是貓的天性，用來磨爪、伸展和留下氣味。與其禁止，不如提供更好的選擇。抓板要夠穩、夠高，放在沙發旁邊或貓睡醒會經過的地方。'},
+ {type:'talk',label:'情境對話',monster:'咬手霧精',myth:'用手逗小貓最有互動感',
+  chat:[{who:'朋友',text:'我都用手跟小貓玩，牠現在很愛撲我的手、咬我的腳，該怎麼辦？'}],
+  q:'你會怎麼建議？',
+  options:['咬回去讓牠知道痛','改用逗貓棒和玩具玩，被咬時停止互動、離開一下','打牠的頭','繼續用手玩，長大就好了'],answer:1,
+  explain:'用手逗貓，貓會把手當成獵物。改用逗貓棒讓手和玩具分開；被咬時不要大叫或打，安靜地停止互動，讓牠知道咬人遊戲就結束了。'},
+ {type:'choice',label:'選擇題',monster:'夜衝霧精',myth:'貓半夜暴衝是因為有鬼',
+  q:'貓每天半夜在家裡暴衝、吵醒人，可以怎麼改善？',
+  options:['把貓關在陽台','睡前用逗貓棒陪牠玩到累，玩完再餵一餐','罵牠','餵牠吃安眠藥'],answer:1,
+  explain:'貓天生在清晨和黃昏比較活躍。白天太無聊，精力就會在半夜爆發。睡前模擬「狩獵、吃飯、理毛、睡覺」的流程，能幫牠和你一起睡個好覺。'},
+ {type:'find',label:'找碴題',monster:'無聊霧精',myth:'貓只要有吃有睡就夠了',
+  q:'哪些是讓室內貓生活更豐富的好方法？選好後按「射箭」。',
+  items:[{t:'每天用逗貓棒玩',e:'🪶',pick:1},{t:'跳台和高處',e:'🗼',pick:1},{t:'益智餵食玩具',e:'🧩',pick:1},{t:'有防護的窗邊座位',e:'🪟',pick:1},{t:'可以躲的紙箱',e:'📦',pick:1},{t:'只玩雷射筆、永遠抓不到',e:'🔴',pick:0},{t:'長時間關在籠子裡',e:'🔒',pick:0},{t:'一直抱著不放',e:'🤗',pick:0}],
+  explain:'遊戲、高處、益智玩具、看窗外和躲藏處，都能滿足貓的天性。雷射筆如果每次都抓不到，貓容易挫折，結束時最好讓牠抓到一個實體玩具。強迫抱抱和長時間關籠都會讓貓壓力變大。'}
+ ],
+ boss:{monster:'打罵巨人',myth:'貓做錯事，打一下罵一下就會學乖',phases:[
+ {q:'貓開始在床上或砂盆外尿尿，第一步該做什麼？',
+  options:['抓牠去聞尿然後處罰','先帶去就醫，排除泌尿道疾病，再檢查砂盆的清潔、位置和數量','把床收起來就好'],answer:1,
+  explain:'亂尿常常是身體出問題，例如膀胱炎、結石，也可能是砂盆太髒或壓力大。處罰只會讓貓更緊張、更躲起來尿。'},
+ {q:'貓做了你不喜歡的事，用打、用水噴處罰，會怎樣？',
+  options:['會學乖','貓會害怕你、壓力變大，問題常常更嚴重','沒有影響'],answer:1,
+  explain:'貓不會把處罰和「做錯事」連在一起，只會記得「人很可怕」。用環境調整、提供替代選擇、做對時給獎勵，才是有效的方法。'},
+ {q:'貓會抓家具，可以帶去做「去爪手術」嗎？',
+  options:['可以，一勞永逸','不應該，去爪是截斷腳趾骨，會造成疼痛和行為問題','只去前腳就沒關係'],answer:1,
+  explain:'去爪手術不是剪指甲，而是切掉腳趾的最後一節骨頭，可能造成長期疼痛、走路異常、亂尿和咬人。定期剪指甲加上好用的抓板，就能解決。'}
+ ]}},
+
+{id:'tribe',name:'貓群部落',topic:'多貓家庭',color:'#3f8a8c',sky:['#d3ebe8','#bfe0dc','#94c4be','#84b6b0'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'擠擠霧精',myth:'兩隻貓共用一個砂盆就夠了',
+  q:'家裡有兩隻貓，一般建議準備幾個砂盆？',
+  options:['1 個','2 個','3 個','不用砂盆'],answer:2,
+  explain:'常見的建議是「貓的數量加一」。砂盆不夠，強勢的貓可能守著砂盆，膽小的貓就會憋尿或在別的地方上廁所。砂盆也要放在不同位置。'},
+ {type:'choice',label:'選擇題',monster:'見面霧精',myth:'新貓和舊貓見面，越早越好',
+  q:'新貓帶回家，和原本的貓引見的第一步是？',
+  options:['直接放在一起','先分開在不同房間，交換用過的毛巾或睡墊，讓牠們熟悉彼此的氣味','讓牠們隔著籠子互看一整天','抱著新貓去給舊貓聞'],answer:1,
+  explain:'貓靠氣味認識彼此。先交換氣味，再讓牠們隔著門吃飯，接著隔著柵欄見面，最後才在有人看著的情況下短時間相處。整個過程可能要幾天到幾週。'},
+ {type:'read',label:'讀貓題',monster:'誤判霧精',myth:'兩隻貓追來追去就是在打架',
+  scene:'兩隻貓輪流追來追去，偶爾抱在一起翻滾，沒有哈氣或尖叫，玩一陣子後各自去休息，之後又一起睡覺。',
+  q:'牠們在做什麼？',
+  options:['在打架，要馬上分開','在玩耍，關係不錯','在爭地盤','其中一隻生病了'],answer:1,
+  explain:'玩耍時會「輪流」當追的一方，沒有哈氣、尖叫或毛炸開，結束後還能放鬆相處。真正打架通常有低吼、尖叫、毛炸開，其中一隻會一直被追或躲起來。'},
+ {type:'choice',label:'選擇題',monster:'霸占霧精',myth:'所有貓的碗放在一起比較方便',
+  q:'多貓家庭的食物、水、砂盆、睡覺的地方要怎麼安排？',
+  options:['全部放在同一個角落','分散在家裡不同的地方，每隻貓都有選擇','只放一份讓牠們搶','放在籠子裡'],answer:1,
+  explain:'資源分散，強勢的貓就不容易全部占住，膽小的貓也能安心吃飯、上廁所。高處的休息點也很重要，能讓貓用垂直空間分開彼此。'},
+ {type:'talk',label:'情境對話',monster:'放棄霧精',myth:'貓一哈氣就代表合不來',
+  chat:[{who:'朋友',text:'新貓來第三天，原住貓一直對牠哈氣，是不是合不來？我是不是該把新貓退回去？'}],
+  q:'你會怎麼回？',
+  options:['合不來了，退回去吧','哈氣是正常的溝通方式，放慢引見的步調，給牠們更多時間','讓牠們關在同一間房間吵一吵就好','處罰會哈氣的那隻'],answer:1,
+  explain:'哈氣是在說「我還不認識你，先保持距離」，不代表永遠合不來。退回到上一個引見階段，慢慢來。很多貓花幾週到幾個月才變成朋友。'},
+ {type:'choice',label:'選擇題',monster:'配對霧精',myth:'找一隻小貓陪老貓，老貓會變年輕',
+  q:'家裡有一隻 14 歲、喜歡安靜的老貓，想再認養一隻，怎麼選比較好？',
+  options:['精力旺盛的幼貓最好','個性穩定、比較安靜的成貓可能更適合','一次領三隻幼貓','都不用考慮個性'],answer:1,
+  explain:'幼貓精力充沛，常一直纏著人玩，安靜的老貓可能受不了而壓力變大。挑選第二隻貓時，個性和精力相近比年齡更重要。'},
+ {type:'timed',label:'急救計時題',seconds:15,monster:'徒手霧精',myth:'貓打架，用手抓開就好',
+  q:'兩隻貓突然真的打起來，毛炸開、尖叫。你會？',
+  options:['用手把牠們抓開','拍手製造聲音，或拿抱枕、紙板隔開，再分開到不同房間','在旁邊等牠們打完','大力抱起其中一隻'],answer:1,
+  explain:'貓在打架時很激動，徒手介入很容易被嚴重抓咬。用聲音打斷，或拿東西隔開，再讓牠們分開冷靜。之後檢查有沒有傷口，咬傷容易化膿。'},
+ {type:'choice',label:'選擇題',monster:'沒發現霧精',myth:'貓躲起來只是個性比較害羞',
+  q:'家裡來了新貓後，原本的貓常常躲起來、不太吃飯，該怎麼辦？',
+  options:['不用管','留意牠是否被欺負，給牠獨立安全的空間，持續吃得很少就要就醫','把牠關起來','強迫牠和新貓相處'],answer:1,
+  explain:'被欺負的貓常常默默躲起來，不容易被發現。確保牠有不會被打擾的吃飯和休息區。如果一天以上幾乎不吃，就要帶去看醫生。'}
+ ],
+ boss:{monster:'硬湊一起獸',myth:'新貓帶回家直接放一起，打一打就熟了',phases:[
+ {q:'新貓帶回家，直接和原本的貓關在同一個空間，會怎樣？',
+  options:['很快就會變好朋友','可能造成激烈打架和長期壓力，應該先隔離再慢慢引見','完全沒有影響'],answer:1,
+  explain:'第一次見面的印象很重要。被迫相處的貓容易留下壞印象，之後要花更久時間修復關係。先隔離、交換氣味，再循序漸進。'},
+ {q:'新貓還沒有健康檢查，可以先和家裡的貓接觸嗎？',
+  options:['可以，先讓牠們玩','不行，先健康檢查、驅蟲、篩檢傳染病，再讓牠們接觸','只要外表看起來健康就可以'],answer:1,
+  explain:'新貓可能帶有寄生蟲、黴菌或傳染病（例如上呼吸道感染、FeLV）。先隔離並完成健檢，能保護原本的貓。'},
+ {q:'引見好幾週了，兩隻貓還是會打到流血。你會？',
+  options:['讓牠們繼續自己解決','退回隔離，重新慢慢引見，必要時諮詢獸醫或行為專家','處罰比較兇的那隻'],answer:1,
+  explain:'持續打到受傷代表引見失敗，關係正在惡化。重新隔離、放慢步調，也可以請獸醫評估是否有疼痛或其他健康問題讓貓變得暴躁。'}
+ ]}},
+
+{id:'shrine',name:'守護者聖殿',topic:'特殊需求貓',color:'#b08a2e',sky:['#f3ead0','#ebddb6','#d2bd84','#c4ad74'],
+ stages:[
+ {type:'choice',label:'選擇題',monster:'恐慌霧精',myth:'FIV 貓一起吃飯就會傳染',
+  q:'貓免疫缺乏病毒（FIV，俗稱貓愛滋）主要怎麼傳染？',
+  options:['一起吃飯喝水','互相理毛','打架時的深度咬傷','空氣傳染'],answer:2,
+  explain:'FIV 主要透過深度咬傷傳染，所以常見於未絕育、會打架的公貓。共用碗盆、互相理毛傳染的機會很低。已絕育、相處和睦的貓，經獸醫評估後，常能和 FIV 貓一起生活。'},
+ {type:'choice',label:'選擇題',monster:'混淆霧精',myth:'FeLV 和 FIV 是一樣的病',
+  q:'貓白血病（FeLV）和 FIV 有什麼不同？',
+  options:['完全一樣','FeLV 可經由唾液和密切接觸傳染，和陰性貓同住前要更謹慎評估','FeLV 不會傳染','FeLV 只會傳染給狗'],answer:1,
+  explain:'FeLV 可以透過互相理毛、共用碗盆等密切接觸傳染，傳染力比 FIV 高。家裡如果有 FeLV 陽性貓，和其他貓同住前要請獸醫評估，並討論疫苗。'},
+ {type:'choice',label:'選擇題',monster:'老化霧精',myth:'老貓不跳了，只是變懶',
+  q:'老貓不再跳上沙發，有時在砂盆外面上廁所，可能是什麼原因？',
+  options:['變懶了','可能是關節退化疼痛；可以換低邊砂盆、加階梯或斜坡，並就醫','故意報復','不用理牠'],answer:1,
+  explain:'關節炎在老貓非常常見，但貓很少表現出痛。跨不進高邊砂盆、跳不上去，常被誤會成變懶或亂上廁所。調整環境並就醫止痛，生活品質能改善很多。'},
+ {type:'read',label:'讀貓題',monster:'糊塗霧精',myth:'老貓晚上亂叫，是在討飯',
+  scene:'16 歲的老貓最近常在半夜大聲嚎叫，有時候在家裡好像迷路一樣，對著牆壁發呆，白天睡得比以前更多。',
+  q:'比較可能是什麼情況？',
+  options:['只是想吃宵夜','可能是認知功能障礙（貓的失智），也要檢查甲狀腺、血壓等問題','發情了','很開心'],answer:1,
+  explain:'老貓也會有類似失智的認知退化。不過甲狀腺亢進、高血壓、聽力或視力退化也會讓貓夜間嚎叫，要先就醫找出原因。家中動線固定、晚上留一盞小夜燈都有幫助。'},
+ {type:'talk',label:'情境對話',monster:'嫌棄霧精',myth:'三腳貓、看不見的貓很可憐，養不起來',
+  chat:[{who:'朋友',text:'中途那邊有一隻三隻腳的貓和一隻看不見的貓，好可憐，但應該很難照顧吧？'}],
+  q:'你會怎麼回？',
+  options:['對，很難照顧，別考慮','牠們的適應力很好，家具不要常移動、加些階梯，就能過得很好','只能一輩子關在籠子裡','要每天帶去醫院'],answer:1,
+  explain:'貓的適應力很強，三腳貓多半跑跳自如，失明的貓靠聽覺和鬍鬚也能記住家裡的配置。保持環境固定、避免高處墜落，牠們就能正常生活，而且常常特別親人。'},
+ {type:'choice',label:'選擇題',monster:'點滴霧精',myth:'腎病貓在家打點滴，飼主做不到',
+  q:'醫生建議慢性腎病的貓在家打皮下點滴，這是？',
+  options:['只有醫院才能做的事，不可能','很常見的居家照護，可以請醫院教學後在家執行','代表貓快不行了','可以自己決定劑量'],answer:1,
+  explain:'皮下點滴能幫腎病貓補充水分，很多飼主學會後在家操作。劑量和頻率要由獸醫決定，並定期回診追蹤血液指數。'},
+ {type:'choice',label:'選擇題',monster:'口臭霧精',myth:'老貓口臭、流口水很正常',
+  q:'貓嘴巴很臭、流口水、想吃又不敢吃，可能是？',
+  options:['正常老化','口腔疾病，例如口炎或牙齒吸收，需要就醫治療','挑嘴','吃太飽'],answer:1,
+  explain:'貓口炎非常疼痛，貓會餓卻吃不下。常需要拔牙治療，很多貓拔牙後疼痛明顯改善，吃得比以前更好。'},
+ {type:'find',label:'找碴題',monster:'不友善霧精',myth:'老貓的家跟年輕貓一樣就好',
+  q:'哪些是對老貓友善的居家安排？選好後按「射箭」。',
+  items:[{t:'低邊砂盆',e:'🟫',pick:1},{t:'階梯或斜坡',e:'🪜',pick:1},{t:'保暖軟墊',e:'🛏️',pick:1},{t:'多處放水碗',e:'💧',pick:1},{t:'晚上的小夜燈',e:'💡',pick:1},{t:'飯碗放在高跳台上',e:'🗼',pick:0},{t:'經常搬動家具',e:'🛋️',pick:0},{t:'砂盆只放在另一層樓',e:'🪜',pick:0}],
+  explain:'老貓需要容易進出的砂盆、不用跳就能到的休息處、溫暖的睡墊和方便喝的水。家具位置固定，加上夜燈，對視力和認知退化的老貓幫助很大。'}
+ ],
+ boss:{monster:'貓愛滋恐懼龍',myth:'FIV 貓會傳染給人，誰養誰倒楣',phases:[
+ {q:'FIV（貓愛滋）會傳染給人嗎？',
+  options:['會','不會，FIV 只會在貓之間傳染','被抓到就會'],answer:1,
+  explain:'FIV 是貓專屬的病毒，不會傳染給人，也不會傳染給狗。它和人類的 HIV 是不同的病毒。'},
+ {q:'被診斷為 FIV 陽性的貓，通常能活多久？',
+  options:['幾個月內就會死','照顧得好，很多可以健康生活很多年','一定活不過一年'],answer:1,
+  explain:'很多 FIV 貓在確診後仍能健康生活多年，壽命接近一般貓。重點是室內飼養、營養均衡、定期健檢，生病時及早治療。'},
+ {q:'糖尿病貓打完胰島素後，開始發抖、站不穩、意識模糊。你會？',
+  options:['再補打一劑胰島素','可能是低血糖，在牙齦抹一點糖漿或蜂蜜，並立即送醫','讓牠睡一覺'],answer:1,
+  explain:'胰島素過量或打完沒吃飯，可能造成低血糖，嚴重會抽搐昏迷。在牙齦上抹糖漿能爭取時間，但一定要立刻就醫。家裡備一小瓶糖漿是糖尿病貓家庭的好習慣。'}
+ ]}}
+];
+
+const ADD={
+home:{stages:[
+ {type:'choice',label:'選擇題',monster:'黑貓霧精',myth:'黑貓會帶來厄運',
+  q:'中途常說黑貓比較難送養，主要原因是？',
+  options:['黑貓個性比較兇','因為迷信和不容易拍出好看的照片，其實個性跟其他貓一樣','黑貓比較容易生病','黑貓比較會掉毛'],answer:1,
+  explain:'黑貓、成貓和老貓都是認養率比較低的一群。毛色和個性、健康沒有關係。認養時多看看牠的個性，常會發現很棒的夥伴。'},
+ {type:'choice',label:'選擇題',monster:'孩子霧精',myth:'孩子說會照顧，就交給孩子',
+  q:'孩子吵著要養貓，答應他「你要自己負責照顧」，這樣可以嗎？',
+  options:['可以，孩子會學到責任','照顧的最終責任一定在大人，孩子可以幫忙，但不能只靠孩子','讓孩子自己決定要不要繼續養','孩子不照顧就送走'],answer:1,
+  explain:'孩子的興趣常會改變，課業變忙後也很難持續照顧。大人要確認自己願意負責十幾年，再讓孩子分擔餵食、陪玩等工作。'},
+ {type:'talk',label:'情境對話',monster:'驚喜霧精',myth:'送一隻貓當禮物，對方一定很開心',
+  chat:[{who:'朋友',text:'我想偷偷領一隻小貓，當作女朋友的生日驚喜，她一定會超開心！'}],
+  q:'你會怎麼回？',
+  options:['好浪漫，快去領','養貓是十幾年的責任，應該讓她自己決定、自己準備，可以陪她一起去認識貓','送兩隻更開心','買一隻品種貓比較有面子'],answer:1,
+  explain:'被當成禮物送出的寵物，常因為收禮的人沒準備好而被退養。如果想送，可以送「一起去中途認識貓」的行程，或認養準備的用品。'},
+ {type:'choice',label:'選擇題',monster:'低敏霧精',myth:'養某些品種的貓就不會過敏',
+  q:'有些人說某些品種是「不會過敏的貓」，這個說法正確嗎？',
+  options:['正確，選那些品種就不會過敏','不完全正確，過敏原主要來自貓的唾液和皮膚，沒有完全不過敏的貓','只要選短毛貓就不會過敏','只要選白貓就不會過敏'],answer:1,
+  explain:'貓的主要過敏原來自唾液和皮脂，舔毛時沾在毛上。不同個體分泌量不同，但沒有任何品種保證不過敏。有過敏的人先諮詢醫師，並實際和那隻貓相處看看。'},
+ {type:'choice',label:'選擇題',monster:'急躁霧精',myth:'新貓到家一兩天就該親人',
+  q:'新貓到家後，一般需要多久才會完全放鬆、展現真正的個性？',
+  options:['一兩個小時','一兩天','常常要幾週到幾個月','永遠不會'],answer:2,
+  explain:'很多貓前幾天會躲起來，幾週後開始熟悉作息，幾個月後才真正把這裡當家。給牠時間，不要因為前幾天不親人就覺得不適合。'},
+ {type:'find',label:'找碴題',monster:'不問霧精',myth:'領貓的時候什麼都不用問',
+  q:'認養時，哪些是應該問中途的好問題？選好後按「射箭」。',
+  items:[{t:'健康與疫苗紀錄',e:'📋',pick:1},{t:'個性和習慣',e:'💬',pick:1},{t:'平常吃什麼',e:'🥫',pick:1},{t:'是否已經絕育',e:'✂️',pick:1},{t:'和其他貓狗相處的情況',e:'🐾',pick:1},{t:'牠是什麼星座',e:'✨',pick:0},{t:'會不會帶來財運',e:'💰',pick:0},{t:'長大毛色會不會變更好看',e:'🎨',pick:0}],
+  explain:'健康紀錄、個性、飲食、絕育狀況和社交經驗，都會影響貓到家後的適應。延續原本的食物和作息，能減少換環境的壓力。'},
+ {type:'choice',label:'選擇題',monster:'家訪霧精',myth:'中途要家訪，是不信任我',
+  q:'中途協會要求認養前家訪、簽認養契約，最主要的目的是？',
+  options:['找麻煩','確認居家環境安全，例如窗戶防護，讓貓有一個穩定的家','想收費','只是形式'],answer:1,
+  explain:'中途照顧每隻貓都花了很多心力，家訪是為了確認窗戶、門口等環境安全，也是一個討論照顧方式的機會。誠實溝通，中途通常也很樂意幫你準備。'}
+ ],boss:[
+ {q:'認養後經濟突然變差，貓又生病了，應該怎麼做？',
+  options:['放棄治療，把貓放到外面','和獸醫討論可行的治療方案，並聯絡原中途或協會尋求協助','什麼都不做，等牠自己好'],answer:1,
+  explain:'很多動物醫院願意討論不同價位的治療方式，部分協會也有醫療協助資源。主動說明困難、尋求幫助，絕對比棄養或放著不管好。'},
+ {q:'要搬家了，新家不能養寵物，應該怎麼做？',
+  options:['把貓留在舊家，下一個房客會照顧','優先找可以養寵物的房子；真的不行，聯絡協會協助找新家','放到新家附近的公園'],answer:1,
+  explain:'把貓留在舊家或放在外面都是棄養。找房子時把「可養寵物」列為必要條件，多數情況都能找到。'}
+ ]},
+
+law:{stages:[
+ {type:'choice',label:'選擇題',monster:'定位霧精',myth:'有晶片就能用手機找到貓',
+  q:'貓身上植入的晶片，可以用 GPS 定位找到走失的貓嗎？',
+  options:['可以，晶片會定位','不行，晶片沒有電池也不會發訊號，只能被掃描器讀出號碼','只有在台北可以','要付費開通才能定位'],answer:1,
+  explain:'寵物晶片只有米粒大小，沒有電池，必須被掃描器靠近讀取，才能查到登記的飼主。所以晶片能幫走失的貓「被找回來」，但不能讓你主動找到貓。'},
+ {type:'choice',label:'選擇題',monster:'亂餵霧精',myth:'餵街貓就是放一大包飼料在路邊',
+  q:'想幫忙照顧社區的街貓，比較好的方式是？',
+  options:['每天在路邊倒一大堆飼料','配合 TNR（誘捕、絕育、回置），定時定點餵食並清理乾淨','把所有街貓都帶回家','趕走牠們'],answer:1,
+  explain:'TNR 是透過絕育控制街貓數量的方法。餵食時定時定點、吃完收走，能減少環境髒亂和鄰居抱怨，也比較容易觀察貓的健康。'},
+ {type:'choice',label:'選擇題',monster:'受傷霧精',myth:'街貓耳朵缺一角，是打架受傷',
+  q:'很多街貓的耳朵尖端被剪掉一小角，代表什麼？',
+  options:['打架受傷','已經絕育的記號，常見於 TNR','被虐待','天生的'],answer:1,
+  explain:'剪耳是在絕育手術麻醉時進行的記號，讓大家遠遠就知道這隻貓已經絕育，不用再被重複誘捕。'},
+ {type:'choice',label:'選擇題',monster:'規約霧精',myth:'住自己買的房子，想養什麼都可以',
+  q:'搬進社區大樓，想養貓之前，應該先確認什麼？',
+  options:['什麼都不用確認','社區的住戶規約有沒有禁止飼養動物','只要問隔壁鄰居','只要貓不出門就沒關係'],answer:1,
+  explain:'依《公寓大廈管理條例》，住戶飼養動物不得妨礙公共衛生、安寧和安全；如果規約另有禁止飼養的規定，要依規約。買房或租房前先看清楚，能避免日後被迫送走貓。'},
+ {type:'choice',label:'選擇題',monster:'帶籠霧精',myth:'搭捷運抱著貓就可以',
+  q:'帶貓搭乘大眾運輸，例如捷運，一般要注意什麼？',
+  options:['抱在懷裡就好','放在可以完全裝好的寵物籠或寵物箱裡，不讓頭腳露出','讓貓自己走','不用注意'],answer:1,
+  explain:'各大眾運輸的規定不同，大多要求寵物完整裝在箱籠內，並有尺寸限制。出門前先查好規定，對貓來說待在穩固的外出籠裡也比較安全。'},
+ {type:'choice',label:'選擇題',monster:'沒錢絕育霧精',myth:'幫貓絕育很貴，負擔不起',
+  q:'想幫貓絕育，可以怎麼減輕費用？',
+  options:['沒有任何辦法','查詢所在縣市政府的犬貓絕育補助','自己在家動手術','等牠生完一胎再說'],answer:1,
+  explain:'許多縣市都有家貓絕育補助，金額和申請方式各地不同，有些地方針對領養的貓補助更多。可以到縣市動保處網站或問合作的動物醫院。'},
+ {type:'choice',label:'選擇題',monster:'註銷霧精',myth:'貓過世了，登記資料就不用管',
+  q:'家裡的貓過世後，寵物登記資料需要處理嗎？',
+  options:['不用處理','要辦理死亡註銷登記','重新幫下一隻貓沿用','只有狗要處理'],answer:1,
+  explain:'寵物死亡後，要到登記站或透過系統辦理註銷，讓登記資料保持正確。遺體不要隨意丟棄或埋在公有地，可以交給合法的寵物火化業者處理。'}
+ ],boss:[
+ {q:'冬天早上，你發現社區有貓常躲在汽機車的引擎附近取暖。發動車子前應該？',
+  options:['直接發動','先拍拍引擎蓋、按一下喇叭，或檢查一下，讓貓有機會離開','不關我的事'],answer:1,
+  explain:'冷天時，街貓常鑽進剛熄火、還有餘溫的引擎室，發動時可能被皮帶捲到，造成嚴重傷亡。發動前拍拍引擎蓋，是很簡單卻能救命的習慣。'}
+ ]},
+
+safe:{stages:[
+ {type:'timed',label:'急救計時題',seconds:15,monster:'悶熱霧精',myth:'貓不怕熱，牠們喜歡溫暖',
+  q:'夏天悶熱的房間裡，貓張口喘氣、流口水、牙齦變得很紅。你會？',
+  options:['馬上泡進冰水','移到陰涼處，用常溫的濕毛巾擦身體降溫，並立即就醫','給牠喝冰牛奶','先觀察一個晚上'],answer:1,
+  explain:'這是中暑的表現，可能很快惡化。降溫要用常溫或微涼的水，冰水會讓血管收縮，反而不容易散熱。降溫的同時盡快送醫。夏天出門時，要確保家裡通風或開冷氣。'},
+ {type:'choice',label:'選擇題',monster:'低溫燙霧精',myth:'電熱毯溫溫的，不會燙傷',
+  q:'冬天給老貓用電熱毯或暖墊，要注意什麼？',
+  options:['開最高溫最溫暖','用低溫設定、上面鋪一層毯子，並讓牠可以自己離開','整晚把牠固定在墊子上','不用注意'],answer:1,
+  explain:'長時間接觸溫溫的熱源，也可能造成低溫燙傷，老貓、行動不便的貓特別危險。要讓貓覺得太熱時可以自己移開。'},
+ {type:'choice',label:'選擇題',monster:'夾夾霧精',myth:'家具不會傷到貓',
+  q:'家裡有電動躺椅、沙發床這類會折疊或升降的家具，要注意什麼？',
+  options:['不用注意','使用前先確認貓沒有鑽在裡面','讓貓在裡面睡覺最溫暖','只要白天用就沒事'],answer:1,
+  explain:'貓喜歡鑽進躺椅、沙發床下方的空間，家具收合時可能被夾傷。使用前先看一下，或把下方空間封起來。'},
+ {type:'choice',label:'選擇題',monster:'逗貓棒霧精',myth:'逗貓棒放著讓貓自己玩就好',
+  q:'玩完逗貓棒或有繩子的玩具後，應該怎麼收？',
+  options:['放在地上讓貓自己玩','收進貓打不開的櫃子裡','掛在跳台上','丟在床上'],answer:1,
+  explain:'繩子、緞帶、羽毛被貓咬斷吞下，可能造成腸阻塞。有線的玩具適合在有人陪著時玩，玩完就收好。'},
+ {type:'choice',label:'選擇題',monster:'噴霧霧精',myth:'在家噴殺蟲劑，貓在旁邊沒關係',
+  q:'家裡要噴殺蟲劑或使用除蟲煙霧時，貓應該怎麼安排？',
+  options:['待在原地就好','先移到另一個房間或帶出門，等通風、擦乾淨後再回來','用毛巾蓋住貓','噴少一點就好'],answer:1,
+  explain:'貓會舔毛，藥劑沾在毛上就會吃下去。使用前收好碗盆和玩具，噴完充分通風、擦拭地面，再讓貓回來。'},
+ {type:'choice',label:'選擇題',monster:'塑膠霧精',myth:'貓愛舔塑膠袋，很可愛',
+  q:'貓很喜歡舔、咬塑膠袋，甚至吃下去，應該怎麼辦？',
+  options:['很可愛，讓牠玩','塑膠袋收好，並就醫檢查是否有健康或壓力問題','給牠更多塑膠袋','打牠一下'],answer:1,
+  explain:'吃非食物的東西稱為「異食癖」，可能造成腸阻塞，也可能和貧血、營養問題或壓力有關。收好東西，並帶去給獸醫評估。'}
+ ],boss:[
+ {q:'貓舔到地上漏出來的汽車水箱精（防凍液），看起來沒事。你會？',
+  options:['看起來沒事就好','立即就醫，防凍液可能造成急性腎衰竭，治療要在數小時內開始','讓牠多喝水'],answer:1,
+  explain:'許多防凍液含有乙二醇，味道甜甜的，貓很少的量就可能中毒。早期看起來可能沒事，但腎臟傷害已經在發生，治療越早越有效。車庫和陽台的化學品一定要收好。'}
+ ]},
+
+food:{stages:[
+ {type:'choice',label:'選擇題',monster:'生魚霧精',myth:'貓愛吃魚，每天給生魚最好',
+  q:'長期大量餵貓吃生魚，可能造成什麼問題？',
+  options:['沒有問題，魚很營養','生魚裡的酵素會破壞維生素 B1，缺乏時可能出現神經症狀','會讓毛變得太亮','會讓貓長太高'],answer:1,
+  explain:'某些生魚含有破壞維生素 B1（硫胺素）的酵素，長期當主食可能造成缺乏，出現步態不穩、頭往下彎、抽搐等症狀。魚可以偶爾煮熟當點心，不適合當主食。'},
+ {type:'choice',label:'選擇題',monster:'人罐霧精',myth:'人吃的鮪魚罐頭，貓也能當主食',
+  q:'把人吃的鮪魚罐頭當貓的正餐，有什麼問題？',
+  options:['完全沒問題','鹽分和油脂不適合貓，營養也不完整，不能當主食','比貓罐頭更營養','只要每天都換口味就好'],answer:1,
+  explain:'人吃的魚罐頭常常加鹽、油或調味，而且缺少貓需要的維生素和礦物質。偶爾一小口無調味的水煮魚可以，正餐還是要用營養完整的貓主食。'},
+ {type:'choice',label:'選擇題',monster:'受潮霧精',myth:'飼料開封後隨便放就好',
+  q:'乾飼料開封後，怎麼保存比較好？',
+  options:['打開放在窗邊','密封後放在陰涼乾燥處，盡快吃完','新飼料直接倒進還有舊飼料的桶子','放在浴室'],answer:1,
+  explain:'乾飼料開封後，油脂會慢慢氧化，受潮也容易發霉。最好連原包裝一起放進密封容器，不要把新舊飼料混在一起，也盡量挑選能在一個月左右吃完的包裝。'},
+ {type:'choice',label:'選擇題',monster:'塑膠碗霧精',myth:'貓的碗用什麼材質都一樣',
+  q:'貓的食碗和水碗，哪一種材質比較推薦？',
+  options:['有刮痕的舊塑膠碗','陶瓷或不鏽鋼，容易清潔','不用碗，直接倒地上','紙碗用一個月'],answer:1,
+  explain:'塑膠碗用久了會有細小刮痕，容易藏細菌，有些貓下巴的黑色粉刺可能和它有關。陶瓷或不鏽鋼碗比較好清潔，每天都要洗。'},
+ {type:'talk',label:'情境對話',monster:'自煮霧精',myth:'自己煮鮮食，肉加菜就營養均衡',
+  chat:[{who:'朋友',text:'我想每天自己煮雞肉給貓吃，不買飼料了，這樣比較天然吧？'}],
+  q:'你會怎麼建議？',
+  options:['好啊，雞肉就夠了','長期自製鮮食要照獸醫或寵物營養師的配方，補充鈣、牛磺酸等營養，不然容易失衡','加洋蔥比較香','只給雞胸肉最健康'],answer:1,
+  explain:'只吃肉會缺鈣、缺某些維生素，長期可能造成骨骼問題或心臟病。想做鮮食可以，但要有完整的配方和營養補充，並定期健檢。'},
+ {type:'find',label:'找碴題',monster:'乾渴霧精',myth:'放一碗水就夠了',
+  q:'哪些是讓貓多喝水的好方法？選好後按「射箭」。',
+  items:[{t:'主食罐頭',e:'🥫',pick:1},{t:'流動飲水機',e:'⛲',pick:1},{t:'家裡多處放水碗',e:'💧',pick:1},{t:'寬口淺碗',e:'🥣',pick:1},{t:'水碗遠離食物和砂盆',e:'↔️',pick:1},{t:'在水裡加鹽',e:'🧂',pick:0},{t:'只在砂盆旁放一碗水',e:'🟫',pick:0},{t:'用牛奶代替水',e:'🥛',pick:0}],
+  explain:'有些貓不喜歡鬍鬚碰到碗邊，寬口淺碗會比較願意喝；也有很多貓偏好流動的水。水碗離食物和砂盆遠一點，貓會比較願意喝。濕食本身也能補充很多水分。'},
+ {type:'choice',label:'選擇題',monster:'自助餐霧精',myth:'飼料碗隨時裝滿，貓自己會控制',
+  q:'成貓一天的餵食方式，哪一個比較理想？',
+  options:['碗一直裝滿，隨時吃','定時定量，一天至少分兩餐','一天只餵一次大份量','想到才餵'],answer:1,
+  explain:'很多室內貓不會自己控制食量，隨時都有飼料容易變胖。定時定量，也比較容易發現牠「今天吃得比較少」這種生病的早期訊號。'}
+ ],boss:[
+ {q:'貓吃魚後一直抓嘴巴、流口水、作嘔，好像有東西卡住。你會？',
+  options:['自己把手伸進喉嚨挖','不要自己硬挖，立即就醫','給牠吃白飯吞下去'],answer:1,
+  explain:'魚刺或骨頭可能卡在喉嚨、牙齒間或食道。自己伸手挖可能被咬，或把異物推得更深、刺傷組織。保持冷靜，立即送醫。'},
+ {q:'烤肉後，貓偷吃了整串連著竹籤的烤肉。你會？',
+  options:['竹籤會自己排出來','立即就醫，竹籤可能刺穿腸胃','餵牠吃大量飼料'],answer:1,
+  explain:'竹籤、牙籤又尖又硬，可能刺穿食道或腸胃，造成嚴重感染。烤肉、聚餐時要特別注意，竹籤用完立刻丟進有蓋的垃圾桶。'}
+ ]},
+
+heal:{stages:[
+ {type:'choice',label:'選擇題',monster:'數不清霧精',myth:'貓呼吸快慢沒什麼好注意的',
+  q:'貓在熟睡時，每分鐘的呼吸次數大約超過多少，就應該請獸醫檢查？',
+  options:['10 次','30 次','80 次','不用數'],answer:1,
+  explain:'貓睡覺時的呼吸次數通常在每分鐘 30 次以下。持續偏高，可能是心臟病或肺部問題的早期訊號。在家數呼吸很簡單：看胸口起伏一次算一下，數 30 秒再乘以 2。有心臟病的貓，獸醫常會請飼主每天記錄。'},
+ {type:'choice',label:'選擇題',monster:'腫塊霧精',myth:'打針的地方有腫塊，過幾天就會消',
+  q:'貓打完疫苗後，注射的地方摸到一個腫塊，什麼情況要回去檢查？',
+  options:['不用管','腫塊超過三個月沒消、大於兩公分，或一個月後還在變大','只有會痛才要檢查','等腫塊破掉再去'],answer:1,
+  explain:'少數貓會在注射部位長出惡性腫瘤，早期發現很重要。獸醫常用「3-2-1 原則」：三個月還在、大於兩公分、注射一個月後還在長大，就要檢查。'},
+ {type:'choice',label:'選擇題',monster:'人牙膏霧精',myth:'人用牙膏也可以幫貓刷牙',
+  q:'幫貓刷牙，下列哪個做法正確？',
+  options:['用人用牙膏','用寵物專用牙膏，慢慢讓貓習慣','只要吃乾飼料就不用刷牙','用鹽巴刷'],answer:1,
+  explain:'人用牙膏可能含氟、木糖醇或發泡劑，貓會吞下去，不適合使用。刷牙是預防牙周病最有效的方法，從摸嘴巴、碰牙齒開始，一步一步讓貓習慣。'},
+ {type:'choice',label:'選擇題',monster:'疫苗霧精',myth:'打完疫苗不舒服都是正常的',
+  q:'貓打完疫苗後，出現哪種狀況要立即回醫院？',
+  options:['精神稍微差、睡比較多','臉部腫起來、一直嘔吐或呼吸困難','食慾稍微差一點','打針的地方輕微敏感'],answer:1,
+  explain:'打完疫苗一兩天內稍微沒精神是常見的。但臉腫、嘔吐、腹瀉、呼吸困難可能是過敏反應，要立刻就醫。打完疫苗後最好在醫院附近多觀察一下。'},
+ {type:'talk',label:'情境對話',monster:'舔毛霧精',myth:'貓一直舔毛就是愛乾淨',
+  chat:[{who:'朋友',text:'我家貓一直舔肚子，舔到那邊的毛都禿了，牠應該只是愛乾淨吧？'}],
+  q:'你會怎麼回？',
+  options:['對啊，代表很愛乾淨','過度舔毛可能是過敏、皮膚病、疼痛或壓力，應該帶去看醫生','剃光毛就不會舔了','給牠戴頭套就好'],answer:1,
+  explain:'貓的正常理毛不會舔到禿毛。肚子、大腿內側禿毛常見原因包括跳蚤或食物過敏、膀胱發炎造成的不適，以及壓力。找出原因才能真正解決。'},
+ {type:'timed',label:'急救計時題',seconds:15,monster:'眼藥霧精',myth:'貓眼睛受傷，點人用眼藥水就好',
+  q:'貓的一隻眼睛突然睜不開、一直流淚。你會？',
+  options:['點家裡的人用眼藥水','盡快就醫，避免牠抓眼睛','用手撐開眼睛檢查','等一週看看'],answer:1,
+  explain:'眼睛睜不開可能是角膜受傷，惡化很快，嚴重時會穿孔。人用眼藥水可能含類固醇，角膜受傷時使用反而有害。盡快就醫，路上注意別讓牠用腳抓。'}
+ ],boss:[
+ {q:'母貓生完小貓兩週，突然發抖、走路不穩、喘氣，甚至抽搐。你會？',
+  options:['產後累了，讓牠休息','立即就醫，可能是產後低血鈣','餵牠喝牛奶補鈣'],answer:1,
+  explain:'哺乳會消耗大量的鈣，母貓可能發生產後低血鈣（產後癲癇），不立即治療會有生命危險。這也是讓母貓及早絕育、避免意外懷孕的原因之一。'},
+ {q:'貓從二樓陽台摔下去，看起來走路正常、沒有外傷。你會？',
+  options:['沒受傷就好','仍然要盡快就醫檢查','讓牠睡一覺就好'],answer:1,
+  explain:'墜樓或被撞到的貓，外表看起來沒事，也可能有內出血、氣胸或下巴骨折，症狀常在幾小時後才出現。一定要就醫檢查，並留意牠的呼吸。'}
+ ]},
+
+mind:{stages:[
+ {type:'choice',label:'選擇題',monster:'呼嚕霧精',myth:'貓呼嚕就代表很開心',
+  q:'貓發出呼嚕聲，一定代表牠很開心嗎？',
+  options:['一定是開心','不一定，貓在生病、疼痛或緊張時也可能呼嚕','代表肚子餓','代表在生氣'],answer:1,
+  explain:'呼嚕在放鬆時很常見，但生病、受傷、生產，甚至臨終時，貓也會呼嚕，可能是一種自我安撫。所以要看整體的狀態，不能只聽呼嚕聲判斷。'},
+ {type:'choice',label:'選擇題',monster:'翻臉霧精',myth:'貓被摸到一半突然咬人，是個性壞',
+  q:'貓被摸得好好的，突然轉頭咬你一口，最可能的原因是？',
+  options:['個性很壞','摸太久或摸到不喜歡的地方，貓已經先給過訊號，例如尾巴甩動、皮膚抖動','想要更多撫摸','肚子餓了'],answer:1,
+  explain:'這叫「撫摸誘發的攻擊」。很多貓能接受的撫摸時間比我們以為的短。注意尾巴開始甩、耳朵轉向、背部皮膚抖動這些前兆，在牠不耐煩之前先停手。'},
+ {type:'talk',label:'情境對話',monster:'喀喀霧精',myth:'貓發出奇怪的聲音一定是生病',
+  chat:[{who:'朋友',text:'我家貓每次看到窗外的鳥，嘴巴都會一直抖、發出「喀喀喀」的聲音，是不是生病了？'}],
+  q:'你會怎麼回？',
+  options:['快去看急診','這是貓看到獵物時很常見的興奮反應，不用擔心','牠在罵鳥','牠在噎到'],answer:1,
+  explain:'這種下巴快速顫抖、發出喀喀聲的行為，常見於貓盯著抓不到的獵物時，一般認為和狩獵的興奮或挫折有關，是正常行為。'},
+ {type:'choice',label:'選擇題',monster:'禮物霧精',myth:'貓把蟑螂叼給你，是在挑釁',
+  q:'貓把抓到的蟑螂或玩具叼到你面前，最好的反應是？',
+  options:['大罵牠','這是貓的本能行為，不要處罰，平靜地收走就好','把蟑螂丟回給牠','關牠禁閉'],answer:1,
+  explain:'把獵物帶回「家」是貓的天性。處罰牠只會讓牠困惑。用逗貓棒好好陪牠玩「狩獵遊戲」，能滿足牠的狩獵需求。'},
+ {type:'read',label:'讀貓題',monster:'不懂踩踩霧精',myth:'貓踩來踩去是在找位置',
+  scene:'貓趴在柔軟的毯子上，兩隻前腳輪流往下踩，眼睛半瞇，同時發出呼嚕聲，有時還會吸吮毯子。',
+  q:'這是什麼行為？',
+  options:['在生氣','俗稱「踩踩」或「踏奶」，通常代表放鬆、滿足','腳在痛','想要出門'],answer:1,
+  explain:'踩踩源自幼貓喝奶時按壓媽媽的乳房，長大後在放鬆、有安全感時也會做。腳掌上有腺體，踩的同時也在留下自己的氣味。'},
+ {type:'choice',label:'選擇題',monster:'砂盆霧精',myth:'砂盆放哪裡都一樣',
+  q:'砂盆放在哪裡比較好？',
+  options:['緊鄰食物和水碗','安靜、容易到達，遠離食物、水碗和吵雜的洗衣機','放在陽台最外面','每天換位置'],answer:1,
+  explain:'貓不喜歡在吃飯的地方上廁所，也不喜歡上廁所時被嚇到。洗衣機突然脫水的聲音，可能讓貓從此不想用那個砂盆。'}
+ ],boss:[
+ {q:'你罵了貓之後，牠尿在你的衣服上。這代表？',
+  options:['牠在報復你','貓不會報復，這通常代表壓力、焦慮或身體不適','牠在示好'],answer:1,
+  explain:'貓沒有「報復」的概念。在有主人氣味的衣服或床上尿尿，常是缺乏安全感的表現，也可能是膀胱發炎。先就醫，再減少家中的壓力來源。'}
+ ]},
+
+tribe:{stages:[
+ {type:'choice',label:'選擇題',monster:'陌生霧精',myth:'同住的貓永遠認得彼此',
+  q:'一隻貓看完醫生回家，另一隻貓卻對牠哈氣、好像不認得牠。可以怎麼做？',
+  options:['處罰哈氣的貓','先讓牠們分開一下，用摸過另一隻貓的毛巾擦一擦剛回家的貓，讓氣味恢復','把兩隻關在一起','送走其中一隻'],answer:1,
+  explain:'貓主要靠氣味認人，剛從醫院回來的貓身上帶著陌生的消毒水和其他動物的味道。讓牠先自己理毛、休息，用家裡的氣味「蓋回去」，通常很快就恢復。'},
+ {type:'choice',label:'選擇題',monster:'貓狗霧精',myth:'貓狗是天敵，不能一起養',
+  q:'家裡有狗，想再養貓，要注意什麼？',
+  options:['完全不可能','狗要能聽口令，家裡要有狗到不了的高處和貓專屬空間，並慢慢引見','直接讓狗聞貓','把貓關在籠子裡讓狗習慣'],answer:1,
+  explain:'很多貓狗能和平相處，關鍵是狗的個性、訓練程度和引見方式。貓一定要有隨時可以逃走的高處和安全空間。有強烈追獵本能的狗要特別謹慎。'},
+ {type:'find',label:'找碴題',monster:'壓力霧精',myth:'貓沒打架，就代表相處得很好',
+  q:'哪些是多貓家庭裡，貓可能有壓力的訊號？選好後按「射箭」。',
+  items:[{t:'過度舔毛到禿',e:'🪮',pick:1},{t:'在砂盆外尿尿',e:'💦',pick:1},{t:'經常躲起來',e:'🫥',pick:1},{t:'食量變少',e:'🍽️',pick:1},{t:'擋在走道或砂盆前盯著另一隻',e:'👀',pick:1},{t:'一起窩著睡覺',e:'😴',pick:0},{t:'互相理毛',e:'💕',pick:0},{t:'輪流追逐玩耍',e:'🏃',pick:0}],
+  explain:'貓之間的衝突常常很安靜，例如盯視、擋路、霸占砂盆。被欺負的貓可能用過度理毛、亂尿、躲藏來表現壓力。一起睡、互相理毛則是關係好的訊號。'},
+ {type:'choice',label:'選擇題',monster:'一起玩霧精',myth:'一支逗貓棒就能陪所有貓玩',
+  q:'家裡有好幾隻貓，用一支逗貓棒一起玩，常會發生什麼？',
+  options:['大家都玩得很開心','比較強勢的貓搶到，膽小的貓就放棄不玩了','貓會打起來所以不能玩','沒有差別'],answer:1,
+  explain:'多貓一起玩時，膽小或年紀大的貓常常默默退出。可以分開時段一對一陪玩，或同時用兩支逗貓棒，讓每隻貓都有機會「抓到獵物」。'},
+ {type:'choice',label:'選擇題',monster:'共用霧精',myth:'貓生病了，跟其他貓照常相處就好',
+  q:'家裡一隻貓得了上呼吸道感染（打噴嚏、流鼻水、眼屎多），應該怎麼做？',
+  options:['照常一起生活','先隔離，碗盆分開，照顧完生病的貓要洗手再碰其他貓','把其他貓送走','讓大家一起感染比較快好'],answer:1,
+  explain:'貓的上呼吸道感染很容易透過分泌物、碗盆和人的手傳給其他貓。隔離照顧，並請獸醫評估其他貓是否也需要觀察或治療。'},
+ {type:'choice',label:'選擇題',monster:'看不出霧精',myth:'多貓家庭不用分別觀察每隻貓',
+  q:'多貓家庭共用飼料和砂盆，最大的照顧盲點是什麼？',
+  options:['沒有盲點','很難發現是哪一隻吃得少、尿量變多或有血尿','貓會變得太親人','飼料會比較快吃完'],answer:1,
+  explain:'共用的情況下，一隻貓不舒服很容易被其他貓「平均」掉。可以分開餵食、定期量體重，也可以用監視器或觀察砂盆上的使用狀況，及早發現異常。'}
+ ],boss:[
+ {q:'家裡的狗開始追著新來的貓跑，貓嚇得到處逃。你會？',
+  options:['讓牠們自己磨合','立即制止並分開，回到隔離狀態，再用牽繩和口令慢慢重新引見','讓貓學會反擊'],answer:1,
+  explain:'狗追貓可能從遊戲變成真的攻擊，體型差距大時可能造成嚴重傷亡。分開、退回上一步，必要時請訓練師協助，讓貓永遠有狗到不了的避難處。'}
+ ]},
+
+shrine:{stages:[
+ {type:'choice',label:'選擇題',monster:'失明霧精',myth:'老貓突然看不見，只是老了',
+  q:'老貓的瞳孔一直放得很大，走路開始撞到東西，可能是什麼原因？',
+  options:['正常老化','可能是高血壓造成視網膜剝離，應盡快就醫量血壓','只是太暗','在跟你玩'],answer:1,
+  explain:'貓的高血壓常和慢性腎病、甲狀腺亢進有關，嚴重時會讓視網膜剝離而突然失明。及早治療，部分視力有機會恢復。老貓健檢時記得量血壓。'},
+ {type:'choice',label:'選擇題',monster:'終身打針霧精',myth:'貓得了糖尿病，就一輩子都要打針',
+  q:'貓得了糖尿病，下列哪個說法正確？',
+  options:['一輩子都一定要打胰島素','早期好好控制血糖和飲食，部分貓可以進入緩解，不需要再打胰島素','不用治療','只能安樂死'],answer:1,
+  explain:'貓糖尿病有機會「緩解」，關鍵是確診後及早用胰島素、搭配低醣飲食和減重。但緩解後仍要定期追蹤，不能自己停藥。'},
+ {type:'choice',label:'選擇題',monster:'利爪霧精',myth:'老貓不用剪指甲，反正不太抓了',
+  q:'老貓的指甲需要特別注意什麼？',
+  options:['不用管','老貓比較少磨爪，指甲容易變厚過長，甚至彎曲刺進肉墊，要定期檢查修剪','老貓的指甲會自己掉','剪越短越好'],answer:1,
+  explain:'老貓活動量下降、比較少抓抓板，指甲常常長得又厚又彎，刺進肉墊會很痛，走路姿勢也會改變。定期檢查並修剪，避免剪到血線。'},
+ {type:'choice',label:'選擇題',monster:'聽不見霧精',myth:'貓不理人，就是個性冷淡',
+  q:'藍眼睛的白貓，比較常有哪種先天狀況？',
+  options:['視力特別好','先天耳聾','怕冷','不會呼嚕'],answer:1,
+  explain:'藍眼白貓有較高比例先天耳聾，可能是一耳或兩耳。耳聾的貓一樣能好好生活，可以用震動、燈光和手勢溝通，並且一定要室內飼養。'},
+ {type:'talk',label:'情境對話',monster:'正常老化霧精',myth:'老貓變瘦是正常的',
+  chat:[{who:'朋友',text:'我家 15 歲的貓這半年瘦了好多，不過老了本來就會變瘦吧？'}],
+  q:'你會怎麼回？',
+  options:['對，老了都這樣','變瘦不是正常老化，可能是甲狀腺亢進、腎病、糖尿病或腫瘤，應該就醫','多餵一點就好','給牠吃人的營養品'],answer:1,
+  explain:'老貓體重下降常是疾病的訊號。在家每個月量一次體重，記錄下來，有明顯下降就要就醫。'},
+ {type:'choice',label:'選擇題',monster:'放棄霧精',myth:'貓老了生病，就不用再努力了',
+  q:'要怎麼評估一隻老病貓的生活品質？',
+  options:['看牠還活著就好','觀察牠吃喝、上廁所、疼痛、活動，以及還能不能做喜歡的事，並和獸醫一起討論','只看年紀','聽鄰居的意見'],answer:1,
+  explain:'有些量表可以幫助飼主評估生活品質，例如疼痛、食慾、清潔、互動、行動能力等。定期記錄「好日子」和「壞日子」，能讓你和獸醫在困難的決定前，有更清楚的依據。'}
+ ],boss:[
+ {q:'腎病貓突然不吃、一直嘔吐，嘴巴有一股尿騷味，精神很差。你會？',
+  options:['等明天回診再說','立即就醫，可能是腎病急性惡化（尿毒）','餵牠喝牛奶'],answer:1,
+  explain:'口中有阿摩尼亞味、嘔吐、不吃，可能代表體內毒素累積嚴重，需要住院輸液治療。腎病貓的狀況可能突然變化，平常就要知道哪些症狀要馬上就醫。'}
+ ]}
+};
+for(const z of ZONES){const a=ADD[z.id]; if(!a)continue; z.stages.push(...a.stages); z.boss.phases.push(...a.boss);}
+
+const INTRO=[
+ {who:'努酷貓',av:'nuku',text:'歡迎來到努酷貓養貓學院！最近愛貓魔人在城市各處放出了迷思之霧。'},
+ {who:'努酷貓',av:'nuku',text:'霧裡的迷思怪會讓人做出錯誤判斷，害貓咪生病、被棄養。我們要用知識之箭射破牠們。'},
+ {who:'努努',av:'nunu',text:'卡關的時候叫我！我會幫你刪掉一個錯的答案，每一區可以用三次喔。'},
+ {who:'酷酷',av:'kuku',text:'每射完一箭，我會告訴你為什麼。答錯也沒關係，搞懂最重要。'},
+ {who:'努酷貓',av:'nuku',text:'城市裡有 8 個區域，每區最深處都有一隻大迷思怪，題目攸關貓命，要全部答對才能打倒牠。選一區出發吧！'}
+];
+const MAX_ARROWS=5, MAX_HINTS=3, KEY='nuku-academy-badges';
+let S, Z;
+const app=document.getElementById('app');
+function loadBadges(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+function saveBadge(id){const b=loadBadges(); if(!b.includes(id)){b.push(id); try{localStorage.setItem(KEY,JSON.stringify(b))}catch(e){}} return loadBadges();}
+let SESSION_BADGES=new Set(loadBadges());
+function badges(){return [...new Set([...SESSION_BADGES,...loadBadges()])];}
+
+/* ---------- question ids & account sync ---------- */
+ZONES.forEach(z=>{ z.stages.forEach((q,i)=>q.id=z.id+'-'+String(i+1).padStart(2,'0')); z.boss.phases.forEach((q,i)=>q.id=z.id+'-b'+(i+1)); });
+const API='/api/academy';
+let ME={ready:false,available:false,loggedIn:false,name:'',badges:[]};
+function esc(t){return String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadMe(){
+  try{
+    const r=await fetch(API+'/me',{credentials:'same-origin',cache:'no-store'});
+    if(!r.ok) throw 0;
+    const j=await r.json();
+    ME={ready:true,available:!!j.available,loggedIn:!!j.loggedIn,name:j.name||'',badges:Array.isArray(j.badges)?j.badges:[]};
+    ME.badges.forEach(b=>SESSION_BADGES.add(b));
+  }catch(e){ ME={ready:true,available:false,loggedIn:false,name:'',badges:[]}; }
+  document.querySelectorAll('[data-acct]').forEach(el=>el.innerHTML=acctHTML(el.dataset.acct));
+  if(document.querySelector('.prog b')) document.querySelector('.prog b').textContent=badges().length;
+}
+function loginHref(){return API+'/login?next='+encodeURIComponent(location.pathname);}
+function acctHTML(where){
+  if(!ME.available) return '';
+  if(ME.loggedIn) return `<div class="acct in"><span class="dot"></span><span>${esc(ME.name||'LINE 使用者')}・紀錄已同步</span><a href="${API}/logout">登出</a></div>`;
+  const msg=where==='win'?'登入後，這枚徽章會保存在你的帳號，換手機也不會不見。':'登入後可以保存徽章和成績，換手機也不會不見。';
+  return `<div class="acct out"><a class="linebtn" href="${loginHref()}">用 LINE 登入</a><p>${msg}也可以不登入直接玩。登入即同意我們保存你的 LINE 名稱與遊戲紀錄，詳見<a href="/privacy">隱私權政策</a>。</p></div>`;
+}
+function sendRun(completed){
+  if(!S||S.sent||!S.log||!S.log.length||!ME.available) return;
+  S.sent=true;
+  try{ fetch(API+'/run',{method:'POST',credentials:'same-origin',keepalive:true,headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({zone:Z.id,completed:!!completed,results:S.log.slice(0,40)})}).catch(()=>{}); }catch(e){}
+}
+
+const PER_RUN=8, BOSS_RUN=3;
+function shuffled(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleQ(q){ if(!q.options) return q; const idx=shuffled(q.options.map((_,i)=>i));
+  return Object.assign({},q,{options:idx.map(i=>q.options[i]),answer:idx.indexOf(q.answer)}); }
+function drawStages(pool){
+  const byType={}; shuffled(pool).forEach(q=>(byType[q.type]=byType[q.type]||[]).push(q));
+  const pick=[]; Object.values(byType).forEach(arr=>{ if(pick.length<PER_RUN) pick.push(arr.shift()); });
+  const rest=shuffled(Object.values(byType).flat());
+  while(pick.length<PER_RUN&&rest.length) pick.push(rest.shift());
+  return shuffled(pick);
+}
+function reset(){S={stages:Z?drawStages(Z.stages):[],bossQ:Z?shuffled(Z.boss.phases).slice(0,BOSS_RUN):[],i:0,arrows:MAX_ARROWS,hints:MAX_HINTS,correct:0,answered:0,hintsUsed:0,bossHp:3,phase:0,locked:false,removed:[],sel:new Set(),timer:null,log:[],sent:false};}
+
+/* ---------- art ---------- */
+function arrowSVG(cls=''){return `<svg class="${cls}" viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="6" x2="6" y2="27" stroke="#6b4423" stroke-width="2"/><path d="M6 0 L10 7 L2 7Z" fill="#9aa0a6" stroke="#28412f" stroke-width="1"/><path d="M6 22 L11 27 L11 30 L6 26 L1 30 L1 27Z" fill="#5fae6c" stroke="#28412f" stroke-width="1"/></svg>`;}
+function flyerSVG(w=60){return `<svg viewBox="0 0 60 12" width="${w}" height="12"><line x1="2" y1="6" x2="50" y2="6" stroke="#6b4423" stroke-width="2.5"/><path d="M60 6 L48 1 L48 11Z" fill="#9aa0a6" stroke="#28412f"/><path d="M0 1 L10 6 L0 11 L5 6Z" fill="#5fae6c" stroke="#28412f"/></svg>`;}
+function monsterSVG(boss,color,stone,label){
+  if(stone) return `<svg viewBox="0 0 120 120" class="monster boss" id="mon" role="img" aria-label="${label}">
+   <path d="M18 104 L10 60 L28 28 L58 12 L92 22 L110 54 L104 104Z" fill="#8a8f96" stroke="#28412f" stroke-width="3" stroke-linejoin="round"/>
+   <path d="M40 30 L50 46 L44 58 M84 34 L76 50 M92 84 L80 92" stroke="#5d6168" stroke-width="3" fill="none" stroke-linecap="round"/>
+   <path d="M36 62 L52 68 M84 62 L68 68" stroke="#28412f" stroke-width="4" stroke-linecap="round"/>
+   <circle cx="46" cy="74" r="6" fill="#ffd34d" stroke="#28412f" stroke-width="2"/><circle cx="74" cy="74" r="6" fill="#ffd34d" stroke="#28412f" stroke-width="2"/>
+   <path d="M44 92 Q60 84 76 92" stroke="#28412f" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`;
+  const horns=boss?`<path d="M34 30 L26 4 L48 22Z M86 30 L94 4 L72 22Z" fill="#fffdf6" stroke="#28412f" stroke-width="3" stroke-linejoin="round"/>`:'';
+  const brows=boss?`<path d="M34 50 L54 56 M88 50 L68 56" stroke="#28412f" stroke-width="4" stroke-linecap="round"/>`:'';
+  const mouth=boss?`<path d="M46 86 L52 80 L58 86 L64 80 L70 86 L76 80" stroke="#28412f" stroke-width="3" fill="none" stroke-linejoin="round"/>`:`<path d="M50 82 Q61 90 72 82" stroke="#28412f" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  return `<svg viewBox="0 0 120 120" class="monster ${boss?'boss':''}" id="mon" role="img" aria-label="${label}">${horns}
+   <path d="M20 70 C10 40 34 14 60 16 C88 16 110 40 100 70 C98 84 104 96 96 104 C90 96 84 108 76 100 C70 110 62 102 56 108 C50 100 42 110 36 100 C28 106 22 96 24 88 C20 82 20 76 20 70Z" fill="${color}" stroke="#28412f" stroke-width="3" stroke-linejoin="round"/>
+   <ellipse cx="44" cy="40" rx="10" ry="6" fill="#fff" opacity=".35"/>
+   <circle cx="46" cy="64" r="9" fill="#fff" stroke="#28412f" stroke-width="2.5"/><circle cx="76" cy="64" r="9" fill="#fff" stroke="#28412f" stroke-width="2.5"/>
+   <circle cx="48" cy="66" r="4" fill="#28412f"/><circle cx="74" cy="66" r="4" fill="#28412f"/>${brows}${mouth}</svg>`;
+}
+function treesSVG(){return `<svg class="trees" viewBox="0 0 560 230" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+ <g fill="rgba(255,255,255,.28)" stroke="rgba(40,65,47,.45)" stroke-width="2"><path d="M60 145 L95 60 L130 145Z"/><path d="M150 143 L178 80 L206 143Z"/><path d="M430 145 L470 50 L510 145Z"/><path d="M500 143 L530 90 L560 143Z"/></g>
+ <g fill="#c8352b" stroke="#28412f" stroke-width="1.5"><path d="M250 176 Q262 160 274 176Z"/><path d="M380 186 Q390 174 400 186Z"/></g>
+ <g fill="#eaa520"><circle cx="258" cy="170" r="2.5"/><circle cx="267" cy="168" r="2"/><circle cx="388" cy="181" r="2"/></g>
+ <g fill="#f3ead2" stroke="#28412f" stroke-width="1.5"><rect x="259" y="176" width="6" height="10" rx="2"/><rect x="387" y="186" width="5" height="8" rx="2"/></g></svg>`;}
+function skyBG(z){const c=z.sky;return `linear-gradient(${c[0]},${c[1]} 62%,${c[2]} 62%,${c[3]})`;}
+function mist(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`;}
+
+/* ---------- screens ---------- */
+function titleScreen(){
+  vnHandler=null;
+  app.innerHTML=`<section class="title">
+    <span class="tag">努酷貓養貓學院</span>
+    <h1><span class="h1main">養貓前必修課</span><span>8 堂課 · 從認養準備到特殊需求貓</span></h1>
+    <img class="hero-art" src="${IMG.nuku}" alt="努酷貓拿著弓箭，身邊有努努和酷酷">
+    <p>想認養貓咪？先跟著努酷貓學會照顧貓的知識。答對題目射破迷思怪，集滿 8 枚徽章，就完成養貓前必修課。</p>
+    <button class="btn" id="go">開始上課</button>
+    <div data-acct="title">${acctHTML('title')}</div>
+    <span class="org">努酷貓守護中途貓關懷教育協會 · 試玩版</span>
+  </section>`;
+  document.getElementById('go').onclick=()=> badges().length?hub():intro(0);
+}
+let vnHandler=null;
+document.addEventListener('keydown',e=>{ if(vnHandler&&(e.key==='Enter'||e.key===' ')){e.preventDefault();vnHandler();} });
+function intro(k){
+  const d=INTRO[k], last=k===INTRO.length-1;
+  const src=d.av==='nuku'?IMG.nuku:IMG[d.av];
+  app.innerHTML=`<div class="vn" id="vn" role="dialog" aria-label="開場劇情">${treesSVG()}<div class="vn-inner">
+    <div class="vn-top"><span class="vn-step">${k+1} / ${INTRO.length}</span><button class="vn-skip" id="skip">略過劇情</button></div>
+    <div class="vn-char"><img class="${d.av}" src="${src}" alt="${d.who}"></div>
+    <div class="vn-box"><div class="vn-name ${d.av}">${d.who}</div><p class="vn-text" id="vt" aria-live="polite"></p>
+    <span class="vn-next" id="vnext">${last?'點一下看課程地圖':'點一下繼續'} ▼</span></div></div></div>`;
+  const vt=document.getElementById('vt'), nx=document.getElementById('vnext');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let n=0, typing=!reduce;
+  const finish=()=>{typing=false;clearInterval(tw);vt.textContent=d.text;nx.classList.add('show');};
+  const tw=setInterval(()=>{ n++; vt.textContent=d.text.slice(0,n); if(n>=d.text.length)finish(); },45);
+  if(reduce)finish();
+  const go=()=>{ if(typing){finish();return;} clearInterval(tw); last?hub():intro(k+1); };
+  vnHandler=go;
+  document.getElementById('vn').onclick=go;
+  document.getElementById('skip').onclick=e=>{e.stopPropagation();clearInterval(tw);hub();};
+}
+
+function hub(){
+  vnHandler=null; if(S&&S.timer)clearInterval(S.timer); sendRun(false);
+  const b=badges();
+  app.innerHTML=`<section class="hubwrap">
+   <div class="hubhead"><div><span class="tag">努酷貓養貓學院</span><h2>養貓前必修課</h2><p class="small">選一堂課開始。每次進入都會從題庫隨機抽 8 題，加上 3 題最終關，重玩題目會不一樣。</p><div data-acct="hub">${acctHTML('hub')}</div></div>
+    <div class="prog" aria-label="已完成 ${b.length} / 8"><b>${b.length}</b><span>/ 8 徽章</span></div></div>
+   <div class="zones">${ZONES.map((z,j)=>{const done=b.includes(z.id);return `<button class="zcard ${done?'done':''}" data-z="${j}" style="--zc:${z.color};--zbg:${skyBG(z)}">
+     <span class="zart">${monsterSVG(true,mist(z.color,1),z.boss.stone,'')}</span>
+     <span class="zinfo"><span class="znum">第 ${j+1} 課</span><span class="zname">${z.name}</span><span class="ztopic">${z.topic}</span></span>
+     <span class="zstat">${done?'已完成':'題庫 '+(z.stages.length+z.boss.phases.length)+' 題'}</span></button>`}).join('')}</div>
+   <div class="center"><button class="btn ghost" id="toTitle">回到首頁</button></div></section>`;
+  app.querySelectorAll('.zcard').forEach(c=>c.onclick=()=>{Z=ZONES[+c.dataset.z];reset();play();window.scrollTo(0,0);});
+  document.getElementById('toTitle').onclick=titleScreen;
+}
+
+function hud(){
+  const st=S.stages;
+  const pips=st.map((_,j)=>`<span class="pip ${j<S.i?'done':''} ${j===S.i?'now':''}"></span>`).join('')+`<span class="pip boss ${S.i>st.length?'done':''} ${S.i===st.length?'now':''}" title="Boss"></span>`;
+  const q=Array.from({length:MAX_ARROWS},(_,j)=>arrowSVG(j>=S.arrows?'gone':'')).join('');
+  return `<div class="hud"><button class="back" id="back" aria-label="回到課程地圖">‹ 地圖</button><div class="zone">${Z.name}<small>${S.i<st.length?`第 ${S.i+1} 關 / 共 ${st.length} 關`:`Boss · 第 ${S.phase+1} 階段`}</small></div>
+   <div class="quiver" aria-label="剩下 ${S.arrows} 支箭"><span class="lbl">箭筒</span>${q}</div></div>
+   <div class="track" aria-hidden="true">${pips}</div>`;
+}
+function wireBack(){document.getElementById('back').onclick=()=>{clearInterval(S.timer);hub();};}
+
+function play(){
+  vnHandler=null; clearInterval(S.timer); S.locked=false; S.removed=[]; S.sel=new Set();
+  if(S.i>=S.stages.length) return bossScreen();
+  const st=shuffleQ(S.stages[S.i]);
+  let body='';
+  if(st.type==='read') body+=`<p class="scene">${st.scene}</p>`;
+  if(st.type==='talk') body+=`<div class="chat">${st.chat.map(c=>`<div class="bubble"><b>${c.who}</b>${c.text}</div>`).join('')}</div>`;
+  if(st.type==='timed') body+=`<div class="timer" id="tm"><i id="tmbar"></i></div>`;
+  body+=`<p class="qtext">${st.q}</p>`;
+  if(st.type==='find') body+=`<div class="grid">${st.items.map((it,j)=>`<button class="tile" data-j="${j}" aria-pressed="false"><span class="ic">${it.e}</span>${it.t}</button>`).join('')}</div>`;
+  else body+=optsHTML(st.options);
+  app.innerHTML=hud()+stageHTML(st.monster,st.myth,false)+`<div class="card" id="card">
+    <div class="qmeta"><span class="qtype">${st.label}</span><span>迷思怪：${st.monster}</span></div>
+    ${body}
+    <div class="row" id="ctl">${hintBtn()}${st.type==='find'?'<button class="btn" id="fire">射箭</button>':''}</div>
+    <div id="after"></div></div>`;
+  wireBack(); wireHint(st);
+  if(st.type==='find'){
+    app.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{ if(S.locked)return; const j=+t.dataset.j;
+      S.sel.has(j)?S.sel.delete(j):S.sel.add(j); t.classList.toggle('sel'); t.setAttribute('aria-pressed',S.sel.has(j)); });
+    document.getElementById('fire').onclick=()=>judgeFind(st);
+  } else wireOpts(st, ok=>afterAnswer(ok,st.explain));
+  if(st.type==='timed') startTimer(st);
+}
+
+function optsHTML(opts){return `<div class="opts">${opts.map((o,j)=>`<button class="opt" data-j="${j}"><span class="tip">${flyerSVG(28)}</span><span>${o}</span></button>`).join('')}</div>`;}
+function stageHTML(name,myth,boss){
+  const mc=boss?mist(Z.color,1):mist(Z.color,.75);
+  return `<div class="stage" id="stage" style="background:${skyBG(Z)}">${treesSVG()}
+   <div class="fog" style="background:radial-gradient(ellipse at 75% 40%, ${mist(Z.color,.3)}, transparent 60%)"></div>
+   <div class="myth" style="border-color:${Z.color}"><b style="color:${Z.color}">${name}：</b>「${myth}」</div>
+   ${monsterSVG(boss,mc,boss&&Z.boss.stone,name)}${boss?`<div class="hp"><i id="hpbar" style="width:${S.bossHp/3*100}%"></i></div>`:''}
+   <img class="hero" id="hero" src="${IMG.nuku}" alt="努酷貓"></div>`;
+}
+function hintLabel(){return `<img src="${IMG.nunu}" alt="">找努努提示（剩 ${S.hints} 次）`;}
+function hintBtn(){return `<button class="hintbtn" id="hint" ${S.hints<=0?'disabled':''}>${hintLabel()}</button>`;}
+function wireHint(st){
+  const b=document.getElementById('hint'); if(!b)return;
+  b.onclick=()=>{
+    if(S.locked||S.hints<=0)return;
+    if(st.type==='find'){
+      const cand=st.items.map((_,j)=>j).filter(j=>st.items[j].pick&&!S.sel.has(j)&&!app.querySelector(`.tile[data-j="${j}"]`).classList.contains('hinted'));
+      if(!cand.length)return;
+      app.querySelector(`.tile[data-j="${cand[0]}"]`).classList.add('hinted');
+    } else {
+      const wrong=st.options.map((_,j)=>j).filter(j=>j!==st.answer&&!S.removed.includes(j));
+      if(wrong.length<=1)return;
+      const j=wrong[Math.floor(Math.random()*wrong.length)]; S.removed.push(j);
+      const o=app.querySelector(`.opt[data-j="${j}"]`); o.classList.add('out'); o.disabled=true;
+    }
+    S.hints--; S.hintsUsed++; b.innerHTML=hintLabel(); if(S.hints<=0)b.disabled=true;
+  };
+}
+function wireOpts(q,cb){
+  app.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    if(S.locked)return; S.locked=true; clearInterval(S.timer);
+    const j=+o.dataset.j, ok=j===q.answer;
+    S.log.push({qid:q.id,ok});
+    o.classList.add(ok?'right':'wrong');
+    if(!ok) app.querySelector(`.opt[data-j="${q.answer}"]`).classList.add('right');
+    app.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+    shoot(ok,()=>cb(ok));
+  });
+}
+function startTimer(st){
+  const total=st.seconds*10; let left=total; const bar=document.getElementById('tmbar'), tm=document.getElementById('tm');
+  S.timer=setInterval(()=>{ left--; bar.style.width=(left/total*100)+'%'; if(left<total*0.33)tm.classList.add('low');
+    if(left<=0){ clearInterval(S.timer); if(S.locked)return; S.locked=true;
+      app.querySelectorAll('.opt').forEach(x=>x.disabled=true); app.querySelector(`.opt[data-j="${st.answer}"]`).classList.add('right');
+      S.log.push({qid:st.id,ok:false}); shoot(false,()=>afterAnswer(false,'時間到了！'+st.explain)); }
+  },100);
+}
+function judgeFind(st){
+  if(S.locked)return; S.locked=true;
+  let ok=true;
+  st.items.forEach((it,j)=>{ const t=app.querySelector(`.tile[data-j="${j}"]`); t.disabled=true; const s=S.sel.has(j);
+    t.classList.remove('sel','hinted');
+    if(it.pick&&s) t.classList.add('reveal-hit');
+    else if(it.pick&&!s){t.classList.add('reveal-miss');ok=false;}
+    else if(!it.pick&&s){ok=false;t.classList.add('reveal-wrong');}
+    else t.classList.add('reveal-ok'); });
+  document.getElementById('fire').disabled=true;
+  S.log.push({qid:st.id,ok});
+  const note=ok?'':'虛線框是你漏選的，劃線的是不該選的。';
+  shoot(ok,()=>afterAnswer(ok,note+st.explain));
+}
+
+/* ---------- arrow flight ---------- */
+function shoot(ok,done){
+  const stage=document.getElementById('stage'), hero=document.getElementById('hero'), mon=document.getElementById('mon');
+  const sr=stage.getBoundingClientRect(), hr=hero.getBoundingClientRect(), mr=mon.getBoundingClientRect();
+  const x0=hr.left-sr.left+hr.width*0.55, y0=hr.top-sr.top+hr.height*0.18;
+  const x1=mr.left-sr.left+mr.width*0.35, y1=mr.top-sr.top+mr.height*0.5;
+  const f=document.createElement('div'); f.className='flyer'; f.innerHTML=flyerSVG(); stage.appendChild(f);
+  hero.classList.remove('shoot'); void hero.offsetWidth; hero.classList.add('shoot');
+  const ang=Math.atan2(y1-y0,x1-x0)*180/Math.PI;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const kf= ok ? [{transform:`translate(${x0}px,${y0}px) rotate(${ang}deg)`},{transform:`translate(${x1-40}px,${y1-6}px) rotate(${ang}deg)`}]
+               : [{transform:`translate(${x0}px,${y0}px) rotate(${ang}deg)`},{transform:`translate(${(x0+x1)/2}px,${y1-40}px) rotate(${ang-10}deg)`,offset:.55},{transform:`translate(${x1-70}px,${sr.height-20}px) rotate(70deg)`}];
+  const an=f.animate(kf,{duration:reduce?1:(ok?420:700),easing:ok?'cubic-bezier(.3,.1,.4,1)':'ease-in',fill:'forwards'});
+  an.onfinish=()=>{
+    if(ok){ mon.classList.add('hit'); f.remove(); }
+    else { S.arrows=Math.max(0,S.arrows-1); const qs=app.querySelectorAll('.quiver svg'); if(qs[S.arrows])qs[S.arrows].classList.add('gone'); }
+    const st=document.createElement('div'); st.className='stamp '+(ok?'ok':'no'); st.textContent=ok?'命中！':'射偏了'; stage.appendChild(st);
+    S.answered++; if(ok)S.correct++;
+    setTimeout(done, reduce?50:550);
+  };
+}
+
+function afterAnswer(ok,text,opts={}){
+  const out=S.arrows<=0;
+  if(ok&&!opts.boss) document.getElementById('mon').classList.add('poof');
+  const next = out ? '箭用完了' : (opts.label || (S.i<S.stages.length-1?'下一關':'前往最深處'));
+  document.getElementById('hint')?.setAttribute('disabled','');
+  document.getElementById('after').innerHTML=`<div class="explain"><div class="avatar kuku"><img src="${IMG.kuku}" alt="酷酷"></div>
+    <div><div class="who">酷酷的解說</div><p>${text}</p>${opts.note?`<p class="note" style="margin-top:6px">${opts.note}</p>`:''}</div></div>
+    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" id="cont">${next}</button></div>`;
+  const c=document.getElementById('cont'); c.focus({preventScroll:true});
+  document.getElementById('after').scrollIntoView({behavior:'smooth',block:'nearest'});
+  c.onclick=()=>{ if(out) return gameOver(); if(opts.onNext) return opts.onNext(); S.i++; play(); window.scrollTo(0,0); };
+}
+
+/* ---------- boss ---------- */
+function bossScreen(){
+  clearInterval(S.timer); S.locked=false; S.removed=[];
+  const B=Z.boss, p=shuffleQ(S.bossQ[S.phase]);
+  app.innerHTML=hud()+stageHTML(B.monster,B.myth,true)+`<div class="card">
+   <div class="qmeta"><span class="qtype must">必過題 · 最終關</span><span>剩餘體力 ${S.bossHp} / 3</span></div>
+   <p class="qtext">${p.q}</p>${optsHTML(p.options)}
+   <p class="note">努努：這一關要靠你自己！答錯任何一題，${B.monster}會回滿體力。</p>
+   <div id="after"></div></div>`;
+  wireBack();
+  wireOpts(p, ok=>{
+    if(ok){
+      S.bossHp--; document.getElementById('hpbar').style.width=(S.bossHp/3*100)+'%';
+      if(S.bossHp<=0){ document.getElementById('mon').classList.add('poof');
+        afterAnswer(true,p.explain,{boss:true,label:'領取徽章',onNext:()=>{S.i=S.stages.length+1;victory();}}); }
+      else afterAnswer(true,p.explain,{boss:true,label:'下一階段',onNext:()=>{S.phase++;bossScreen();window.scrollTo(0,0);}});
+    } else {
+      S.bossHp=3; S.phase=0; document.getElementById('hpbar').style.width='100%';
+      afterAnswer(false,p.explain,{boss:true,label:'重新挑戰',note:'這幾題攸關貓咪的生命，所以一定要全部答對才能過關。',onNext:()=>{bossScreen();window.scrollTo(0,0);}});
+    }
+  });
+}
+
+/* ---------- endings ---------- */
+function gameOver(){
+  sendRun(false);
+  app.innerHTML=`<div class="dialog" style="margin-top:24px"><div class="avatar nuku"><img src="${IMG.head}" alt="努酷貓"></div>
+   <div class="dialog-col"><div><div class="who">努酷貓</div><p class="line">箭用完了，迷思之霧又變濃了。沒關係，酷酷剛剛講的你都記下來了，我們再試一次！</p></div>
+   <div class="dialog-actions"><button class="btn ghost" id="map">回到地圖</button><button class="btn" id="re">重新挑戰${Z.name}</button></div></div></div>`;
+  document.getElementById('re').onclick=()=>{reset();play();};
+  document.getElementById('map').onclick=hub;
+}
+function victory(){
+  SESSION_BADGES.add(Z.id); saveBadge(Z.id); sendRun(true);
+  const b=badges(), all=b.length>=ZONES.length;
+  const acc=Math.round(S.correct/S.answered*100);
+  app.innerHTML=`<section class="result">
+   <div class="medal" style="--zc:${Z.color}"><svg viewBox="0 0 88 88" aria-hidden="true"><path d="M44 4 L78 16 L74 56 Q66 76 44 84 Q22 76 14 56 L10 16Z" fill="#eaa520" stroke="#28412f" stroke-width="3"/><path d="M44 18 L64 26 L61 52 Q56 64 44 70 Q32 64 27 52 L24 26Z" fill="${Z.color}" stroke="#28412f" stroke-width="2"/><path d="M44 30 C50 30 52 38 44 48 C36 38 38 30 44 30Z M36 50 L52 50" stroke="#fffdf6" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+    <div><span class="tag">徽章取得</span><h2 style="font-size:26px;margin-top:6px">${Z.name}徽章</h2><p class="small" style="margin:4px 0 0">你打倒了${Z.boss.monster}，${Z.topic}這一課完成了。</p></div></div>
+   <div class="stats"><div class="stat"><b>${acc}%</b><span>答對率</span></div><div class="stat"><b>${S.arrows}</b><span>剩餘箭數</span></div><div class="stat"><b>${S.hintsUsed}</b><span>努努提示</span></div></div>
+   ${ME.loggedIn?'':`<div data-acct="win">${acctHTML('win')}</div>`}
+   <div class="rescue"><div class="pic">橘</div><div><span class="ex">範例資料</span><h3 style="font-size:19px;margin-top:4px">你救出了中途貓「小橘」</h3><p class="small" style="margin:2px 0 0">正式版會串接 NUKUNUKU 的中途貓資料，顯示真正在等家的貓咪與認養連結。</p></div></div>
+   <div class="passport"><div><h3>必修課 · 學習徽章</h3><div class="sub">${all?'8 枚徽章全部集滿！':`已集 ${b.length} / 8 枚，集滿就完成養貓前必修課`}</div></div>
+    <div class="slots">${ZONES.map(z=>`<div class="slot ${b.includes(z.id)?'lit':''}">${z.name}</div>`).join('')}</div></div>
+   <div class="dialog"><div class="avatar nuku"><img src="${IMG.head}" alt="努酷貓"></div><div class="dialog-col"><div><div class="who">努酷貓</div>
+    <p class="line">${all?'太厲害了！8 堂課全部完成，你已經準備好迎接一隻貓咪回家了。認養前，也歡迎來 NUKUNUKU 認識我們的中途貓！':`${Z.name}這一課你完成了，隨時可以回來複習。還有 ${ZONES.length-b.length} 堂課在等你，下一區見！`}</p></div></div></div>
+   <div class="center"><button class="btn" id="map">回到課程地圖</button><button class="btn ghost" id="again">再玩一次</button></div>
+  </section>`;
+  window.scrollTo(0,0);
+  document.getElementById('again').onclick=()=>{reset();play();};
+  document.getElementById('map').onclick=hub;
+}
+
+function loginNotice(){
+  let k=''; try{ k=new URLSearchParams(location.search).get('login')||''; }catch(e){}
+  const msg={failed:'LINE 登入沒有成功，請再試一次，或先不登入直接玩。',cancelled:'你取消了 LINE 登入，一樣可以直接玩。',unavailable:'LINE 登入目前還沒開放，可以先直接玩。'}[k];
+  if(!msg) return;
+  const t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.textContent=msg; document.body.appendChild(t);
+  setTimeout(()=>t.remove(),6000);
+  try{ history.replaceState(null,'',location.pathname); }catch(e){}
+}
+titleScreen();
+loadMe();
+loginNotice();
+
+</script>
+</body></html>
