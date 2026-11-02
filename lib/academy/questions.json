@@ -604,6 +604,21 @@
    "text": "救回的街貓帶回家後，第一步應該？",
    "type": "choice"
   },
+  "law-53": {
+   "zone": "law",
+   "text": "製作走失貓的協尋海報，最重要的資訊是？",
+   "type": "choice"
+  },
+  "law-54": {
+   "zone": "law",
+   "text": "全國動物保護專線 1959，可以用來做什麼？",
+   "type": "choice"
+  },
+  "law-55": {
+   "zone": "law",
+   "text": "颱風來臨前，飼主應該怎麼準備？",
+   "type": "choice"
+  },
   "law-b1": {
    "zone": "law",
    "text": "讓家貓自由進出家門，最大的問題是什麼？",
