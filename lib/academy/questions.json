@@ -25,8 +25,8 @@
    "name": "心語山谷"
   },
   {
-   "id": "tribe",
-   "name": "貓群部落"
+   "id": "care",
+   "name": "暖暖小屋"
   },
   {
    "id": "shrine",
@@ -476,20 +476,15 @@
   },
   "heal-11": {
    "zone": "heal",
-   "text": "幫貓刷牙，下列哪個做法正確？",
+   "text": "貓打完疫苗後，出現哪種狀況要立即回醫院？",
    "type": "choice"
   },
   "heal-12": {
    "zone": "heal",
-   "text": "貓打完疫苗後，出現哪種狀況要立即回醫院？",
-   "type": "choice"
-  },
-  "heal-13": {
-   "zone": "heal",
    "text": "你會怎麼回？",
    "type": "talk"
   },
-  "heal-14": {
+  "heal-13": {
    "zone": "heal",
    "text": "貓的一隻眼睛突然睜不開、一直流淚。你會？",
    "type": "timed"
@@ -589,6 +584,76 @@
    "text": "砂盆放在哪裡比較好？",
    "type": "choice"
   },
+  "mind-15": {
+   "zone": "mind",
+   "text": "家裡有兩隻貓，一般建議準備幾個砂盆？",
+   "type": "choice"
+  },
+  "mind-16": {
+   "zone": "mind",
+   "text": "新貓帶回家，和原本的貓引見的第一步是？",
+   "type": "choice"
+  },
+  "mind-17": {
+   "zone": "mind",
+   "text": "牠們在做什麼？",
+   "type": "read"
+  },
+  "mind-18": {
+   "zone": "mind",
+   "text": "多貓家庭的食物、水、砂盆、睡覺的地方要怎麼安排？",
+   "type": "choice"
+  },
+  "mind-19": {
+   "zone": "mind",
+   "text": "你會怎麼回？",
+   "type": "talk"
+  },
+  "mind-20": {
+   "zone": "mind",
+   "text": "家裡有一隻 14 歲、喜歡安靜的老貓，想再認養一隻，怎麼選比較好？",
+   "type": "choice"
+  },
+  "mind-21": {
+   "zone": "mind",
+   "text": "兩隻貓突然真的打起來，毛炸開、尖叫。你會？",
+   "type": "timed"
+  },
+  "mind-22": {
+   "zone": "mind",
+   "text": "家裡來了新貓後，原本的貓常常躲起來、不太吃飯，該怎麼辦？",
+   "type": "choice"
+  },
+  "mind-23": {
+   "zone": "mind",
+   "text": "一隻貓看完醫生回家，另一隻貓卻對牠哈氣、好像不認得牠。可以怎麼做？",
+   "type": "choice"
+  },
+  "mind-24": {
+   "zone": "mind",
+   "text": "家裡有狗，想再養貓，要注意什麼？",
+   "type": "choice"
+  },
+  "mind-25": {
+   "zone": "mind",
+   "text": "哪些是多貓家庭裡，貓可能有壓力的訊號？選好後按「射箭」。",
+   "type": "find"
+  },
+  "mind-26": {
+   "zone": "mind",
+   "text": "家裡有好幾隻貓，用一支逗貓棒一起玩，常會發生什麼？",
+   "type": "choice"
+  },
+  "mind-27": {
+   "zone": "mind",
+   "text": "家裡一隻貓得了上呼吸道感染（打噴嚏、流鼻水、眼屎多），應該怎麼做？",
+   "type": "choice"
+  },
+  "mind-28": {
+   "zone": "mind",
+   "text": "多貓家庭共用飼料和砂盆，最大的照顧盲點是什麼？",
+   "type": "choice"
+  },
   "mind-b1": {
    "zone": "mind",
    "text": "貓開始在床上或砂盆外尿尿，第一步該做什麼？",
@@ -609,94 +674,119 @@
    "text": "你罵了貓之後，牠尿在你的衣服上。這代表？",
    "type": "boss"
   },
-  "tribe-01": {
-   "zone": "tribe",
-   "text": "家裡有兩隻貓，一般建議準備幾個砂盆？",
-   "type": "choice"
-  },
-  "tribe-02": {
-   "zone": "tribe",
-   "text": "新貓帶回家，和原本的貓引見的第一步是？",
-   "type": "choice"
-  },
-  "tribe-03": {
-   "zone": "tribe",
-   "text": "牠們在做什麼？",
-   "type": "read"
-  },
-  "tribe-04": {
-   "zone": "tribe",
-   "text": "多貓家庭的食物、水、砂盆、睡覺的地方要怎麼安排？",
-   "type": "choice"
-  },
-  "tribe-05": {
-   "zone": "tribe",
-   "text": "你會怎麼回？",
-   "type": "talk"
-  },
-  "tribe-06": {
-   "zone": "tribe",
-   "text": "家裡有一隻 14 歲、喜歡安靜的老貓，想再認養一隻，怎麼選比較好？",
-   "type": "choice"
-  },
-  "tribe-07": {
-   "zone": "tribe",
-   "text": "兩隻貓突然真的打起來，毛炸開、尖叫。你會？",
-   "type": "timed"
-  },
-  "tribe-08": {
-   "zone": "tribe",
-   "text": "家裡來了新貓後，原本的貓常常躲起來、不太吃飯，該怎麼辦？",
-   "type": "choice"
-  },
-  "tribe-09": {
-   "zone": "tribe",
-   "text": "一隻貓看完醫生回家，另一隻貓卻對牠哈氣、好像不認得牠。可以怎麼做？",
-   "type": "choice"
-  },
-  "tribe-10": {
-   "zone": "tribe",
-   "text": "家裡有狗，想再養貓，要注意什麼？",
-   "type": "choice"
-  },
-  "tribe-11": {
-   "zone": "tribe",
-   "text": "哪些是多貓家庭裡，貓可能有壓力的訊號？選好後按「射箭」。",
-   "type": "find"
-  },
-  "tribe-12": {
-   "zone": "tribe",
-   "text": "家裡有好幾隻貓，用一支逗貓棒一起玩，常會發生什麼？",
-   "type": "choice"
-  },
-  "tribe-13": {
-   "zone": "tribe",
-   "text": "家裡一隻貓得了上呼吸道感染（打噴嚏、流鼻水、眼屎多），應該怎麼做？",
-   "type": "choice"
-  },
-  "tribe-14": {
-   "zone": "tribe",
-   "text": "多貓家庭共用飼料和砂盆，最大的照顧盲點是什麼？",
-   "type": "choice"
-  },
-  "tribe-b1": {
-   "zone": "tribe",
+  "mind-b5": {
+   "zone": "mind",
    "text": "新貓帶回家，直接和原本的貓關在同一個空間，會怎樣？",
    "type": "boss"
   },
-  "tribe-b2": {
-   "zone": "tribe",
+  "mind-b6": {
+   "zone": "mind",
    "text": "新貓還沒有健康檢查，可以先和家裡的貓接觸嗎？",
    "type": "boss"
   },
-  "tribe-b3": {
-   "zone": "tribe",
+  "mind-b7": {
+   "zone": "mind",
    "text": "引見好幾週了，兩隻貓還是會打到流血。你會？",
    "type": "boss"
   },
-  "tribe-b4": {
-   "zone": "tribe",
+  "mind-b8": {
+   "zone": "mind",
    "text": "家裡的狗開始追著新來的貓跑，貓嚇得到處逃。你會？",
+   "type": "boss"
+  },
+  "care-01": {
+   "zone": "care",
+   "text": "幫貓剪指甲，應該剪到哪裡？",
+   "type": "choice"
+  },
+  "care-02": {
+   "zone": "care",
+   "text": "室內貓大約多久需要檢查、修剪一次指甲？",
+   "type": "choice"
+  },
+  "care-03": {
+   "zone": "care",
+   "text": "餵貓吃藥丸，下列哪個做法最正確？",
+   "type": "choice"
+  },
+  "care-04": {
+   "zone": "care",
+   "text": "用針筒餵貓藥水，正確的方式是？",
+   "type": "choice"
+  },
+  "care-05": {
+   "zone": "care",
+   "text": "長毛貓身上有一團很緊的毛結，最安全的處理方式是？",
+   "type": "choice"
+  },
+  "care-06": {
+   "zone": "care",
+   "text": "關於清貓的耳朵，下列哪個說法正確？",
+   "type": "choice"
+  },
+  "care-07": {
+   "zone": "care",
+   "text": "貓的眼角有眼屎，怎麼清比較好？",
+   "type": "choice"
+  },
+  "care-08": {
+   "zone": "care",
+   "text": "室內貓需要多常洗澡？",
+   "type": "choice"
+  },
+  "care-09": {
+   "zone": "care",
+   "text": "哪些是每天就能做、很實用的健康觀察？選好後按「射箭」。",
+   "type": "find"
+  },
+  "care-10": {
+   "zone": "care",
+   "text": "最可能是什麼狀況？",
+   "type": "read"
+  },
+  "care-11": {
+   "zone": "care",
+   "text": "在家怎麼幫貓量體重最方便？",
+   "type": "choice"
+  },
+  "care-12": {
+   "zone": "care",
+   "text": "關於砂盆的清潔，下列哪個做法比較好？",
+   "type": "choice"
+  },
+  "care-13": {
+   "zone": "care",
+   "text": "你會怎麼建議？",
+   "type": "talk"
+  },
+  "care-14": {
+   "zone": "care",
+   "text": "剪指甲時不小心剪到血線，一直滴血。你會？",
+   "type": "timed"
+  },
+  "care-15": {
+   "zone": "care",
+   "text": "怎麼讓貓比較不怕外出籠？",
+   "type": "choice"
+  },
+  "care-16": {
+   "zone": "care",
+   "text": "幫貓刷牙，下列哪個做法正確？",
+   "type": "choice"
+  },
+  "care-b1": {
+   "zone": "care",
+   "text": "清砂盆時發現，家裡的公貓從昨天到今天幾乎沒有尿塊，只有幾小塊。你會？",
+   "type": "boss"
+  },
+  "care-b2": {
+   "zone": "care",
+   "text": "醫生開了抗生素藥丸，餵貓吞下後應該？",
+   "type": "boss"
+  },
+  "care-b3": {
+   "zone": "care",
+   "text": "貓背上有一個很緊的毛結，貼著皮膚，你會？",
    "type": "boss"
   },
   "shrine-01": {
