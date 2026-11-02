@@ -2111,6 +2111,38 @@ for(const k in Q2){ ZONES.find(z=>z.id===k).stages.push(...Q2[k].stages); ZONES.
     explain:'依 2021 年美國動物醫院協會（AAHA）與美國貓科醫師協會（AAFP）的指引，7 到 10 歲是熟齡，10 歲以上是老年。進入老年後，建議大約每半年健檢一次。'});
 })();
 
+/* 秘書長審核決定（2026-11-03） */
+(function(){
+  const Zn=id=>ZONES.find(z=>z.id===id);
+  const find=(zid,q,boss)=>{const arr=boss?Zn(zid).boss.phases:Zn(zid).stages;const s=arr.find(s=>s.q===q);if(!s)throw new Error('not found: '+q);return s;};
+  const drop=(zid,q)=>{const z=Zn(zid);const i=z.stages.findIndex(s=>s.q===q);if(i<0)throw new Error('drop not found: '+q);z.stages.splice(i,1);};
+
+  // heal-01：答案改為 1 到 2 天
+  const h1=find('heal','一隻成貓突然完全不吃東西，最晚什麼時候該帶去看醫生？');
+  h1.options=h1.options.map(o=>o==='超過一天仍完全不吃，就要就醫'?'超過 1 到 2 天仍完全不吃，就要就醫':o);
+  h1.explain='貓長時間不進食，身體會大量分解脂肪，容易引發脂肪肝。超過 1 到 2 天完全不吃就該就醫，不要等到明顯變瘦。';
+
+  // home-32：補充體重
+  const h32=find('home','認養的幼貓還沒絕育，一般建議在什麼時候做？');
+  h32.options[0]='大約 4 到 6 個月大，體重滿 2.5 公斤，實際時間和獸醫討論';
+  h32.explain='母貓可能在 4 到 6 個月大就第一次發情，也可能在這時意外懷孕。一般建議在 4 到 6 個月大、體重滿 2.5 公斤左右安排絕育，在第一次發情前完成，對健康和行為都比較好。';
+
+  // care-28：剃毛不會幫助散熱
+  const c28=find('care','台灣夏天很熱，幫貓把毛剃光會比較涼嗎？');
+  c28.options=['不會，剃毛不會幫助貓散熱，剃太短還可能傷到毛囊','會，剃越短越涼','所有貓夏天都要剃','剃光才不會中暑'];
+  c28.answer=0;
+  c28.explain='貓的毛有隔熱作用，剃光不會讓貓比較涼，還可能曬傷，剃太短也可能傷到毛囊，讓毛長不回來。貓流汗散熱主要靠腳掌的肉球和鼻頭，夏天開冷氣、提供涼墊和充足的水更有效。長毛嚴重打結時，再交給專業人員處理。';
+
+  // shrine-b3：補充意識不清時不要灌
+  const sb3=find('shrine','糖尿病貓打完胰島素後，開始發抖、站不穩、意識模糊。你會？',true);
+  sb3.explain+='貓意識不清時，只把糖漿抹在牙齦上，不要往嘴裡灌，避免嗆到。';
+
+  // 刪除：FIP 藥物、餵食街貓開罰、繁殖買賣許可
+  drop('heal','關於貓傳染性腹膜炎（FIP），下列哪個說法比較正確？');
+  drop('law','餵食社區街貓後，沒有清理留下的飼料和容器，可能會？');
+  drop('law','以營利為目的繁殖、買賣貓，依規定需要什麼？');
+})();
+
 const INTRO=[
  {who:'努酷貓',av:'nuku',text:'歡迎來到努酷貓養貓學院！最近愛貓魔人在城市各處放出了迷思之霧。'},
  {who:'努酷貓',av:'nuku',text:'霧裡的迷思怪會讓人做出錯誤判斷，害貓咪生病、被棄養。我們要用知識之箭射破牠們。'},

@@ -441,180 +441,170 @@
   },
   "law-20": {
    "zone": "law",
-   "text": "餵食社區街貓後，沒有清理留下的飼料和容器，可能會？",
+   "text": "各縣市公立動物收容所裡的貓，可以認養嗎？",
    "type": "choice"
   },
   "law-21": {
    "zone": "law",
-   "text": "各縣市公立動物收容所裡的貓，可以認養嗎？",
+   "text": "台灣從 2017 年起，公立收容所實施什麼政策？",
    "type": "choice"
   },
   "law-22": {
    "zone": "law",
-   "text": "台灣從 2017 年起，公立收容所實施什麼政策？",
+   "text": "出遠門要把貓送去寄宿，選擇業者時要注意什麼？",
    "type": "choice"
   },
   "law-23": {
    "zone": "law",
-   "text": "以營利為目的繁殖、買賣貓，依規定需要什麼？",
+   "text": "帶貓去公園「遛貓」，常見的風險是？",
    "type": "choice"
   },
   "law-24": {
    "zone": "law",
-   "text": "出遠門要把貓送去寄宿，選擇業者時要注意什麼？",
+   "text": "貓要去寄宿或住院，常被要求出示什麼？",
    "type": "choice"
   },
   "law-25": {
    "zone": "law",
-   "text": "帶貓去公園「遛貓」，常見的風險是？",
+   "text": "聽到鄰居說要放毒餌趕走社區的街貓，你會怎麼做？",
    "type": "choice"
   },
   "law-26": {
    "zone": "law",
-   "text": "貓要去寄宿或住院，常被要求出示什麼？",
+   "text": "帶貓看醫生，對於治療內容和費用，飼主可以怎麼做？",
    "type": "choice"
   },
   "law-27": {
    "zone": "law",
-   "text": "聽到鄰居說要放毒餌趕走社區的街貓，你會怎麼做？",
+   "text": "換動物醫院或想看其他醫生時，可以怎麼做？",
    "type": "choice"
   },
   "law-28": {
    "zone": "law",
-   "text": "帶貓看醫生，對於治療內容和費用，飼主可以怎麼做？",
+   "text": "貓需要做大手術，你心裡還有疑問，可以怎麼做？",
    "type": "choice"
   },
   "law-29": {
    "zone": "law",
-   "text": "換動物醫院或想看其他醫生時，可以怎麼做？",
+   "text": "路上看到一隻受傷、很害怕的街貓，比較安全的處理方式是？",
    "type": "choice"
   },
   "law-30": {
    "zone": "law",
-   "text": "貓需要做大手術，你心裡還有疑問，可以怎麼做？",
+   "text": "動物保護圈常說的「中途」是什麼？",
    "type": "choice"
   },
   "law-31": {
    "zone": "law",
-   "text": "路上看到一隻受傷、很害怕的街貓，比較安全的處理方式是？",
-   "type": "choice"
-  },
-  "law-32": {
-   "zone": "law",
-   "text": "動物保護圈常說的「中途」是什麼？",
-   "type": "choice"
-  },
-  "law-33": {
-   "zone": "law",
    "text": "你會怎麼回？",
    "type": "talk"
   },
-  "law-34": {
+  "law-32": {
    "zone": "law",
    "text": "下面哪些是負責任飼主的表現？選好後按「射箭」。",
    "type": "find"
   },
-  "law-35": {
+  "law-33": {
    "zone": "law",
    "text": "一隻街貓被車撞倒在馬路中間，還在動。你會？",
    "type": "timed"
   },
-  "law-36": {
+  "law-34": {
    "zone": "law",
    "text": "想帶貓搬到國外，通常需要準備什麼？",
    "type": "choice"
   },
-  "law-37": {
+  "law-35": {
    "zone": "law",
    "text": "2013 年，台灣在哪一種野生動物身上發現狂犬病？",
    "type": "choice"
   },
-  "law-38": {
+  "law-36": {
    "zone": "law",
    "text": "想捐款支持動物救援，可以注意什麼？",
    "type": "choice"
   },
-  "law-39": {
+  "law-37": {
    "zone": "law",
    "text": "認養來的貓，如果真的沒辦法再養，可以直接轉送給朋友嗎？",
    "type": "choice"
   },
-  "law-40": {
+  "law-38": {
    "zone": "law",
    "text": "幫貓辦寵物登記、植入晶片，通常可以去哪裡辦？",
    "type": "choice"
   },
-  "law-41": {
+  "law-39": {
    "zone": "law",
    "text": "辦理寵物登記時，一般需要什麼？",
    "type": "choice"
   },
-  "law-42": {
+  "law-40": {
    "zone": "law",
    "text": "許多縣市的寵物登記費，已絕育和未絕育的貓有什麼差別？",
    "type": "choice"
   },
-  "law-43": {
+  "law-41": {
    "zone": "law",
    "text": "動物福利常說的「五大自由」，不包含下列哪一項？",
    "type": "choice"
   },
-  "law-44": {
+  "law-42": {
    "zone": "law",
    "text": "動物保護相關的事務，地方上主要由哪個單位負責？",
    "type": "choice"
   },
-  "law-45": {
+  "law-43": {
    "zone": "law",
    "text": "家裡的貓走失後被送到收容所，要怎麼領回？",
    "type": "choice"
   },
-  "law-46": {
+  "law-44": {
    "zone": "law",
    "text": "貼出走失協尋後，有人說找到貓，但要你先匯款才肯還，應該？",
    "type": "choice"
   },
-  "law-47": {
+  "law-45": {
    "zone": "law",
    "text": "想帶貓搭飛機，應該先確認什麼？",
    "type": "choice"
   },
-  "law-48": {
+  "law-46": {
    "zone": "law",
    "text": "讓家貓在戶外自由活動，對環境有什麼影響？",
    "type": "choice"
   },
-  "law-49": {
+  "law-47": {
    "zone": "law",
    "text": "中途的認養契約，常見的約定有哪些？",
    "type": "choice"
   },
-  "law-50": {
+  "law-48": {
    "zone": "law",
    "text": "想在社區推動街貓 TNR，比較好的第一步是？",
    "type": "choice"
   },
-  "law-51": {
+  "law-49": {
    "zone": "law",
    "text": "你固定餵食的街貓生病了，可以怎麼做？",
    "type": "choice"
   },
-  "law-52": {
+  "law-50": {
    "zone": "law",
    "text": "送貓去美容後發現牠受傷了，可以怎麼做？",
    "type": "choice"
   },
-  "law-53": {
+  "law-51": {
    "zone": "law",
    "text": "有人在家裡養了遠超過能力照顧的大量貓，環境髒亂、很多貓生病，這是？",
    "type": "choice"
   },
-  "law-54": {
+  "law-52": {
    "zone": "law",
    "text": "在網路上看到虐待動物的影片，比較好的做法是？",
    "type": "choice"
   },
-  "law-55": {
+  "law-53": {
    "zone": "law",
    "text": "寵物登記的聯絡資料，比較好的做法是？",
    "type": "choice"
@@ -1391,165 +1381,160 @@
   },
   "heal-26": {
    "zone": "heal",
-   "text": "關於貓傳染性腹膜炎（FIP），下列哪個說法比較正確？",
+   "text": "年輕的貓反覆頻尿、血尿，檢查卻沒有結石或細菌，常見原因是？",
    "type": "choice"
   },
   "heal-27": {
    "zone": "heal",
-   "text": "年輕的貓反覆頻尿、血尿，檢查卻沒有結石或細菌，常見原因是？",
+   "text": "貓突然一直流口水，可能是什麼原因？",
    "type": "choice"
   },
   "heal-28": {
    "zone": "heal",
-   "text": "貓突然一直流口水，可能是什麼原因？",
+   "text": "貓眼睛內側露出一層白色的薄膜（第三眼瞼），一直沒有縮回去，代表？",
    "type": "choice"
   },
   "heal-29": {
    "zone": "heal",
-   "text": "貓眼睛內側露出一層白色的薄膜（第三眼瞼），一直沒有縮回去，代表？",
+   "text": "貓兩隻眼睛的瞳孔一大一小，可能代表什麼？",
    "type": "choice"
   },
   "heal-30": {
    "zone": "heal",
-   "text": "貓兩隻眼睛的瞳孔一大一小，可能代表什麼？",
+   "text": "貓突然歪頭、走路繞圈、站不穩，可能是？",
    "type": "choice"
   },
   "heal-31": {
    "zone": "heal",
-   "text": "貓突然歪頭、走路繞圈、站不穩，可能是？",
-   "type": "choice"
-  },
-  "heal-32": {
-   "zone": "heal",
    "text": "貓突然倒地抽搐、四肢划動、口吐白沫。你會？",
    "type": "timed"
   },
-  "heal-33": {
+  "heal-32": {
    "zone": "heal",
    "text": "貓被蜜蜂或其他昆蟲叮到，臉部快速腫起來，而且開始呼吸急促。你會？",
    "type": "timed"
   },
-  "heal-34": {
+  "heal-33": {
    "zone": "heal",
    "text": "成貓的年度健康檢查，常包含哪些項目？",
    "type": "choice"
   },
-  "heal-35": {
+  "heal-34": {
    "zone": "heal",
    "text": "在家幫貓收集尿液檢體，比較方便的方法是？",
    "type": "choice"
   },
-  "heal-36": {
+  "heal-35": {
    "zone": "heal",
    "text": "貓的症狀時有時無，到醫院時又看起來正常，可以怎麼做？",
    "type": "choice"
   },
-  "heal-37": {
+  "heal-36": {
    "zone": "heal",
    "text": "貓需要輸血時，為什麼一定要先驗血型、做配對？",
    "type": "choice"
   },
-  "heal-38": {
+  "heal-37": {
    "zone": "heal",
    "text": "貓要麻醉手術，術前飲食應該怎麼做？",
    "type": "choice"
   },
-  "heal-39": {
+  "heal-38": {
    "zone": "heal",
    "text": "手術後醫生要求戴頭套（伊莉莎白頸圈），應該怎麼做？",
    "type": "choice"
   },
-  "heal-40": {
+  "heal-39": {
    "zone": "heal",
    "text": "醫生開了 10 天份的抗生素，吃到第 5 天貓看起來好了，可以停藥嗎？",
    "type": "choice"
   },
-  "heal-41": {
+  "heal-40": {
    "zone": "heal",
    "text": "下面哪些狀況需要「立即送急診」？選好後按「射箭」。",
    "type": "find"
   },
-  "heal-42": {
+  "heal-41": {
    "zone": "heal",
    "text": "你會怎麼回？",
    "type": "talk"
   },
-  "heal-43": {
+  "heal-42": {
    "zone": "heal",
    "text": "貓的嘴巴越來越臭，最常見的原因是？",
    "type": "choice"
   },
-  "heal-44": {
+  "heal-43": {
    "zone": "heal",
    "text": "成貓拉了一次軟便，但精神、食慾都很好，可以怎麼處理？",
    "type": "choice"
   },
-  "heal-45": {
+  "heal-44": {
    "zone": "heal",
    "text": "貓最近呼吸時鼻子一直有呼嚕呼嚕的聲音，連醒著也有，而且越來越明顯，可能是？",
    "type": "choice"
   },
-  "heal-46": {
+  "heal-45": {
    "zone": "heal",
    "text": "貓剛打完疫苗，最好避免做什麼？",
    "type": "choice"
   },
-  "heal-47": {
+  "heal-46": {
    "zone": "heal",
    "text": "幫貓梳毛時，摸到一個以前沒有的皮下腫塊，應該怎麼做？",
    "type": "choice"
   },
-  "heal-48": {
+  "heal-47": {
    "zone": "heal",
    "text": "一隻 4 公斤的貓，半年內瘦了 0.5 公斤，該怎麼看？",
    "type": "choice"
   },
-  "heal-49": {
+  "heal-48": {
    "zone": "heal",
    "text": "在家可以怎麼簡單觀察貓是否脫水？",
    "type": "choice"
   },
-  "heal-50": {
+  "heal-49": {
    "zone": "heal",
    "text": "用手指輕壓貓的牙齦，放開後變白的地方應該多久恢復粉紅？",
    "type": "choice"
   },
-  "heal-51": {
+  "heal-50": {
    "zone": "heal",
    "text": "貓的耳朵突然腫成一個軟軟的水球，可能是？",
    "type": "choice"
   },
-  "heal-52": {
+  "heal-51": {
    "zone": "heal",
    "text": "貓一直舔屁股、在地上磨屁股，或肛門旁邊紅腫，可能是？",
    "type": "choice"
   },
-  "heal-53": {
+  "heal-52": {
    "zone": "heal",
    "text": "有些未絕育公貓的尾巴根部，毛又油又黏、還有黑頭，可能是？",
    "type": "choice"
   },
-  "heal-54": {
+  "heal-53": {
    "zone": "heal",
    "text": "小幼貓身上有大量跳蚤，可能造成什麼危險？",
    "type": "choice"
   },
-  "heal-55": {
+  "heal-54": {
    "zone": "heal",
    "text": "幼貓的便便或嘔吐物裡，出現像麵條一樣的白色蟲子，應該？",
    "type": "choice"
   },
-  "heal-56": {
+  "heal-55": {
    "zone": "heal",
    "text": "貓打架後幾天，身上腫起一包、摸了會痛，還有點發燒、沒精神，可能是？",
    "type": "choice"
   },
-  "heal-57": {
+  "heal-56": {
    "zone": "heal",
    "text": "貓在陽台咬了一隻蟾蜍，開始大量流口水、甩頭。你會？",
    "type": "timed"
   },
-  "heal-58": {
+  "heal-57": {
    "zone": "heal",
    "text": "貓打噴嚏時噴出血，或一側鼻孔流血，應該？",
    "type": "choice"
