@@ -2098,6 +2098,19 @@ for(const k in Q2){ ZONES.find(z=>z.id===k).stages.push(...Q2[k].stages); ZONES.
    '貓走失時，你的手機可能剛好沒電或換了號碼。多留一位家人的電話，被找到時才不會聯絡不上。'));
 })();
 
+/* AI 初審後的修正（2026-11-03） */
+(function(){
+  const Zn=id=>ZONES.find(z=>z.id===id);
+  const fix=(zid,q,newQ)=>{const z=Zn(zid);const i=z.stages.findIndex(s=>s.q===q);if(i<0)throw new Error('not found: '+q);z.stages[i]=Object.assign({},z.stages[i],newQ);};
+  fix('law','完全養在室內、不會出門的貓，狂犬病疫苗的規定是？',{
+    q:'會出門、可能接觸戶外動物的貓，狂犬病疫苗應該怎麼做？',
+    options:['每年定期施打','一輩子打一次就好','不用打，貓不會得狂犬病','只有幼貓要打'],answer:0,
+    explain:'台灣的野生動物（例如鼬獾）仍有狂犬病，會外出的貓一定要每年施打。農業部自 2025 年起有條件放寬完全室內飼養家貓的施打規定，但適用條件和各縣市執行方式不同，請向獸醫或縣市動保處確認自家貓的情況。'});
+  fix('shrine','貓大約幾歲以後，一般就被視為「老年貓」？',{
+    options:['約 10 歲以後','2 歲','5 歲','20 歲才算'],answer:0,
+    explain:'依 2021 年美國動物醫院協會（AAHA）與美國貓科醫師協會（AAFP）的指引，7 到 10 歲是熟齡，10 歲以上是老年。進入老年後，建議大約每半年健檢一次。'});
+})();
+
 const INTRO=[
  {who:'努酷貓',av:'nuku',text:'歡迎來到努酷貓養貓學院！最近愛貓魔人在城市各處放出了迷思之霧。'},
  {who:'努酷貓',av:'nuku',text:'霧裡的迷思怪會讓人做出錯誤判斷，害貓咪生病、被棄養。我們要用知識之箭射破牠們。'},
