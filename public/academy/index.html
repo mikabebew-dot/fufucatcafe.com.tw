@@ -2142,6 +2142,8 @@ for(const k in Q2){ ZONES.find(z=>z.id===k).stages.push(...Q2[k].stages); ZONES.
   drop('law','餵食社區街貓後，沒有清理留下的飼料和容器，可能會？');
   drop('law','以營利為目的繁殖、買賣貓，依規定需要什麼？');
 })();
+/* 秘書長決定：刪除登記費題 */
+(function(){const z=ZONES.find(z=>z.id==='law');const i=z.stages.findIndex(s=>s.q==='許多縣市的寵物登記費，已絕育和未絕育的貓有什麼差別？');if(i<0)throw new Error('fee q not found');z.stages.splice(i,1);})();
 
 const INTRO=[
  {who:'努酷貓',av:'nuku',text:'歡迎來到努酷貓養貓學院！最近愛貓魔人在城市各處放出了迷思之霧。'},
