@@ -18,6 +18,9 @@ import { SanityLive } from "@/sanity/lib/live";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import "../globals.css";
 
+// 後備機制：就算即時更新沒觸發，頁面最多 60 秒也會抓到後台最新發布的內容
+export const revalidate = 60;
+
 // 字型由 Next.js 在建置時下載並自行託管，訪客不需連到 Google
 const sans = Noto_Sans_TC({ weight: ["400", "500", "700"], variable: "--font-noto-sans", display: "swap", preload: false });
 const serif = Noto_Serif_TC({ weight: ["600"], variable: "--font-noto-serif", display: "swap", preload: false });
