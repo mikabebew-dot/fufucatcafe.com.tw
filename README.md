@@ -143,3 +143,30 @@ sanity/schemaTypes/      後台欄位
 sanity/studio/           後台選單、預覽對應、核對並發布
 scripts/                 初始化與驗收
 ```
+
+---
+
+## 養貓前必修課（/academy）
+
+努酷貓養貓學院的闖關遊戲，8 堂課、500 題題庫，每次隨機抽題。
+
+| 位置 | 說明 |
+|---|---|
+| `public/academy/` | 遊戲本體（單一 HTML 與角色圖），網址 `/academy` |
+| `app/api/academy/*` | LINE 登入（login、callback、logout）、登入狀態（me）、每局成績回傳（run） |
+| `lib/academy/` | 登入 cookie 簽章、寫入紀錄、題目清單（questions.json，題目 ID 與遊戲內順序一致） |
+| 後台 → 必修課紀錄 | 玩家人數、每日遊玩、各課過關率、每題答錯率、完成 8 課名單（可下載 CSV） |
+
+**紀錄存在哪裡**：同一個 Sanity 資料集，文件 ID 都以 `academy.` 開頭。Sanity 規定 ID 含「.」的文件只有登入後台或帶 token 才讀得到，所以玩家名稱不會出現在公開 API。
+
+**不登入也能玩**：訪客的成績只計入遊玩次數和答錯率；用 LINE 登入的玩家才會留下名稱、徽章與成績。
+
+### 上線前要設定的環境變數（Vercel → Settings → Environment Variables）
+
+| 名稱 | 取得方式 |
+|---|---|
+| `LINE_LOGIN_CHANNEL_ID`、`LINE_LOGIN_CHANNEL_SECRET` | [LINE Developers](https://developers.line.biz/) 建立 **LINE Login** channel。Callback URL 填 `https://fufucatcafe.com.tw/api/academy/callback`；Scope 勾 `profile`、`openid` |
+| `ACADEMY_SESSION_SECRET` | 至少 32 字元的隨機字串（終端機執行 `openssl rand -base64 48`） |
+| `SANITY_ACADEMY_TOKEN` | sanity.io/manage → 專案 → API → Tokens → 新增 **Editor** 權限 token，命名 `academy-writer` |
+
+沒設定時遊戲照常可玩，只是不顯示登入按鈕、也不記錄。

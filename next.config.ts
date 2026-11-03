@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
     // 圖片由 Sanity 圖片 CDN 依需求即時產生各尺寸（見 components/SanityImage.tsx）
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
+  async rewrites() {
+    // 養貓前必修課是一個獨立的靜態遊戲（public/academy），網址 /academy
+    return { beforeFiles: [{ source: "/academy", destination: "/academy/index.html" }] };
+  },
   async headers() {
     return [
       {
