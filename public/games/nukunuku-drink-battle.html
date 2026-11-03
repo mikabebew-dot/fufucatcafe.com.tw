@@ -1,0 +1,773 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>NUKUNUKU 調飲大作戰｜FUFU × NUKUNUKU 貓咪遊樂室</title><meta name="description" content="看懂貓客人的點單，調出正確的飲料，三天營業額贏過對面的月光喵喵咖啡！"><link rel="icon" href="/icon.png"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700;900&family=Titan+One&display=swap">
+<style>
+/* Layout: one navy world like the printed menu. Title screen = logo + tappable menu wall; game = HUD, three counter seats, drink station, sticky serve dock. */
+:root{
+  color-scheme:dark;
+  --navy:#2b4a8f; --navy-deep:#1e3670; --navy-lift:#3a5ca6; --navy-high:#4a6db8; --ink:#15244d;
+  --butter:#ffe27a; --butter-deep:#f0b92e; --cream:#fff5dd; --blush:#ff8fab; --mint:#8fe3b8; --cherry:#ff5d6c;
+  --f-display:'Titan One','Noto Sans TC',sans-serif;
+  --f-ui:'Fredoka','Noto Sans TC',sans-serif;
+  --f-cjk:'Noto Sans TC','Fredoka',sans-serif;
+}
+*{box-sizing:border-box}
+body{background-color:var(--navy);background-image:radial-gradient(rgba(255,255,255,.07) 1.6px,transparent 1.7px);background-size:24px 24px;color:var(--cream);font-family:var(--f-cjk);font-size:16px;line-height:1.45;padding-block:12px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid var(--butter);outline-offset:3px}
+#app{max-width:1000px;margin:0 auto}
+h1,h2,h3,p{margin:0}
+svg{display:block}
+
+/* ---------- title ---------- */
+.title{position:relative;text-align:center}
+.shopname{font-family:var(--f-display);font-size:clamp(20px,5.4vw,34px);line-height:1.1;color:var(--cream);letter-spacing:.14em;display:flex;justify-content:center;align-items:center;gap:12px;margin-top:8px;overflow-wrap:anywhere}
+.shopname::before,.shopname::after{content:"";width:.7em;height:.12em;border-radius:4px;background:currentColor;flex:none}
+.shopname::before{transform:rotate(-14deg)}.shopname::after{transform:rotate(14deg)}
+.topline{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:6px}
+.peekwrap{display:flex;align-items:flex-end;gap:6px;text-align:left}
+.peek{width:clamp(92px,24vw,150px);cursor:pointer}
+.peek:hover{animation:wiggle .5s}
+.bubble{position:relative;align-self:flex-start;margin-top:4px;font-family:var(--f-display);font-size:clamp(14px,3.6vw,20px);color:var(--butter);border:3px solid var(--butter);border-radius:50% 50% 50% 8%/60% 60% 40% 40%;padding:8px 14px;transform:rotate(-8deg);white-space:nowrap;min-width:5.5em;text-align:center}
+.stars{width:clamp(80px,22vw,150px);height:auto;color:var(--butter)}
+.stars .tw{animation:twinkle 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.stars .tw:nth-child(2){animation-delay:.6s}.stars .tw:nth-child(3){animation-delay:1.2s}
+.drink-word{display:flex;flex-direction:column;align-items:center;font-family:var(--f-display);font-size:clamp(46px,14.6vw,124px);line-height:1;color:var(--butter);margin:4px 0 0;font-weight:400}.dw{display:flex;justify-content:center;padding-bottom:.12em}.dw.cjk button{font-family:var(--f-cjk);font-weight:900;letter-spacing:.02em}
+.drink-word button{font:inherit;color:inherit;padding:0 .01em;text-shadow:0 .05em 0 var(--butter-deep),0 .1em 0 rgba(10,20,50,.35);transition:transform .15s}
+.drink-word button:hover{transform:translateY(-.05em) rotate(-4deg)}
+.drink-word button.pop{animation:squish .45s}
+.menuword{font-family:var(--f-ui);font-weight:600;font-size:clamp(34px,9vw,64px);letter-spacing:.12em;color:var(--cream);margin-top:.1em}
+.cta{display:grid;justify-items:center;gap:8px;margin:18px 0 6px}
+.btn-start{font-family:var(--f-display);font-size:clamp(22px,6vw,30px);background:var(--butter);color:var(--ink);padding:14px 38px;border-radius:999px;box-shadow:0 7px 0 var(--butter-deep),0 16px 26px rgba(0,0,0,.3);animation:bob 2.2s ease-in-out infinite;transition:transform .1s}
+.btn-start:hover{animation:wiggle .5s}
+.btn-start:active{transform:translateY(5px);box-shadow:0 2px 0 var(--butter-deep)}
+.best{font-family:var(--f-ui);font-size:14px;opacity:.85}
+.hint{font-weight:700;color:var(--butter);margin:22px 0 10px;font-size:15px}
+.hint span{display:inline-block;animation:bob 1.2s ease-in-out infinite}
+.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(min-width:760px){.menu-grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:2px dashed rgba(255,255,255,.22);border-radius:18px;background:rgba(255,255,255,.04);transition:transform .15s,border-color .15s,background .15s;min-width:0}
+.tile:hover{transform:translateY(-4px) rotate(-1.2deg);border-style:solid;border-color:var(--butter);background:rgba(255,226,122,.12)}
+.tile:active{transform:scale(.96)}
+.tile svg{width:min(86px,100%);height:auto}
+.tile .zh{font-weight:900;font-size:15px;color:var(--butter);line-height:1.2}
+.tile .en{font-family:var(--f-ui);font-size:11.5px;line-height:1.2;opacity:.9}
+.badge{position:absolute;top:6px;right:6px;font-size:10px;background:var(--mint);color:var(--ink);border-radius:99px;padding:1px 6px;font-weight:700}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:26px;text-align:left}
+@media(max-width:640px){.how{grid-template-columns:1fr}}
+.how div{background:var(--cream);color:var(--ink);border-radius:20px;padding:14px 16px}
+.how b{display:block;font-family:var(--f-display);font-size:18px;margin-bottom:2px}
+.how b em{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--butter);font-size:14px;margin-right:8px}
+.how p{font-size:14px}
+.ribbon{margin:26px auto 0;display:inline-flex;flex-direction:column;gap:2px;font-family:var(--f-ui);font-weight:600;letter-spacing:.14em;color:var(--butter);border-top:3px dashed rgba(255,226,122,.5);padding-top:12px}
+.ribbon small{font-family:var(--f-cjk);font-size:14px;letter-spacing:.2em;color:var(--cream)}
+
+/* ---------- overlays / panels ---------- */
+.overlay{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,18,44,.72);padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fade .2s}
+.card{position:relative;background:var(--cream);color:var(--ink);border-radius:28px;padding:22px 20px;max-width:400px;width:100%;text-align:center;animation:pop .3s}
+.card .cupbig{width:150px;margin:0 auto}
+.card h3{font-weight:900;font-size:26px;line-height:1.2}
+.card .langs{font-family:var(--f-ui);font-size:15px;opacity:.75;margin:4px 0 10px}
+.card .price{display:inline-block;background:var(--ink);color:var(--butter);font-family:var(--f-display);border-radius:99px;padding:3px 14px;margin-bottom:10px}
+.card .note{font-size:15px;background:#f6e4b5;border-radius:14px;padding:10px 12px}
+.card .x{position:absolute;top:10px;right:12px;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--butter);font-weight:900}
+.panel{max-width:620px;margin:20px auto;background:var(--cream);color:var(--ink);border-radius:30px;padding:26px 20px;text-align:center;position:relative;overflow:hidden}
+.panel h2{font-family:var(--f-display);font-size:clamp(26px,7vw,40px);line-height:1.15}
+.panel .sub{font-size:15px;opacity:.8;margin:6px 0 14px}
+.rule{background:#f6e4b5;border-radius:16px;padding:12px 14px;text-align:left;font-size:15px;margin:8px 0}
+.rule b{color:#b3541a}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+.stat{background:#f6e4b5;border-radius:16px;padding:10px}
+.stat small{display:block;font-size:12.5px;opacity:.75}
+.stat b{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
+.stat.big{grid-column:1/-1;background:var(--ink);color:var(--butter)}
+.stat.big b{font-size:34px}
+.vs{display:grid;gap:6px;margin:10px 0;text-align:left;font-size:14px}
+.vs .row{display:grid;grid-template-columns:96px 1fr 92px;gap:8px;align-items:center}
+.vs .tr{height:14px;border-radius:99px;background:rgba(21,36,77,.15);overflow:hidden}
+.vs .tr i{display:block;height:100%;border-radius:99px;background:var(--navy-high)}
+.vs .row.r i{background:var(--blush)}
+.vs b{text-align:right;font-variant-numeric:tabular-nums}
+.shop{display:grid;gap:8px;margin:12px 0;text-align:left}
+.up{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#f6e4b5;border-radius:16px;padding:10px 12px}
+.up b{display:block;font-size:15px}.up span{font-size:13px;opacity:.8}
+.up button{background:var(--ink);color:var(--butter);font-weight:700;border-radius:99px;padding:8px 14px;white-space:nowrap}
+.up button:disabled{opacity:.35}
+.up.owned button{background:var(--mint);color:var(--ink)}
+.btn-main{font-family:var(--f-display);font-size:22px;background:var(--ink);color:var(--butter);padding:12px 32px;border-radius:99px;box-shadow:0 5px 0 #0a1230;margin-top:8px}
+.btn-main:active{transform:translateY(4px);box-shadow:0 1px 0 #0a1230}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall 3.2s linear infinite}
+.trophy{width:150px;margin:0 auto 6px}
+
+/* ---------- game ---------- */
+.hud{display:grid;gap:10px;background:var(--navy-deep);border-radius:22px;padding:12px;border:2px solid rgba(255,255,255,.1)}
+.hud-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.daypill{font-family:var(--f-display);background:var(--butter);color:var(--ink);padding:3px 14px;border-radius:99px;font-size:18px;white-space:nowrap}
+.timer-wrap{display:flex;align-items:center;gap:8px;flex:1 1 150px;min-width:0}
+.timer{flex:1;height:16px;border-radius:99px;background:rgba(0,0,0,.3);position:relative;overflow:hidden}
+.timer i{position:absolute;inset:0 auto 0 0;width:100%;border-radius:inherit;background:linear-gradient(90deg,var(--mint),var(--butter))}
+.timer.low i{background:var(--cherry)}
+.timer-t{font-family:var(--f-ui);font-weight:600;font-variant-numeric:tabular-nums;min-width:2.8em;text-align:right}
+.paws{display:flex;gap:4px}.paws svg{width:24px;height:24px}.paws .lost{opacity:.2;filter:grayscale(1)}
+.hbtn{font-family:var(--f-ui);font-size:13px;padding:4px 10px;border-radius:99px;border:2px solid rgba(255,255,255,.28)}
+.combo{font-family:var(--f-display);color:var(--butter);font-size:15px;min-width:4em}
+.race{display:grid;gap:6px}
+.lane{display:grid;grid-template-columns:96px 1fr 92px;align-items:center;gap:8px;font-size:13px}
+.lane .who{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lane .tr{height:14px;border-radius:99px;background:rgba(0,0,0,.3);overflow:hidden}
+.lane .tr i{display:block;height:100%;width:0;border-radius:99px;background:var(--butter);transition:width .4s}
+.lane.rival .tr i{background:var(--blush)}
+.lane b{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-ui)}
+.counter{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 6px 10px;border-radius:20px;background:var(--navy-lift);border:3px solid transparent;text-align:center;min-height:216px;min-width:0}
+.slot.active{border-color:var(--butter);background:var(--navy-high)}
+.slot.empty{background:transparent;border:2px dashed rgba(255,255,255,.25);justify-content:center;opacity:.6;cursor:default;font-size:13px}
+.slot .face{width:62px;height:56px}
+.slot .face svg{width:100%;height:100%}
+.slot>span{display:block;width:100%}
+.ticket{background:var(--cream);color:var(--ink);border-radius:12px;padding:8px 5px;border-bottom:4px dashed #e0c98f}
+.t-drink{font-weight:900;font-size:15px;line-height:1.2}
+.t-en{font-family:var(--f-ui);font-size:10.5px;opacity:.65;line-height:1.2}
+.t-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px}
+.t-chips em{font-style:normal;font-size:11.5px;font-weight:700;background:#f1dfae;border-radius:99px;padding:1px 7px 1px 5px;display:inline-flex;align-items:center;gap:4px}
+.t-chips i{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(0,0,0,.3)}
+.t-plain{font-size:10.5px;opacity:.6;margin-top:4px}
+.t-price{font-family:var(--f-display);font-size:13px;margin-top:4px;color:#b3541a}
+.pat{height:8px;border-radius:99px;background:rgba(0,0,0,.3);overflow:hidden;margin-top:auto}
+.pat i{display:block;height:100%;width:100%;background:var(--mint)}
+.pat.mid i{background:var(--butter)}.pat.low i{background:var(--cherry)}
+.slot.arrive{animation:pop .35s}.slot.shake{animation:shake .4s}.slot.leave{animation:leave .45s forwards}
+.float{position:absolute;pointer-events:none;z-index:6;font-family:var(--f-display);font-size:22px;color:var(--butter);text-shadow:0 2px 0 var(--ink);animation:floatUp 1.2s ease-out forwards;white-space:nowrap}
+.float.bad{color:var(--cherry)}
+.station{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+@media(min-width:760px){.station{grid-template-columns:230px minmax(0,1fr)}}
+.preview{background:var(--navy-deep);border-radius:22px;padding:12px;display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:center}
+@media(min-width:760px){.preview{grid-template-columns:1fr;text-align:center;align-content:start}}
+.preview .stage{max-width:150px;width:100%;margin:0 auto}
+.build-name{font-weight:900;font-size:18px;color:var(--butter);line-height:1.2}
+.build-sub{font-size:13px;opacity:.85}
+.controls{background:var(--navy-deep);border-radius:22px;padding:12px;display:grid;gap:12px;min-width:0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:6px 12px;border-radius:99px;font-weight:700;font-size:14px;background:rgba(255,255,255,.08)}
+.tab[aria-selected=true]{background:var(--butter);color:var(--ink)}
+.drink-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+.dtile{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 3px;border-radius:14px;background:rgba(255,255,255,.07);font-size:12.5px;font-weight:700;line-height:1.2;text-align:center;min-width:0}
+.dtile svg{width:52px;height:52px}
+.dtile[aria-pressed=true]{background:var(--butter);color:var(--ink)}
+.opt-row{display:grid;grid-template-columns:40px 1fr;gap:8px;align-items:start}
+.opt-label{font-weight:900;font-size:13px;color:var(--butter);padding-top:7px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:rgba(255,255,255,.09);font-weight:700;font-size:13.5px}
+.opt i{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.55)}
+.opt[aria-pressed=true]{background:var(--butter);color:var(--ink)}
+.opt[aria-pressed=true] i{border-color:var(--ink)}
+.dock{position:sticky;bottom:0;z-index:5;margin-top:12px;display:flex;align-items:center;gap:8px;padding:10px 10px 10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));background:var(--ink);border-radius:22px;border:2px solid rgba(255,255,255,.14);box-shadow:0 -6px 24px rgba(0,0,0,.3)}
+.dock-info{flex:1;min-width:0;font-size:13px}
+.dock-info b{display:block;color:var(--butter);font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock-info span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.85}
+.btn-ghost{padding:9px 14px;border-radius:99px;border:2px solid rgba(255,255,255,.3);font-weight:700;font-size:14px}
+.btn-serve{font-family:var(--f-display);font-size:20px;background:var(--butter);color:var(--ink);padding:11px 22px;border-radius:99px;box-shadow:0 5px 0 var(--butter-deep)}
+.btn-serve:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--butter-deep)}
+.btn-serve:disabled{opacity:.4;box-shadow:none}
+.toast{position:fixed;left:50%;top:max(14px,env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;background:var(--cream);color:var(--ink);font-weight:900;border-radius:99px;padding:8px 18px;box-shadow:0 8px 20px rgba(0,0,0,.35);animation:toast 1.8s forwards;max-width:calc(100% - 32px);text-align:center}
+.steam{animation:steam 2s ease-in-out infinite}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+@keyframes squish{0%{transform:scale(1)}30%{transform:scale(1.25,.7)}60%{transform:scale(.85,1.2)}100%{transform:scale(1)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes twinkle{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.65);opacity:.5}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes leave{to{transform:translateY(-14px) scale(.9);opacity:0}}
+@keyframes floatUp{0%{transform:translateY(0) scale(.7);opacity:0}15%{opacity:1;transform:translateY(-10px) scale(1.1)}100%{transform:translateY(-64px);opacity:0}}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,-14px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+@keyframes steam{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-3px);opacity:.3}}
+@keyframes fall{to{transform:translateY(520px) rotate(540deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- responsive / auto-fit ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+button{touch-action:manipulation}
+.slot,.dtile,.opt,.tab,.btn-serve,.btn-ghost,.hbtn,.tile{user-select:none;-webkit-user-select:none}
+.title,.game,.panel,.station>*,.counter>*,.hud>*{min-width:0}
+.stars{flex:none}.peekwrap{min-width:0}
+.game{padding-bottom:6px}
+@media(max-width:520px){
+ body{font-size:15px}
+ .hud{padding:10px;gap:8px;border-radius:18px}
+ .hud-top{gap:6px}
+ .daypill{font-size:15px;padding:2px 10px}
+ .timer-wrap{order:5;flex:1 1 100%}
+ .hbtn{font-size:12px;padding:3px 8px}
+ .combo{font-size:13px;min-width:0}
+ .paws svg{width:20px;height:20px}
+ .lane{grid-template-columns:70px 1fr 80px;font-size:12px;gap:6px}
+ .counter{gap:6px}
+ .slot{padding:6px 4px 8px;min-height:178px;border-radius:16px;gap:4px;border-width:2px}
+ .slot .face{width:48px;height:44px}
+ .ticket{padding:6px 3px}
+ .t-drink{font-size:13px}
+ .t-en{font-size:9.5px}
+ .t-chips{gap:3px;margin-top:4px}
+ .t-chips em{font-size:10.5px;padding:0 5px 0 4px}
+ .t-plain{font-size:10px}
+ .t-price{font-size:12px}
+ .preview{grid-template-columns:76px 1fr;padding:10px}
+ .build-name{font-size:16px}
+ .build-sub{font-size:12px}
+ .controls{padding:10px;gap:10px}
+ .tab{font-size:13px;padding:5px 10px}
+ .drink-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .dtile svg{width:44px;height:44px}
+ .dtile{font-size:12px}
+ .opt-row{grid-template-columns:1fr;gap:4px}
+ .opt-label{padding-top:0}
+ .opt{font-size:13px;padding:5px 9px;gap:5px}
+ .dock{padding:8px 8px 8px 12px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));gap:6px;border-radius:18px}
+ .dock-info b{font-size:14px}
+ .btn-ghost{padding:8px 11px;font-size:13px}
+ .btn-serve{font-size:18px;padding:10px 18px}
+ .panel{padding:20px 14px;margin:12px auto;border-radius:24px}
+ .vs .row{grid-template-columns:72px 1fr 82px;gap:6px;font-size:12.5px}
+ .stat b{font-size:20px}.stat.big b{font-size:28px}
+ .float{font-size:18px}
+ .menu-grid{gap:8px}
+ .tile{padding:8px 3px}
+ .tile .zh{font-size:14px}.tile .en{font-size:10.5px}
+ .how{margin-top:20px}
+ .card{padding:18px 16px;border-radius:24px}
+ .card .cupbig{width:120px}
+ .btn-start{padding:12px 30px}
+}
+@media(max-width:360px){
+ .slot{min-height:164px}
+ .slot .face{width:40px;height:38px}
+ .t-drink{font-size:12px}
+ .lane{grid-template-columns:58px 1fr 74px}
+ .vs .row{grid-template-columns:60px 1fr 76px}
+ .btn-serve{font-size:16px;padding:9px 14px}
+ .drink-grid{gap:5px}
+ .dtile svg{width:38px;height:38px}
+ .bubble{min-width:4.5em;padding:6px 10px}
+}
+@media(max-height:520px) and (orientation:landscape){
+ .preview .stage{max-width:84px}
+ .dock{position:static}
+ .slot{min-height:150px}
+ .drink-word{font-size:clamp(40px,9vw,90px)}
+}
+</style>
+<main id="app"></main>
+<script>
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const fmt=n=>'NT$ '+Math.round(n).toLocaleString('en-US');
+let uid=0;
+
+/* ---------- data ---------- */
+const MILK={original:{zh:'原味',color:null},whole:{zh:'鮮奶',color:'#fffaf0'},oat:{zh:'燕麥奶',color:'#ead9ae'},soy:{zh:'豆漿',color:'#f3efb8'}};
+const SYR={none:{zh:'無糖漿',color:'#ffffff'},caramel:{zh:'焦糖',color:'#d98324'},vanilla:{zh:'香草',color:'#f7e7a4'},brown:{zh:'黑糖',color:'#5f3114'},honey:{zh:'蜂蜜',color:'#f4b82e'},strawberry:{zh:'草莓',color:'#ff5f8a'}};
+const ICE={normal:'正常冰',less:'少冰',none:'去冰',hot:'熱'};
+const TABS=[['coffee','咖啡可可'],['milk','奶茶'],['tea','茶飲'],['fruit','果飲汽水']];
+
+const D=[
+{id:'americano',zh:'美式咖啡',en:'Americano',ko:'아메리카노',ja:'アメリカーノ',cat:'coffee',price:65,k:'glass',c:['#5a3420','#2a170d'],ice:1,straw:0,pet:'black',pos:'in',note:'提神第一名，貓掌櫃每天開店前都先乾一杯。'},
+{id:'latte',zh:'原味拿鐵',en:'Original Latte',ko:'오리지널 라떼',ja:'ラテ',cat:'coffee',price:75,k:'mug',body:'#4f84c9',c:['#c99a6b','#c99a6b'],art:'cat',note:'奶泡上浮著一隻小白貓，捨不得喝第一口。'},
+{id:'cocoamac',zh:'可可瑪奇朵',en:'Cocoa Macchiato',ko:'코코 마끼아또',ja:'ココアマキアート',cat:'coffee',price:80,k:'mug',body:'#9cc47c',c:['#6b4a3a','#6b4a3a'],art:'paw',pet:'black',pos:'in',note:'表面蓋了一個貓掌印，是店長親自按的。'},
+{id:'cocoaulait',zh:'可可歐蕾',en:'Cocoa Au Lait',ko:'코코 오레',ja:'ココアオレ',cat:'coffee',price:78,k:'mug',body:'#5b8fcf',c:['#a9754f','#a9754f'],art:'dots',pet:'black',pos:'in',note:'甜甜暖暖，冷天一杯就會呼嚕呼嚕。'},
+{id:'milktea',zh:'原味奶茶',en:'Milk Tea',ko:'밀크티',ja:'ミルクティー',cat:'milk',price:70,k:'glass',c:['#d9ab78','#b88458'],ice:1,straw:1,pet:'black',pos:'in',note:'店裡最穩的老朋友，什麼時候喝都對。'},
+{id:'bsmilk',zh:'黑糖奶茶',en:'Brown Sugar Milk Tea',ko:'흑당 밀크티',ja:'黒糖ミルクティー',cat:'milk',price:85,k:'glass',c:['#ead3b0','#d4a574'],ice:1,drizzle:1,pet:'black',pos:'in',note:'杯壁的黑糖虎紋，像貓咪的條紋。'},
+{id:'oolongmilk',zh:'厚烏龍奶茶',en:'Oolong Milk Tea',ko:'진한 우롱 밀크티',ja:'ウーロンミルクティー',cat:'milk',price:85,k:'take',body:'#e2bd85',c:['#c9a06a','#b08650'],paw:1,pet:'black',pos:'top',note:'烏龍茶香很濃，小黑貓從杯蓋偷看你。'},
+{id:'peachoolong',zh:'蜜桃烏龍',en:'Peach Oolong',ko:'복숭아 우롱',ja:'ピーチウーロン',cat:'tea',price:78,k:'glass',c:['#ffc86b','#ff9a4d'],ice:1,pet:'black',pos:'top',inn:[['peach',42,56,7],['peach',58,64,6.5]],note:'整顆水蜜桃浸在茶裡，清爽又香甜。'},
+{id:'berry',zh:'莓果花茶',en:'Berry Flower Tea',ko:'베리 꽃차',ja:'ベリーティー',cat:'tea',price:76,k:'glass',c:['#8b4fb0','#c94f8e'],ice:1,pet:'black',pos:'in',inn:[['flower',38,48,4.5],['flower',60,56,4],['flower',44,62,3.6]],note:'紫紅色的茶湯漂著小花，拍照最好看。'},
+{id:'buckwheat',zh:'蕎麥茶',en:'Buckwheat Tea',ko:'메밀차',ja:'そば茶',cat:'tea',price:55,k:'mugglass',c:['#dcaa4e','#c4902f'],pet:'white',pos:'in',decaf:1,note:'無咖啡因，穀物香氣，睡前也能放心喝。'},
+{id:'chamomile',zh:'洋甘菊花茶',en:'Chamomile Tea',ko:'카모마일차',ja:'カモミールティー',cat:'tea',price:58,k:'mugglass',c:['#f4dc72','#e8c84e'],pet:'white',pos:'in',out:[['daisy',14,80,5]],decaf:1,note:'無咖啡因，小雛菊的香味讓貓咪也想睡。'},
+{id:'roast',zh:'深焙烏龍茶',en:'Roast Oolong Tea',ko:'깊게 구운 우롱차',ja:'ウーロン茶',cat:'tea',price:60,k:'mugglass',c:['#8f5f20','#6e4515'],pet:'black',pos:'in',inn:[['leaf',36,52],['leaf',62,56]],note:'炭焙香氣很沉穩，適合慢慢啜飲。'},
+{id:'strawcalpis',zh:'草莓可爾必斯',en:'Strawberry Calpis',ko:'딸기 칼피스',ja:'ストロベリーカルピス',cat:'fruit',price:82,k:'glass',c:['#ffc2d0','#ff8fab'],ice:1,straw:1,pet:'white',pos:'in',out:[['berry',68,20]],note:'粉紅色的酸甜乳酸，少女心大爆發。'},
+{id:'herbal',zh:'花草茶',en:'Herbal Tea',ko:'허브차',ja:'ハーブティー',cat:'tea',price:66,k:'glass',c:['#a5d06a','#cbe38a'],ice:1,straw:1,pet:'black',pos:'top',inn:[['leaf',34,46],['lemon',62,52,6]],note:'加了檸檬片和香草，喝完整個人都清醒。'},
+{id:'wglemon',zh:'冬瓜檸檬',en:'Winter Gourd Lemon',ko:'동과 레몬',ja:'冬瓜レモン',cat:'fruit',price:68,k:'mugglass',c:['#f6d964','#e9c244'],pet:'white',pos:'in',inn:[['lemon',48,52,9]],note:'古早味的冬瓜糖香，再加一片檸檬。'},
+{id:'wgbuck',zh:'冬瓜蕎麥',en:'Winter Gourd Buckwheat',ko:'동과 메밀차',ja:'冬瓜そば茶',cat:'fruit',price:70,k:'mugglass',c:['#cf9a47','#b4802f'],pet:'white',pos:'top',note:'冬瓜的甜加上蕎麥的香，兩隻貓一起泡湯。'},
+{id:'cola',zh:'可樂',en:'Cola',ko:'콜라',ja:'コーラ',cat:'fruit',price:45,k:'glass',c:['#4a2118','#2b110c'],ice:1,straw:1,pet:'black',pos:'in',note:'冒泡泡的汽水，貓咪會被氣泡聲嚇到。'},
+{id:'honeylemon',zh:'蜂蜜檸檬',en:'Honey Lemon',ko:'허니 레몬',ja:'はちみつレモン',cat:'fruit',price:66,k:'mugglass',c:['#f8cb4a','#eeb52a'],pet:'white',pos:'in',inn:[['lemon',44,50,9]],out:[['honey',86,36]],note:'酸酸甜甜，附一支蜂蜜棒讓你自己加。'},
+{id:'kumquat',zh:'金桔檸檬',en:'Kumquat Lemon',ko:'금귤 레몬',ja:'きんかんレモン',cat:'fruit',price:72,k:'glass',c:['#ffd24a','#ffac2c'],ice:1,pet:'black',pos:'top',inn:[['kq',38,50,5],['kq',60,48,5],['kq',64,66,5]],note:'整顆金桔手捏出香氣，貓咪爬上來想偷吃。'},
+{id:'bsugar',zh:'黑糖水',en:'Brown Sugar',ko:'흑설탕물',ja:'黒糖水',cat:'fruit',price:50,k:'glass',c:['#82522a','#3f2310'],ice:1,pet:'black',pos:'in',note:'最簡單的甜，黑糖熬得香香濃濃。'},
+{id:'peachcalpis',zh:'水蜜桃可爾必斯',en:'Peach Calpis',ko:'복숭아 칼피스',ja:'桃フレーバーカルピス',cat:'fruit',price:82,k:'glass',c:['#ffd6df','#ffb0c0'],ice:1,pet:'white',pos:'top',inn:[['peach',40,60,6.5]],note:'水蜜桃加乳酸，一口就是夏天。'}
+];
+const DM=Object.fromEntries(D.map(d=>[d.id,d]));
+
+/* ---------- cats ---------- */
+const CATS={
+ black:{fur:'#2b2b36',eye:'#ffd23f',pupil:'#14141c',ear:'#ff9fb0',mouth:'#ffb3c0',wh:'#ffffff'},
+ tux:{fur:'#2b2b36',eye:'#ffd23f',pupil:'#14141c',ear:'#ff9fb0',mouth:'#3a2a2a',wh:'#ffffff',muzzle:'#fff8ef'},
+ white:{fur:'#fff8ef',eye:'#2b2b36',pupil:'#2b2b36',ear:'#ffb3bf',mouth:'#7a4a4a',wh:'#9aa3b2',line:'#2b2b36'},
+ orange:{fur:'#f4a85c',eye:'#2b2b36',pupil:'#2b2b36',ear:'#ffd0c0',mouth:'#7a3a2a',wh:'#ffffff',stripe:'#d9822b'},
+ gray:{fur:'#a7b0c0',eye:'#2b2b36',pupil:'#2b2b36',ear:'#ffc0cc',mouth:'#5a4a5a',wh:'#ffffff'},
+ calico:{fur:'#fff8ef',eye:'#2b2b36',pupil:'#2b2b36',ear:'#ffb3bf',mouth:'#7a4a4a',wh:'#9aa3b2',line:'#2b2b36',pl:'#f4a85c',pr:'#3a3a46'}
+};
+function cat(cx,cy,r,kind,mood){
+ const c=CATS[kind]||CATS.black; mood=mood||'ok';
+ const P=(x,y)=>(cx+x*r).toFixed(1)+','+(cy+y*r).toFixed(1);
+ const sw=c.line?`stroke="${c.line}" stroke-width="${(r*.07).toFixed(2)}" stroke-linejoin="round"`:'';
+ let g='';
+ for(const m of [-1,1]){
+  g+=`<polygon points="${P(m*.9,-.3)} ${P(m*.82,-1.2)} ${P(m*.2,-.78)}" fill="${c.fur}" ${sw}/>`;
+  g+=`<polygon points="${P(m*.74,-.46)} ${P(m*.7,-.98)} ${P(m*.36,-.74)}" fill="${c.ear}"/>`;
+ }
+ g+=`<ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${(r*.86).toFixed(1)}" fill="${c.fur}" ${sw}/>`;
+ if(c.muzzle) g+=`<ellipse cx="${cx}" cy="${(cy+.4*r).toFixed(1)}" rx="${(.52*r).toFixed(1)}" ry="${(.4*r).toFixed(1)}" fill="${c.muzzle}"/><path d="M${P(0,-.86)} L${P(-.13,-.42)} L${P(.13,-.42)}Z" fill="${c.muzzle}"/>`;
+ if(c.stripe) for(const x of [-.2,0,.2]) g+=`<line x1="${(cx+x*r).toFixed(1)}" y1="${(cy-.84*r).toFixed(1)}" x2="${(cx+x*r).toFixed(1)}" y2="${(cy-.52*r).toFixed(1)}" stroke="${c.stripe}" stroke-width="${(r*.1).toFixed(2)}" stroke-linecap="round"/>`;
+ if(c.pl) g+=`<ellipse cx="${(cx-.5*r).toFixed(1)}" cy="${(cy-.45*r).toFixed(1)}" rx="${(.4*r).toFixed(1)}" ry="${(.3*r).toFixed(1)}" fill="${c.pl}"/><ellipse cx="${(cx+.55*r).toFixed(1)}" cy="${(cy-.4*r).toFixed(1)}" rx="${(.34*r).toFixed(1)}" ry="${(.28*r).toFixed(1)}" fill="${c.pr}"/>`;
+ let e='';
+ for(const m of [-1,1]){
+  const ex=cx+m*.4*r, ey=cy-.05*r, er=.17*r;
+  if(mood==='happy'){
+   e+=`<path d="M${(ex-er).toFixed(1)},${(ey+.02*r).toFixed(1)} Q${ex.toFixed(1)},${(ey-.3*r).toFixed(1)} ${(ex+er).toFixed(1)},${(ey+.02*r).toFixed(1)}" fill="none" stroke="${c.pupil==='#14141c'?'#ffd23f':c.pupil}" stroke-width="${(r*.1).toFixed(2)}" stroke-linecap="round"/>`;
+  }else{
+   e+=`<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="${er.toFixed(1)}" fill="${c.eye}"/><circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="${(er*.55).toFixed(1)}" fill="${c.pupil}"/><circle cx="${(ex-er*.25).toFixed(1)}" cy="${(ey-er*.3).toFixed(1)}" r="${(er*.22).toFixed(1)}" fill="#fff"/>`;
+   if(mood==='mad') e+=`<polygon points="${(ex+m*1.35*er).toFixed(1)},${(ey-1.4*er).toFixed(1)} ${(ex-m*1.35*er).toFixed(1)},${(ey-1.4*er).toFixed(1)} ${(ex-m*1.35*er).toFixed(1)},${(ey+.1*er).toFixed(1)}" fill="${c.fur}"/>`;
+  }
+ }
+ g+=`<g class="eyes" style="animation-delay:${(Math.random()*4).toFixed(1)}s">${e}</g>`;
+ g+=`<path d="M${P(-.1,.16)} L${P(.1,.16)} L${P(0,.27)}Z" fill="${c.ear}"/>`;
+ const sk=`fill="none" stroke="${c.mouth}" stroke-width="${(r*.07).toFixed(2)}" stroke-linecap="round"`;
+ if(mood==='happy') g+=`<path d="M${P(-.22,.32)} Q${P(0,.7)} ${P(.22,.32)}Z" fill="#ff7a8a" stroke="${c.mouth}" stroke-width="${(r*.05).toFixed(2)}" stroke-linejoin="round"/>`;
+ else if(mood==='mad') g+=`<path d="M${P(-.2,.46)} Q${P(0,.3)} ${P(.2,.46)}" ${sk}/>`;
+ else g+=`<path d="M${P(-.22,.34)} Q${P(-.11,.46)} ${P(0,.28)} Q${P(.11,.46)} ${P(.22,.34)}" ${sk}/>`;
+ for(const m of [-1,1]) g+=`<path d="M${P(m*.55,.22)} L${P(m*1.3,.1)} M${P(m*.55,.32)} L${P(m*1.3,.4)}" stroke="${c.wh}" stroke-width="${(r*.04).toFixed(2)}" opacity=".7" stroke-linecap="round"/>`;
+ return g;
+}
+const catSvg=(kind,mood,vb)=>`<svg viewBox="${vb||'0 0 80 74'}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${cat(40,40,28,kind,mood)}</svg>`;
+
+/* ---------- cups ---------- */
+const DECO={
+ lemon:(x,y,r)=>`<g><circle cx="${x}" cy="${y}" r="${r}" fill="#ffe36b" stroke="#f0b400" stroke-width="1.4"/>${[0,60,120].map(a=>`<line x1="${x}" y1="${y-r+1.5}" x2="${x}" y2="${y+r-1.5}" stroke="#f6c60d" stroke-width="1" transform="rotate(${a} ${x} ${y})"/>`).join('')}</g>`,
+ peach:(x,y,r)=>`<g><circle cx="${x}" cy="${y}" r="${r}" fill="#ffae7a"/><circle cx="${x-r*.3}" cy="${y-r*.3}" r="${r*.42}" fill="#ffd9b8" opacity=".75"/><path d="M${x},${y-r} q3,-4 6,-2" stroke="#6bbf59" stroke-width="2" fill="none" stroke-linecap="round"/></g>`,
+ flower:(x,y,r)=>`<g>${[0,72,144,216,288].map(a=>`<circle cx="${x}" cy="${y-r*.8}" r="${r*.55}" fill="#fff" opacity=".92" transform="rotate(${a} ${x} ${y})"/>`).join('')}<circle cx="${x}" cy="${y}" r="${r*.4}" fill="#ffd23f"/></g>`,
+ leaf:(x,y)=>`<ellipse cx="${x}" cy="${y}" rx="6" ry="2.6" fill="#5fae4f" transform="rotate(-28 ${x} ${y})"/>`,
+ kq:(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#ffa21f" stroke="#e07b00" stroke-width="1"/><circle cx="${x-1.5}" cy="${y-1.5}" r="1.4" fill="#ffd27a"/>`,
+ berry:(x,y)=>`<g><path d="M${x},${y+9} C${x-10},${y+3} ${x-8},${y-7} ${x},${y-4} C${x+8},${y-7} ${x+10},${y+3} ${x},${y+9}Z" fill="#ff4d5e"/><circle cx="${x-3}" cy="${y}" r=".9" fill="#ffd9a0"/><circle cx="${x+3}" cy="${y+1}" r=".9" fill="#ffd9a0"/><circle cx="${x}" cy="${y+4}" r=".9" fill="#ffd9a0"/><path d="M${x-5},${y-5} L${x},${y-10} L${x+5},${y-5} L${x},${y-7}Z" fill="#4fae5a"/></g>`,
+ daisy:(x,y,r)=>`<g>${[0,60,120,180,240,300].map(a=>`<ellipse cx="${x}" cy="${y-r*.75}" rx="${r*.34}" ry="${r*.55}" fill="#fff" stroke="#e8e0cc" stroke-width=".5" transform="rotate(${a} ${x} ${y})"/>`).join('')}<circle cx="${x}" cy="${y}" r="${r*.32}" fill="#ffc83d"/></g>`,
+ honey:(x,y)=>`<g><rect x="${x-1.5}" y="${y-4}" width="3" height="36" rx="1.5" fill="#c9965a"/><ellipse cx="${x}" cy="${y+2}" rx="6.5" ry="8" fill="#f2b632"/><path d="M${x-6},${y} h12 M${x-6},${y+4} h12" stroke="#c98a12" stroke-width="1.3"/></g>`
+};
+const ICEPOS=[[.12,.10,-12],[.52,.05,8],[.74,.32,20],[.26,.38,5],[.52,.52,-15]];
+const WAVE=(x,y,w,dy)=>`M${x-1},${y} h${w+2} v${dy} q${-w/8},${dy*.55} ${-w/4},0 t${-w/4},0 t${-w/4},0 t${-w/4},0 z`;
+
+function cup(d,o){
+ o=o||{};
+ const id='u'+(++uid), empty=!d, kind=empty?'glass':d.k;
+ const c0=empty?'#fff':d.c[0], c1=empty?'#fff':d.c[1];
+ const mk=o.milk&&o.milk!=='original'?MILK[o.milk].color:null;
+ const sy=o.syrup&&o.syrup!=='none'?SYR[o.syrup].color:null;
+ const ice=o.ice!==undefined?o.ice:(d&&d.ice?'normal':'none');
+ const hot=o.ice!==undefined?o.ice==='hot':(kind==='mug'||kind==='mugglass');
+ const nIce=ice==='normal'?5:ice==='less'?2:0;
+ let s=`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${empty?'空杯':d.zh}">`;
+ const liq=(clipD,x,y,w,h)=>{
+  let t=`<defs><clipPath id="${id}k"><path d="${clipD}"/></clipPath><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c0}"/><stop offset="1" stop-color="${c1}"/></linearGradient></defs><g clip-path="url(#${id}k)">`;
+  if(!empty) t+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#${id}g)"/>`;
+  if(d&&d.drizzle&&!empty) t+=`<path d="M${x+6},${y} q4,${h*.4} 0,${h*.7} M${x+w*.45},${y} q-4,${h*.3} 1,${h*.55} M${x+w-8},${y} q4,${h*.35} 0,${h*.6}" stroke="#5b2f12" stroke-width="3.4" fill="none" stroke-linecap="round" opacity=".8"/>`;
+  if(mk) t+=`<path d="${WAVE(x,y-1,w,h*.22)}" fill="${mk}" opacity=".93"/>`;
+  if(sy) t+=`<path d="M${x-1},${y+h+1} h${w+2} v${-h*.2} q${-w/8},${-h*.11} ${-w/4},0 t${-w/4},0 t${-w/4},0 t${-w/4},0 z" fill="${sy}" opacity=".92"/>`;
+  for(let i=0;i<nIce;i++){const p=ICEPOS[i],sz=w*.24,ix=x+p[0]*w,iy=y+p[1]*h+2;t+=`<rect x="${ix.toFixed(1)}" y="${iy.toFixed(1)}" width="${sz.toFixed(1)}" height="${sz.toFixed(1)}" rx="2" fill="#fff" fill-opacity=".34" stroke="#fff" stroke-opacity=".75" stroke-width=".9" transform="rotate(${p[2]} ${(ix+sz/2).toFixed(1)} ${(iy+sz/2).toFixed(1)})"/>`;}
+  if(d&&d.inn) for(const q of d.inn) t+=DECO[q[0]](q[1],q[2],q[3]);
+  return t+'</g>';
+ };
+ const petIn=(y)=>d&&d.pet&&d.pos==='in'?cat(50,y,11,d.pet,'happy'):(empty?cat(50,y,11,'calico','ok'):'');
+ const outer=()=>d&&d.out?d.out.map(q=>DECO[q[0]](q[1],q[2],q[3])).join(''):'';
+ const steam=hot?`<g class="steam" stroke="#fff" stroke-width="2" fill="none" opacity=".65" stroke-linecap="round"><path d="M40,32 q-4,-5 0,-10 t0,-10"/><path d="M52,30 q-4,-5 0,-10 t0,-10"/><path d="M63,32 q-4,-5 0,-10 t0,-10"/></g>`:'';
+ if(d&&d.pet&&d.pos==='top') s+=cat(50,kind==='take'?21:23,12,d.pet,'happy');
+ if(kind==='glass'){
+  s+=`<path d="M22,26 H78 L72,90 Q71.6,93.5 68,93.5 H32 Q28.4,93.5 28,90 Z" fill="#fff" fill-opacity=".13"/>`;
+  s+=liq('M25,32 H75 L70.5,88 Q70,90 68,90 H32 Q30,90 29.5,88 Z',25,32,50,57);
+  if(d&&d.straw) s+=`<path d="M60,12 L52,66" stroke="#e8eef8" stroke-width="3.4" stroke-linecap="round" opacity=".92"/>`;
+  s+=petIn(76);
+  s+=`<path d="M22,26 H78 L72,90 Q71.6,93.5 68,93.5 H32 Q28.4,93.5 28,90 Z" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="1.8" stroke-linejoin="round"/><path d="M30,36 L33,84" stroke="#fff" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>`;
+  s+=outer()+steam;
+ }else if(kind==='mugglass'){
+  const body='M20,40 H80 V62 Q80,90 50,90 Q20,90 20,62 Z';
+  s+=`<path d="M80,48 Q98,48 96,66 Q94,80 76,78" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="5"/>`;
+  s+=`<path d="${body}" fill="#fff" fill-opacity=".13"/>`+liq(body,20,46,60,44)+petIn(70);
+  s+=`<path d="${body}" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="1.8"/><ellipse cx="50" cy="40" rx="30" ry="6" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="1.6"/>`;
+  s+=outer()+steam;
+ }else if(kind==='mug'){
+  const bd=empty?'#ccc':d.body;
+  s+=`<path d="M80,48 Q98,48 96,66 Q94,80 76,78" fill="none" stroke="${bd}" stroke-width="6"/>`;
+  s+=`<path d="M20,40 H80 V62 Q80,90 50,90 Q20,90 20,62 Z" fill="${bd}"/><ellipse cx="50" cy="40" rx="30" ry="8" fill="${bd}" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><ellipse cx="50" cy="40" rx="26" ry="6.2" fill="${c0}"/>`;
+  if(d.art==='cat') s+=`<g transform="translate(0 0)">${cat(50,40.5,4.4,'white','ok')}</g>`;
+  if(d.art==='paw') s+=`<ellipse cx="50" cy="41.8" rx="3.4" ry="2.5" fill="#fff4dc"/>${[[45.2,38.4],[48.5,36.6],[51.5,36.6],[54.8,38.4]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="1.3" fill="#fff4dc"/>`).join('')}`;
+  if(d.art==='dots') s+=`<circle cx="44" cy="39" r="1.2" fill="#fff4dc"/><circle cx="52" cy="42" r="1.2" fill="#fff4dc"/><circle cx="57" cy="38" r="1.2" fill="#fff4dc"/><circle cx="48" cy="43" r="1" fill="#fff4dc"/>`;
+  if(mk) s+=`<ellipse cx="50" cy="40.5" rx="16" ry="3.6" fill="${mk}" opacity=".93"/>`;
+  if(sy) s+=`<path d="M30,41 q4,-5 8,0 t8,0 t8,0 t8,0" fill="none" stroke="${sy}" stroke-width="2.4" stroke-linecap="round"/>`;
+  if(nIce) for(let i=0;i<Math.min(nIce,3);i++){const p=[[38,36],[57,38],[48,34]][i];s+=`<rect x="${p[0]}" y="${p[1]}" width="7" height="7" rx="1.6" fill="#fff" fill-opacity=".5" stroke="#fff" stroke-width=".8" transform="rotate(${i*17-8} ${p[0]+3.5} ${p[1]+3.5})"/>`;}
+  s+=d.pet&&d.pos==='in'?cat(50,70,11,d.pet,'happy'):'';
+  s+=steam;
+ }else{ // take
+  s+=`<path d="M26,40 H74 L69,92 Q68.7,94.5 66,94.5 H34 Q31.3,94.5 31,92 Z" fill="${d.body}"/><path d="M28,52 H72" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>`;
+  s+=liq('M37,47 H63 V61 Q63,63 61,63 H39 Q37,63 37,61 Z',37,47,26,16);
+  s+=`<rect x="36" y="46" width="28" height="18" rx="4" fill="none" stroke="#fff6e0" stroke-width="1.6"/>`;
+  s+=`<g fill="#5a3b22"><ellipse cx="50" cy="82" rx="6" ry="4.6"/><circle cx="41" cy="75.5" r="2.4"/><circle cx="47" cy="71.5" r="2.4"/><circle cx="53" cy="71.5" r="2.4"/><circle cx="59" cy="75.5" r="2.4"/></g>`;
+  s+=`<rect x="23" y="31" width="54" height="10" rx="4" fill="#fbf3e6" stroke="#e5d6bd" stroke-width="1"/><path d="M30,31 Q50,22 70,31Z" fill="#fbf3e6" stroke="#e5d6bd" stroke-width="1"/>`;
+ }
+ return s+'</svg>';
+}
+const pawSvg=(c)=>`<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="${c||'#ffe27a'}"><ellipse cx="12" cy="16" rx="5.4" ry="4.4"/><circle cx="5" cy="10.5" r="2.3"/><circle cx="9.3" cy="6.4" r="2.3"/><circle cx="14.7" cy="6.4" r="2.3"/><circle cx="19" cy="10.5" r="2.3"/></g></svg>`;
+
+/* ---------- sound ---------- */
+let AC=null, muted=false, musicOn=true, musicTimer=0, mStep=0, mNext=0;
+function ctx(){ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC; }
+function tone(f,dur,type,vol,delay,f2){
+ try{
+  ctx(); const t=AC.currentTime+(delay||0), o=AC.createOscillator(), g=AC.createGain();
+  o.type=type||'sine'; o.frequency.setValueAtTime(f,t);
+  if(f2) o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol||.15,t+Math.min(.02,dur/2)); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+dur+.05);
+ }catch(e){}
+}
+function meow(p,vol,sad){
+ try{
+  ctx(); const t=AC.currentTime, o=AC.createOscillator(), f=AC.createBiquadFilter(), g=AC.createGain();
+  o.type='sawtooth'; f.type='bandpass'; f.Q.value=3.5;
+  o.frequency.setValueAtTime(p*(sad?1.15:.8),t); o.frequency.linearRampToValueAtTime(p*(sad?.8:1.25),t+.15); o.frequency.exponentialRampToValueAtTime(p*(sad?.5:.78),t+.45);
+  f.frequency.setValueAtTime(850,t); f.frequency.linearRampToValueAtTime(1800,t+.16); f.frequency.linearRampToValueAtTime(760,t+.45);
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol,t+.05); g.gain.setValueAtTime(vol,t+.2); g.gain.exponentialRampToValueAtTime(0.0001,t+.48);
+  o.connect(f); f.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+.5);
+ }catch(e){}
+}
+function sfx(k){
+ if(muted) return;
+ if(k==='ok'){tone(660,.14,'triangle',.18);tone(990,.2,'triangle',.18,.1);}
+ else if(k==='bad'){tone(180,.25,'square',.09,0,120);}
+ else if(k==='pick'){tone(560,.07,'triangle',.1);}
+ else if(k==='door'){tone(1318,.35,'sine',.1);tone(1760,.4,'sine',.07,.08);}
+ else if(k==='meow'){meow(rnd(480,600),.2);}
+ else if(k==='meow2'){meow(rnd(420,680),.12);}
+ else if(k==='meowhappy'){meow(rnd(620,760),.18);}
+ else if(k==='meowsad'){meow(rnd(380,460),.18,true);}
+ else if(k==='coin'){tone(988,.08,'square',.06);tone(1318,.2,'square',.06,.07);}
+ else if(k==='lose'){tone(330,.2,'triangle',.12);tone(220,.4,'triangle',.12,.18);}
+}
+/* background music: bouncy C-major loop, 4 bars, two melody variants */
+const mf=m=>440*Math.pow(2,(m-69)/12);
+const MEL=[
+ [72,0,76,79,76,0,74,72, 77,0,81,84,81,0,79,77, 72,0,76,79,84,0,83,79, 77,76,74,0,71,0,74,0],
+ [79,0,76,72,76,0,79,81, 77,0,74,77,81,0,79,77, 76,0,72,76,79,0,76,72, 74,76,77,74,72,0,0,0]
+];
+function musicTick(){
+ if(!AC||!musicOn) return;
+ const spb=60/128/2;
+ if(mNext<AC.currentTime-.3) mNext=AC.currentTime+.05;
+ while(mNext<AC.currentTime+.3){
+  const d=mNext-AC.currentTime, st=mStep%32, m=MEL[Math.floor(mStep/32)%2][st];
+  if(m) tone(mf(m),spb*.95,'triangle',.07,d);
+  if(st%4===0){ const root=[48,53,48,55][Math.floor(st/8)]; tone(mf(root+(st%8===4?7:0)),spb*1.8,'sine',.1,d); }
+  if(st%2===1) tone(2600,.04,'square',.008,d);
+  mNext+=spb; mStep++;
+ }
+}
+function startMusic(){ try{ ctx(); if(!musicTimer){ mNext=AC.currentTime+.1; musicTimer=setInterval(musicTick,100); } }catch(e){} }
+function stopMusic(){ if(musicTimer){ clearInterval(musicTimer); musicTimer=0; } }
+document.addEventListener('visibilitychange',()=>{ try{ if(AC){ document.hidden?AC.suspend():AC.resume(); } }catch(e){} });
+
+/* ---------- shell ---------- */
+const app=$('#app');
+let G=null, raf=0, bestTotal=0;
+try{bestTotal=+localStorage.getItem('nkcc_best')||0;}catch(e){}
+function show(html){ closeDlg(); app.innerHTML=html; window.scrollTo(0,0); }
+function toast(t){ const e=document.createElement('div'); e.className='toast'; e.setAttribute('role','status'); e.textContent=t; document.body.appendChild(e); setTimeout(()=>e.remove(),1850); }
+function closeDlg(){ const o=$('.overlay'); if(o) o.remove(); }
+function overlay(inner){ closeDlg(); const o=document.createElement('div'); o.className='overlay'; o.innerHTML=inner; document.body.appendChild(o); return o; }
+
+/* ---------- title ---------- */
+const BUBBLES=['MEOW~','喵~','ニャー','야옹~','NYA~'];
+function titleHTML(){
+ const tiles=D.map(d=>`<button class="tile" data-act="drink" data-id="${d.id}" aria-label="${d.zh} ${d.en}">${d.decaf?'<span class="badge">無咖啡因</span>':''}${cup(d)}<span class="zh">${d.zh}</span><span class="en">${d.en}</span></button>`).join('');
+ const star=(x,y,s,c)=>`<path class="tw" d="M${x},${y-s} L${x+s*.3},${y-s*.3} L${x+s},${y} L${x+s*.3},${y+s*.3} L${x},${y+s} L${x-s*.3},${y+s*.3} L${x-s},${y} L${x-s*.3},${y-s*.3}Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>`;
+ return `<section class="title">
+  <p class="shopname">NUKUNUKUCATCAFE</p>
+  <div class="topline">
+   <div class="peekwrap"><button class="peek" data-act="meow" aria-label="摸摸店長"><svg viewBox="0 0 120 76" aria-hidden="true">${cat(60,50,32,'tux','ok')}<ellipse cx="34" cy="70" rx="13" ry="8" fill="#fff8ef" stroke="#2b2b36" stroke-width="2"/><ellipse cx="86" cy="70" rx="13" ry="8" fill="#fff8ef" stroke="#2b2b36" stroke-width="2"/><path d="M4,75 H116" stroke="#ffe27a" stroke-width="3" stroke-linecap="round"/></svg></button><div class="bubble" id="bubble">MEOW~</div></div>
+   <svg class="stars" viewBox="0 0 150 90" aria-hidden="true">${star(40,30,22)}${star(104,52,26)}${star(132,18,10)}</svg>
+  </div>
+  <h1 class="drink-word" aria-label="NUKUNUKU調飲大作戰">${['NUKUNUKU','調飲大作戰'].map((w,k)=>`<span class="dw${k?' cjk':''}">${[...w].map(l=>`<button data-act="letter" aria-hidden="true" tabindex="-1">${l}</button>`).join('')}</span>`).join('')}</h1>
+  <div class="cta"><button class="btn-start" data-act="start">開店營業！</button><p class="best">${bestTotal?'最高三日營業額 '+fmt(bestTotal):'三天營業，和對面的「月光喵喵咖啡」比營業額'}</p><button class="hbtn musicbtn" data-act="music">${musicOn?'音樂 開':'音樂 關'}</button></div>
+  <p class="hint"><span>↓</span> 點一點菜單，看每一杯的喵喵介紹</p>
+  <div class="menu-grid">${tiles}</div>
+  <div class="how">
+   <div><b><em>1</em>看單</b><p>客人頭上的紙條會寫飲料和配料。沒寫的項目，就是原味。</p></div>
+   <div><b><em>2</em>調製</b><p>點選飲料，再選糖漿、牛奶、冰量，杯子會跟著變色。</p></div>
+   <div><b><em>3</em>出杯</b><p>按「出杯」送給客人。越快越準，小費越多，連擊還能加價。</p></div>
+  </div>
+  <p class="ribbon">ALL-YOU-CAN-DRINK<small>暢飲計時制咖啡廳</small></p>
+ </section>`;
+}
+function showTitle(){ stopLoop(); G=null; show(titleHTML()); }
+function drinkCard(id){
+ const d=DM[id]; sfx('meow');
+ overlay(`<div class="card" role="dialog" aria-label="${d.zh}"><button class="x" data-act="closeDlg" aria-label="關閉">×</button><div class="cupbig">${cup(d)}</div><h3>${d.zh}</h3><p class="langs">${d.en}<br>${d.ko} · ${d.ja}</p><span class="price">NT$ ${d.price}</span><p class="note">${d.note}</p></div>`);
+}
+
+/* ---------- days ---------- */
+const DAYS=[
+ {name:'暖暖開店日',len:80,rival:850,spawn:6.5,pat:35,rule:'客人會點一杯飲料，有時加<b>糖漿</b>。紙條上沒寫的配料，就保持原味。'},
+ {name:'牛奶登場',len:80,rival:1120,spawn:5.4,pat:30,rule:'新增<b>牛奶</b>選項：鮮奶、燕麥奶、豆漿。有人想換奶，客人也比較沒耐心了。'},
+ {name:'冰量大考驗',len:85,rival:1450,spawn:4.5,pat:26,rule:'最後一天多了<b>冰量</b>：正常、少冰、去冰、熱。客人來得更快。'}
+];
+const UP=[
+ {id:'pad',name:'暖暖貓墊',desc:'客人的耐心 +25%',cost:280},
+ {id:'lucky',name:'招財貓',desc:'飲料售價 +12%',cost:420},
+ {id:'card',name:'熟客集點卡',desc:'小費增加 60%',cost:320}
+];
+function newGame(){
+ G={day:0,total:0,cash:0,rivalPrev:0,up:{pad:0,lucky:0,card:0},tab:'coffee',stats:[],best:0};
+ nextDay();
+}
+function nextDay(){ G.day++; briefScreen(); }
+function briefScreen(){
+ const D0=DAYS[G.day-1];
+ show(`<section class="panel"><p class="sub">第 ${G.day} 天 / 共 3 天</p><h2>${D0.name}</h2>
+  <div class="rule">${D0.rule}</div>
+  <div class="rule">對手「月光喵喵咖啡」今天目標約 <b>${fmt(D0.rival)}</b>。三天加總，營業額高的店贏。</div>
+  <div class="rule">3 隻小貓掌是你的信譽，客人氣走會扣一隻，扣完就提早打烊。</div>
+  <button class="btn-main" data-act="go">開門！</button></section>`);
+}
+
+/* ---------- game ---------- */
+const defSel=()=>({drink:null,milk:'original',syrup:'none',ice:'normal'});
+const orderPrice=o=>DM[o.drink].price+(o.syrup!=='none'?8:0)+(o.milk!=='original'?10:0)+(o.ice!=='normal'?3:0);
+function stopLoop(){ if(raf) cancelAnimationFrame(raf); raf=0; if(G&&G.d) G.d.running=false; }
+
+function gameHTML(){
+ const cfg=DAYS[G.day-1];
+ const rows=[];
+ if(G.day>=2) rows.push(`<div class="opt-row"><span class="opt-label">牛奶</span><div class="opts">${Object.entries(MILK).map(([k,v])=>`<button class="opt" data-act="opt" data-g="milk" data-v="${k}" aria-pressed="false"><i style="background:${v.color||'transparent'}"></i>${v.zh}</button>`).join('')}</div></div>`);
+ rows.push(`<div class="opt-row"><span class="opt-label">糖漿</span><div class="opts">${Object.entries(SYR).map(([k,v])=>`<button class="opt" data-act="opt" data-g="syrup" data-v="${k}" aria-pressed="false"><i style="background:${k==='none'?'transparent':v.color}"></i>${v.zh}</button>`).join('')}</div></div>`);
+ if(G.day>=3) rows.push(`<div class="opt-row"><span class="opt-label">冰量</span><div class="opts">${Object.entries(ICE).map(([k,v])=>`<button class="opt" data-act="opt" data-g="ice" data-v="${k}" aria-pressed="false">${v}</button>`).join('')}</div></div>`);
+ return `<div class="game">
+  <header class="hud">
+   <div class="hud-top">
+    <span class="daypill">第 ${G.day} 天<small style="font-size:12px"> /3</small></span>
+    <div class="timer-wrap"><div class="timer" id="timer"><i id="timerfill"></i></div><span class="timer-t" id="timert">1:20</span></div>
+    <div class="paws" id="paws" aria-label="信譽">${[0,1,2].map(()=>pawSvg()).join('')}</div>
+    <span class="combo" id="combo"></span>
+    <button class="hbtn" data-act="pause">暫停</button><button class="hbtn musicbtn" data-act="music">${musicOn?'音樂 開':'音樂 關'}</button><button class="hbtn" data-act="mute" id="mutebtn">${muted?'音效 關':'音效 開'}</button>
+   </div>
+   <div class="race">
+    <div class="lane me"><span class="who">NUKUNUKU</span><div class="tr"><i id="mebar"></i></div><b id="mev">NT$ 0</b></div>
+    <div class="lane rival"><span class="who">月光喵喵</span><div class="tr"><i id="rvbar"></i></div><b id="rvv">NT$ 0</b></div>
+   </div>
+  </header>
+  <section class="counter" id="counter" aria-label="櫃檯客人">${[0,1,2].map(i=>`<button class="slot empty" data-i="${i}" disabled>等客人上門…</button>`).join('')}</section>
+  <section class="station">
+   <div class="preview"><div class="stage" id="stage"></div><div><div class="build-name" id="bname">空杯</div><div class="build-sub" id="bsub">點下方飲料開始</div></div></div>
+   <div class="controls">
+    <div class="tabs" role="tablist">${TABS.map(t=>`<button class="tab" role="tab" data-act="tab" data-v="${t[0]}" aria-selected="false">${t[1]}</button>`).join('')}</div>
+    <div class="drink-grid" id="dgrid"></div>
+    ${rows.join('')}
+   </div>
+  </section>
+  <div class="dock"><div class="dock-info"><b id="dkb">請先選飲料</b><span id="dks">看紙條，再點飲料和配料</span></div><button class="btn-ghost" data-act="clear">重做</button><button class="btn-serve" id="serve" data-act="serve" disabled>出杯！</button></div>
+ </div>`;
+}
+
+function startDay(){
+ const cfg=DAYS[G.day-1];
+ const d={t:cfg.len,len:cfg.len,rivalTarget:cfg.rival*rnd(.93,1.07),rivalDay:0,lives:3,combo:0,bestCombo:0,served:0,missed:0,tips:0,rev:0,cust:[null,null,null],active:-1,sel:defSel(),spawnIn:.4,running:true,paused:false,cid:0,last:performance.now(),hud:0};
+ G.d=d; show(gameHTML()); renderGrid(); renderStation(); hudUpdate(true);
+ raf=requestAnimationFrame(loop);
+}
+function loop(ts){
+ const d=G&&G.d; if(!d||!d.running) return;
+ const dt=Math.min(.1,Math.max(0,(ts-d.last)/1000)); d.last=ts;
+ if(!d.paused) step(dt);
+ if(d.running) raf=requestAnimationFrame(loop);
+}
+function makeOrder(){
+ const i=G.day-1, o={drink:pick(D).id,syrup:'none',milk:'original',ice:'normal'};
+ if(Math.random()<[.7,.78,.83][i]) o.syrup=pick(['caramel','vanilla','brown','honey','strawberry']);
+ if(Math.random()<[0,.6,.66][i]) o.milk=pick(['whole','oat','soy']);
+ if(Math.random()<[0,0,.75][i]) o.ice=pick(['less','none','hot']);
+ return o;
+}
+function spawn(){
+ const d=G.d, free=d.cust.map((c,i)=>c?-1:i).filter(i=>i>=0); if(!free.length) return false;
+ const i=pick(free), o=makeOrder(), asks=(o.syrup!=='none')+(o.milk!=='original')+(o.ice!=='normal');
+ const mx=(DAYS[G.day-1].pat+asks*4)*(G.up.pad?1.25:1);
+ d.cust[i]={id:++d.cid,order:o,kind:pick(['tux','orange','white','gray','calico','black']),p:mx,max:mx,mood:'happy',price:orderPrice(o)};
+ renderSlot(i,'arrive'); sfx('door'); setTimeout(()=>sfx('meow2'),200);
+ if(d.active<0) setActive(i);
+ return true;
+}
+function slotHTML(i){
+ const c=G.d.cust[i];
+ if(!c) return `<button class="slot empty" data-i="${i}" disabled>等客人上門…</button>`;
+ const o=c.order, dr=DM[o.drink], ch=[];
+ if(o.syrup!=='none') ch.push(`<em><i style="background:${SYR[o.syrup].color}"></i>${SYR[o.syrup].zh}糖漿</em>`);
+ if(o.milk!=='original') ch.push(`<em><i style="background:${MILK[o.milk].color}"></i>${MILK[o.milk].zh}</em>`);
+ if(o.ice!=='normal') ch.push(`<em>${ICE[o.ice]}</em>`);
+ return `<button class="slot${G.d.active===i?' active':''}" data-act="slot" data-i="${i}" aria-label="${dr.zh}"><span class="face">${catSvg(c.kind,c.mood)}</span><span class="ticket"><span class="t-drink">${dr.zh}</span><span class="t-en" style="display:block">${dr.en}</span>${ch.length?`<span class="t-chips">${ch.join('')}</span>`:'<span class="t-plain" style="display:block">原味就好</span>'}<span class="t-price" style="display:block">NT$ ${c.price}</span></span><span class="pat"><i></i></span></button>`;
+}
+function renderSlot(i,anim){
+ const old=$(`#counter [data-i="${i}"]`); if(!old) return;
+ const tmp=document.createElement('div'); tmp.innerHTML=slotHTML(i); const el=tmp.firstElementChild;
+ if(anim) el.classList.add(anim);
+ old.replaceWith(el);
+}
+function setActive(i){
+ G.d.active=i;
+ $$('#counter .slot').forEach(e=>e.classList.toggle('active',+e.dataset.i===i&&!e.classList.contains('empty')));
+ renderStation();
+}
+function firstOccupied(){ const d=G.d; return d.cust.findIndex(c=>c); }
+function renderGrid(){
+ $$('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===G.tab));
+ $('#dgrid').innerHTML=D.filter(x=>x.cat===G.tab).map(x=>`<button class="dtile" data-act="pick" data-id="${x.id}" aria-pressed="false">${cup(x)}<span>${x.zh}</span></button>`).join('');
+ renderStation();
+}
+function renderStation(){
+ const d=G.d; if(!d) return; const s=d.sel, dr=s.drink?DM[s.drink]:null;
+ $('#stage').innerHTML=cup(dr,{milk:G.day>=2?s.milk:'original',syrup:s.syrup,ice:G.day>=3?s.ice:(dr&&dr.ice?'normal':'none')});
+ const bits=[]; if(s.syrup!=='none') bits.push(SYR[s.syrup].zh+'糖漿'); if(G.day>=2&&s.milk!=='original') bits.push(MILK[s.milk].zh); if(G.day>=3&&s.ice!=='normal') bits.push(ICE[s.ice]);
+ $('#bname').textContent=dr?dr.zh:'空杯'; $('#bsub').textContent=dr?(bits.join(' · ')||'原味，什麼都不加'):'點下方飲料開始';
+ $('#dkb').textContent=dr?dr.zh:'請先選飲料'; $('#dks').textContent=dr?(bits.join(' · ')||'原味'):'看紙條，再點飲料和配料';
+ $$('.dtile').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===s.drink));
+ $$('.opt').forEach(b=>b.setAttribute('aria-pressed',s[b.dataset.g]===b.dataset.v));
+ $('#serve').disabled=!(dr&&d.active>=0&&d.cust[d.active]);
+}
+function hudUpdate(force){
+ const d=G.d, cfg=DAYS[G.day-1];
+ const t=Math.ceil(d.t); $('#timert').textContent=Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
+ $('#timerfill').style.width=(d.t/d.len*100)+'%'; $('#timer').classList.toggle('low',d.t<15);
+ $$('#paws svg').forEach((p,i)=>p.classList.toggle('lost',i>=d.lives));
+ $('#combo').textContent=d.combo>=2?'連擊 ×'+d.combo:'';
+ const ref=Math.max(cfg.rival*1.15,d.rev,1);
+ $('#mev').textContent=fmt(d.rev); $('#rvv').textContent=fmt(d.rivalDay);
+ $('#mebar').style.width=Math.min(100,d.rev/ref*100)+'%'; $('#rvbar').style.width=Math.min(100,d.rivalDay/ref*100)+'%';
+}
+function step(dt){
+ const d=G.d, cfg=DAYS[G.day-1];
+ d.t-=dt; if(d.t<=0){ d.t=0; hudUpdate(); return endDay('time'); }
+ d.spawnIn-=dt;
+ if(d.spawnIn<=0){ if(spawn()) d.spawnIn=cfg.spawn*rnd(.8,1.25); else d.spawnIn=1; }
+ for(let i=0;i<3;i++){
+  const c=d.cust[i]; if(!c) continue;
+  c.p-=dt; if(c.p<=0){ timeout(i); if(!d.running) return; continue; }
+  const f=c.p/c.max, el=$(`#counter [data-i="${i}"] .pat`);
+  if(el){ el.firstElementChild.style.width=(f*100)+'%'; el.className='pat'+(f<.28?' low':f<.6?' mid':''); }
+  const m=f>.6?'happy':f>.28?'ok':'mad';
+  if(m!==c.mood){ c.mood=m; const fc=$(`#counter [data-i="${i}"] .face`); if(fc) fc.innerHTML=catSvg(c.kind,m); }
+ }
+ d.rivalDay=d.rivalTarget*Math.pow(1-d.t/d.len,.92)*(1+Math.sin((1-d.t/d.len)*17)*.015);
+ d.hud+=dt; if(d.hud>.12){ d.hud=0; hudUpdate(); }
+}
+function floatAt(i,txt,bad){
+ const el=$(`#counter [data-i="${i}"]`), box=$('#counter'); if(!el||!box) return;
+ const f=document.createElement('div'); f.className='float'+(bad?' bad':''); f.textContent=txt;
+ f.style.left=(el.offsetLeft+el.offsetWidth/2-34)+'px'; f.style.top=(el.offsetTop+20)+'px';
+ box.appendChild(f); setTimeout(()=>f.remove(),1250);
+}
+function leave(i,cls){
+ const d=G.d, el=$(`#counter [data-i="${i}"]`); d.cust[i]=null;
+ if(el){ el.classList.add('leave'); setTimeout(()=>{ if(G&&G.d===d) renderSlot(i); },430); }
+ if(d.active===i){ const n=firstOccupied(); d.active=n; $$('#counter .slot').forEach(e=>e.classList.toggle('active',+e.dataset.i===n&&!e.classList.contains('empty'))); renderStation(); }
+}
+function timeout(i){
+ const d=G.d; floatAt(i,'氣走了…',true); leave(i); d.lives--; d.combo=0; d.missed++; sfx('lose'); setTimeout(()=>sfx('meowsad'),120); toast('客人等太久，氣呼呼走了');
+ hudUpdate(); if(d.lives<=0) endDay('closed');
+}
+function serve(){
+ const d=G.d, i=d.active, c=d.cust[i], s=d.sel; if(!c||!s.drink||d.paused) return;
+ const o=c.order, bad=[];
+ if(s.drink!==o.drink) bad.push('飲料'); if(s.syrup!==o.syrup) bad.push('糖漿'); if(s.milk!==o.milk) bad.push('牛奶'); if(s.ice!==o.ice) bad.push('冰量');
+ if(bad.length){
+  d.combo=0; c.p=Math.max(.5,c.p-c.max*.28); sfx('bad'); toast(bad.join('、')+'不對喵，再看一次紙條');
+  const el=$(`#counter [data-i="${i}"]`); if(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+  hudUpdate(); return;
+ }
+ const mult=(1+.05*Math.min(d.combo,10))*(G.up.lucky?1.12:1);
+ const tip=Math.round(30*(c.p/c.max)*(G.up.card?1.6:1));
+ const earn=Math.round(c.price*mult)+tip;
+ d.combo++; d.bestCombo=Math.max(d.bestCombo,d.combo); d.served++; d.tips+=tip; d.rev+=earn; G.total+=earn; G.cash+=earn;
+ floatAt(i,'+'+earn); sfx('ok'); sfx('coin'); setTimeout(()=>sfx('meowhappy'),150); leave(i);
+ d.sel=defSel(); renderStation(); hudUpdate();
+}
+function endDay(why){
+ const d=G.d; if(!d.running) return; d.running=false; cancelAnimationFrame(raf); raf=0;
+ d.rivalDay=d.rivalTarget; G.rivalPrev+=d.rivalTarget; hudUpdate();
+ G.stats.push({rev:d.rev,served:d.served,tips:d.tips,combo:d.bestCombo,rival:d.rivalTarget});
+ sfx(d.rev>=d.rivalTarget?'ok':'lose');
+ overlay(`<div class="card"><h3>${why==='closed'?'提早打烊':'打烊啦'}</h3><p class="note" style="margin-top:10px">${why==='closed'?'信譽用完了，今天先收攤。':'今天辛苦了，來看看成績。'}</p></div>`);
+ setTimeout(dayEndScreen,1300);
+}
+function dayEndScreen(){
+ const s=G.stats[G.day-1], last=G.day>=3;
+ const mx=Math.max(G.total,G.rivalPrev,1);
+ const ups=UP.map(u=>`<div class="up${G.up[u.id]?' owned':''}"><div><b>${u.name}</b><span>${u.desc}</span></div><button data-act="buy" data-id="${u.id}" ${G.up[u.id]||G.cash<u.cost?'disabled':''}>${G.up[u.id]?'已擁有':fmt(u.cost)}</button></div>`).join('');
+ show(`<section class="panel"><p class="sub">第 ${G.day} 天結算</p><h2>${s.rev>=s.rival?'今天贏過對面！':'今天輸給對面了'}</h2>
+  <div class="stats"><div class="stat big"><small>今日營業額</small><b>${fmt(s.rev)}</b></div><div class="stat"><small>出杯數</small><b>${s.served}</b></div><div class="stat"><small>小費</small><b>${fmt(s.tips)}</b></div><div class="stat"><small>最高連擊</small><b>×${s.combo}</b></div><div class="stat"><small>對手今日</small><b>${fmt(s.rival)}</b></div></div>
+  <div class="vs"><div class="row"><span>NUKUNUKU</span><div class="tr"><i style="width:${G.total/mx*100}%"></i></div><b>${fmt(G.total)}</b></div><div class="row r"><span>月光喵喵</span><div class="tr"><i style="width:${G.rivalPrev/mx*100}%"></i></div><b>${fmt(G.rivalPrev)}</b></div></div>
+  ${last?'':`<p class="sub" style="margin:12px 0 4px">用現金 ${fmt(G.cash)} 升級小店（不影響累計營業額）</p><div class="shop" id="shop">${ups}</div>`}
+  <button class="btn-main" data-act="${last?'final':'next'}">${last?'看最終結果':'第 '+(G.day+1)+' 天'}</button></section>`);
+}
+function finalScreen(){
+ const win=G.total>G.rivalPrev, diff=Math.abs(G.total-G.rivalPrev);
+ const rank=G.total<1800?'新手小貓店員':G.total<2600?'人氣小店員':G.total<3300?'金牌咖啡師':'傳說貓掌櫃';
+ if(G.total>bestTotal){ bestTotal=Math.round(G.total); try{localStorage.setItem('nkcc_best',String(bestTotal));}catch(e){} }
+ const conf=win?`<div class="confetti" aria-hidden="true">${Array.from({length:26},()=>`<i style="left:${rnd(2,98).toFixed(0)}%;background:${pick(['#ffe27a','#ff8fab','#8fe3b8','#7fb2ff'])};animation-delay:${rnd(0,3).toFixed(1)}s"></i>`).join('')}</div>`:'';
+ show(`<section class="panel">${conf}<svg class="trophy" viewBox="0 0 120 120" aria-hidden="true">${cat(60,72,38,win?'tux':'gray',win?'happy':'ok')}${win?'<path d="M36,36 L42,12 L60,28 L78,12 L84,36Z" fill="#ffe27a" stroke="#f0b92e" stroke-width="3" stroke-linejoin="round"/>':''}</svg>
+  <h2>${win?'NUKUNUKU 調飲大作戰奪冠！':'月光喵喵略勝一籌'}</h2>
+  <p class="sub">${win?'你比對手多賺 '+fmt(diff)+'，成為鎮上最受歡迎的貓咖啡。':'只差 '+fmt(diff)+'，再試一次一定能超車。'}</p>
+  <div class="stats"><div class="stat big"><small>三日總營業額</small><b>${fmt(G.total)}</b></div><div class="stat"><small>對手總營業額</small><b>${fmt(G.rivalPrev)}</b></div><div class="stat"><small>你的稱號</small><b style="font-size:19px">${rank}</b></div></div>
+  <button class="btn-main" data-act="again">再開一次店</button> <button class="btn-ghost" style="color:var(--ink);border-color:var(--ink);margin-top:8px" data-act="home">回標題</button></section>`);
+ sfx(win?'ok':'lose');
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ if(musicOn&&!musicTimer) startMusic();
+ const b=e.target.closest('[data-act]'); if(b){
+  const a=b.dataset.act;
+  if(a==='start') { sfx('door'); newGame(); }
+  else if(a==='go') startDay();
+  else if(a==='drink') drinkCard(b.dataset.id);
+  else if(a==='music'){ musicOn=!musicOn; if(musicOn) startMusic(); else stopMusic(); $$('.musicbtn').forEach(x=>x.textContent=musicOn?'音樂 開':'音樂 關'); }
+  else if(a==='closeDlg') closeDlg();
+  else if(a==='meow'){ sfx('meow'); const bu=$('#bubble'); if(bu) bu.textContent=pick(BUBBLES); }
+  else if(a==='letter'){ sfx('pick'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  else if(G&&G.d){
+   const d=G.d;
+   if(a==='tab'){ G.tab=b.dataset.v; sfx('pick'); renderGrid(); }
+   else if(a==='pick'){ d.sel.drink=b.dataset.id; sfx('pick'); renderStation(); }
+   else if(a==='opt'){ d.sel[b.dataset.g]=b.dataset.v; sfx('pick'); renderStation(); }
+   else if(a==='slot'){ sfx('pick'); setActive(+b.dataset.i); }
+   else if(a==='serve') serve();
+   else if(a==='clear'){ d.sel=defSel(); renderStation(); }
+   else if(a==='pause'){ d.paused=true; overlay(`<div class="card"><h3>休息一下</h3><p class="note" style="margin:10px 0">時間暫停中，貓咪們在打盹。</p><button class="btn-main" data-act="resume">繼續營業</button></div>`); }
+   else if(a==='resume'){ closeDlg(); d.paused=false; d.last=performance.now(); }
+   else if(a==='mute'){ muted=!muted; b.textContent=muted?'音效 關':'音效 開'; }
+   else if(a==='buy'){ const u=UP.find(x=>x.id===b.dataset.id); if(u&&!G.up[u.id]&&G.cash>=u.cost){ G.cash-=u.cost; G.up[u.id]=1; sfx('coin'); dayEndScreen(); } }
+   else if(a==='next') nextDay();
+   else if(a==='final') finalScreen();
+   else if(a==='again') newGame();
+   else if(a==='home') showTitle();
+  }
+  return;
+ }
+ if(e.target.classList&&e.target.classList.contains('overlay')&&!(G&&G.d&&G.d.paused)) closeDlg();
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!(G&&G.d&&G.d.paused)) closeDlg(); });
+document.addEventListener('visibilitychange',()=>{ if(document.hidden&&G&&G.d&&G.d.running&&!G.d.paused) $('[data-act="pause"]')&&$('[data-act="pause"]').click(); });
+showTitle();
+</script>
+
+</body></html>
