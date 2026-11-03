@@ -1,6 +1,8 @@
 import "server-only";
 import type { Locale } from "@/i18n/routing";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/live";
 import { CONTENT_KEY, isLocale } from "./locale";
 
@@ -21,10 +23,12 @@ export async function load<T>(
 ): Promise<T> {
   // 例如 /favicon.ico 這類不是語言代碼的網址 → 直接 404，不去查資料
   if (!isLocale(locale)) notFound();
-  const { data } = await sanityFetch({
-    query,
-    params: { lang: CONTENT_KEY[locale], today: todayTaipei(), ...params },
-    ...(opts.stega === false ? { stega: false } : {}),
-  });
-  return data as T;
+  const p = { lang: CONTENT_KEY[locale], today: todayTaipei(), ...params };
+  // 管理員預覽：走即時草稿
+  if ((await draftMode()).isEnabled) {
+    const { data } = await sanityFetch({ query, params: p, ...(opts.stega === false ? { stega: false } : {}) });
+    return data as T;
+  }
+  // 一般訪客：已發布內容，快取最多 60 秒，後台發布後一分鐘內一定會出現在官網
+  return client.fetch<T>(query, p, { stega: false, next: { revalidate: 60, tags: ["sanity"] } });
 }
