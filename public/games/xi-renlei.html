@@ -380,7 +380,7 @@ button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 (()=>{
 "use strict";
 const $=s=>document.querySelector(s);
-const GAME_URL='https://fufucatcafe-com-tw.vercel.app/games/xi-renlei.html';
+const GAME_URL='https://fufucatcafe.com.tw/games/xi-renlei.html';
 const shareURL=()=>GAME_URL||location.href;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}};
 const rand=(a,b)=>a+Math.random()*(b-a);
