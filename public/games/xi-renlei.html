@@ -408,9 +408,10 @@ function pmap(map,x,y,pal){for(let j=0;j<map.length;j++){const row=map[j];for(le
 function twoPass(fn){MODE='o';fn();MODE='f';fn()}
 
 /* ================= graduation (11/6/2026, Taipei time) ================= */
-const GRAD_AT=Date.UTC(2026,10,5,16,0,0);
-const isGrad=()=>location.hash==='#graduated'||Date.now()>=GRAD_AT;  // #graduated previews the after-graduation look
-const daysLeft=()=>Math.max(1,Math.ceil((GRAD_AT-Date.now())/86400000));
+// 畢業日期未定：確定後改成 Date.UTC(年,月-1,日-1,16,0,0)（台北時間午夜）
+const GRAD_AT=null;
+const isGrad=()=>location.hash==='#graduated'||(GRAD_AT!==null&&Date.now()>=GRAD_AT);  // #graduated previews the after-graduation look
+const daysLeft=()=>GRAD_AT===null?0:Math.max(1,Math.ceil((GRAD_AT-Date.now())/86400000));
 let CAP=false;
 function gradCap(hx,hy){
   rect(hx-12,hy-17,24,5,OUT);rect(hx-7,hy-13,14,5,OUT);
@@ -976,7 +977,7 @@ function showResult(){
   $('#rTitle').textContent=t;$('#rScore').textContent=S.score;$('#rNew').hidden=!isNew||S.score===0;
   $('#rServed').textContent=S.served;$('#rLost').textContent=S.lost;$('#rCombo').textContent=S.maxCombo;$('#rCoins').textContent=S.coins;
   $('#rBest').textContent=Math.max(best,S.score);
-  $('#rGrad').innerHTML=isGrad()?'馬花仁現在在新家過得很好<br>謝謝你陪畢業店長再營業一天':'馬花仁 <b>11/6</b> 就要畢業了<br>趁牠還在店裡，來 NUKUNUKU 看看牠吧';
+  $('#rGrad').innerHTML=isGrad()?'馬花仁現在在新家過得很好<br>謝謝你陪畢業店長再營業一天':'馬花仁正在等待牠的新家<br>趁牠還在店裡，來 NUKUNUKU 看看牠吧';
   $('#sharePanel').hidden=true;
   show('scrResult');refreshRecords();
 }
@@ -1118,10 +1119,10 @@ function startGame(){CAP=isGrad();reset();show(null);updateHUD();SFX.meow();Musi
 function openSelect(){CAP=isGrad();syncGrad();show('scrSelect');SFX.tap()}
 function syncGrad(){
   const gd=isGrad(),n=daysLeft();CAP=gd;
-  $('#gradNote').innerHTML=gd?'馬花仁已於 <b>2026.11.6</b> 幸福畢業<br>永遠的第一代店長，隨時回來營業':'馬花仁 <b>11/6</b> 就要畢業去新家了<br>還有 <b>'+n+'</b> 天可以在店裡見到牠';
-  $('#selSt').textContent=gd?'已幸福畢業':'現任店長・'+n+' 天後畢業';
+  $('#gradNote').innerHTML=gd?'馬花仁已經幸福畢業<br>永遠的第一代店長，隨時回來營業':'馬花仁即將畢業去新家<br>趁牠還在店裡，來 NUKUNUKU 看看牠吧';
+  $('#selSt').textContent=gd?'已幸福畢業':'現任店長・即將畢業';
   $('#selSt').classList.toggle('grad',gd);
-  $('#selDesc').textContent=gd?'第一代店長・2026.11.6 找到家':'橘白毛色・黃綠色眼睛・愛吐舌頭';
+  $('#selDesc').textContent=gd?'第一代店長・已找到家':'橘白毛色・黃綠色眼睛・愛吐舌頭';
   $('#sideIntro').textContent=gd?'馬花仁是咖啡廳的第一代招牌貓，已在 2026 年 11 月 6 日幸福畢業、住進新家。在這裡牠永遠是店長：180 秒內看懂每位客人的個性，用對技能把他們通通吸過來。':'你是咖啡廳的招牌貓「馬花仁」，橘白毛色、黃綠色眼睛、偶爾會吐舌頭。11 月 6 日牠就要畢業去新家了。180 秒內看懂每位客人的個性，用對技能把他們通通吸過來。';
 }
 function togglePause(){
@@ -1175,7 +1176,7 @@ function buildGuide(){
 
 /* ================= share ================= */
 function shareText(kind){
-  const t=titleFor(S.score),url=shareURL(),gl=isGrad()?'馬花仁已經幸福畢業，找到永遠的家了！':'馬花仁 11/6 就要畢業去新家了！';
+  const t=titleFor(S.score),url=shareURL(),gl=isGrad()?'馬花仁已經幸福畢業，找到永遠的家了！':'馬花仁即將畢業去新家了！';
   if(kind==='challenge')return`我在《中途貓咪今天也努力營業中》拿到 ${S.score} 分，獲得「${t}」稱號！\n你能幫馬花仁吸引更多人類嗎？\n${gl}\n來挑戰我：${url}`;
   return`《中途貓咪今天也努力營業中》\n今天也要努力吸人類！\n我和貓咪馬花仁吸引了 ${S.served} 位人類，拿到 ${S.score} 分！\n稱號：「${t}」\n${gl}\n一起來玩：${url}`;
 }
