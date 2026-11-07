@@ -30,5 +30,11 @@ export async function load<T>(
     return data as T;
   }
   // 一般訪客：已發布內容，快取最多 60 秒，後台發布後一分鐘內一定會出現在官網
-  return client.fetch<T>(query, p, { stega: false, next: { revalidate: 60, tags: ["sanity"] } });
+  const cached = await client.fetch<T>(query, p, { stega: false, next: { revalidate: 60, tags: ["sanity"] } });
+  // 快取裡是「查無資料」時（例如貓咪還是草稿時有人先點過網址），改抓最新資料，
+  // 避免剛發布的頁面一直卡在 404
+  if (cached === null || cached === undefined) {
+    return client.withConfig({ useCdn: false }).fetch<T>(query, p, { stega: false, cache: "no-store" });
+  }
+  return cached;
 }
