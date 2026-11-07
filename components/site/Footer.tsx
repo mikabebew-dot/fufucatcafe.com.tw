@@ -34,6 +34,9 @@ export async function SiteFooter({ data }: { data: FooterData }) {
                     {lineUrl(shop, b.id) && <a href={lineUrl(shop, b.id)} target="_blank" rel="noopener noreferrer">LINE ↗</a>}
                     <Link href={`/${b.id}/visit`}>{t("visit.details")}</Link>
                   </p>
+                  <p style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 4 }}>
+                    {b.socials.map((s) => <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.platform} ↗</a>)}
+                  </p>
                 </div>
               </div>
             );

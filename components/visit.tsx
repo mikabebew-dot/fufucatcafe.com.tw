@@ -1,6 +1,6 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { DAYS } from "@/lib/constants";
+import { BRANDS, DAYS } from "@/lib/constants";
 import { directionsUrl, lineUrl, telUrl } from "@/lib/contact";
 import { groupHours } from "@/lib/hours";
 import type { Shop } from "@/lib/types";
@@ -225,12 +225,20 @@ export function ContactButtons({ shop, brand }: { shop: Shop; brand: string }) {
   const nav = directionsUrl(shop);
   const line = lineUrl(shop, brand);
   const tel = telUrl(shop.phone);
-  if (!nav && !line && !tel) return null;
+  const socials = BRANDS.find((b) => b.id === brand)?.socials ?? [];
+  if (!nav && !line && !tel && !socials.length) return null;
   return (
+    <>
     <div className="contact-row">
       {nav && <a className="btn contact-btn" href={nav} target="_blank" rel="noopener noreferrer">📍 {tc("directions")}</a>}
       {line && <a className="btn contact-btn contact-line" href={line} target="_blank" rel="noopener noreferrer">💬 {tc("line")}</a>}
       {tel && <a className="btn btn-ghost contact-btn" href={tel}>📞 {tc("call")}</a>}
     </div>
+    {socials.length > 0 && (
+      <p style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 12 }}>
+        {socials.map((s) => <a key={s.url} className="text-link" href={s.url} target="_blank" rel="noopener noreferrer">{s.platform} ↗</a>)}
+      </p>
+    )}
+    </>
   );
 }

@@ -4,8 +4,17 @@
  */
 
 export const BRANDS = [
-  { id: "fufu", name: "FUFU", official: "FU FU CAT CAFE", logo: "/brand/fufu-logo.png", line: "@qvy2066j" },
-  { id: "nukunuku", name: "NUKUNUKU", official: "NUKU NUKU CAT CAFE", logo: "/brand/nukunuku-logo.jpg", line: "@808gupte" },
+  { id: "fufu", name: "FUFU", official: "FU FU CAT CAFE", logo: "/brand/fufu-logo.png", line: "@qvy2066j",
+    socials: [
+      { platform: "Instagram", url: "https://www.instagram.com/fufucatcafe/" },
+      { platform: "Facebook", url: "https://www.facebook.com/fufucatcafe" },
+      { platform: "Threads", url: "https://www.threads.net/@fufucatcafe" },
+    ] },
+  { id: "nukunuku", name: "NUKUNUKU", official: "NUKU NUKU CAT CAFE", logo: "/brand/nukunuku-logo.jpg", line: "@808gupte",
+    socials: [
+      { platform: "Instagram", url: "https://www.instagram.com/nukunukucatcafe/" },
+      { platform: "Facebook", url: "https://www.facebook.com/share/1CDHcBQ8bn/" },
+    ] },
 ] as const;
 export type BrandId = (typeof BRANDS)[number]["id"];
 export const isBrand = (v: string): v is BrandId => BRANDS.some((b) => b.id === v);
