@@ -203,6 +203,20 @@ export const T = {
   restart: { zh: "下一組客人", en: "Next guests", ja: "次のお客様", ko: "다음 손님" },
   again: { zh: "重新填寫（換下一組）", en: "Start over (next group)", ja: "最初からやり直す（次のグループ）", ko: "처음부터 다시 (다음 그룹)" },
 
+  fosterLink: {
+    zh: "入座後，來認識正在等家的貓咪",
+    en: "Once you're seated, meet the cats waiting for a home",
+    ja: "お席に着いたら、おうちを待つ猫たちに会いに",
+    ko: "자리에 앉으면, 가족을 기다리는 고양이들을 만나 보세요",
+  },
+  fosterPageTitle: { zh: "今天在店裡等家的孩子", en: "Cats waiting for a home today", ja: "今日おうちを待っている子たち", ko: "오늘 가족을 기다리는 아이들" },
+  fosterPageTitleFufu: { zh: "姊妹店 NUKUNUKU 等家的孩子", en: "Cats waiting for a home at NUKUNUKU", ja: "姉妹店NUKUNUKUでおうちを待つ子たち", ko: "자매점 NUKUNUKU에서 가족을 기다리는 아이들" },
+  fosterAsk: {
+    zh: "想多認識哪一隻，歡迎直接問店員。",
+    en: "Want to know more about one of them? Just ask our staff.",
+    ja: "気になる子がいたら、スタッフに気軽に聞いてください。",
+    ko: "궁금한 아이가 있으면 직원에게 편하게 물어보세요.",
+  },
   fosterTitle: { zh: "這些孩子正在等一個家", en: "These cats are waiting for a home", ja: "おうちを待っている猫たち", ko: "가족을 기다리는 고양이들" },
   fosterLead: {
     zh: "NUKUNUKU 是中途貓咖啡廳。今天遇見的孩子，有些正在找家人，點照片可以認識牠。",

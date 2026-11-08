@@ -8,7 +8,7 @@ import { useClient } from "sanity";
 type Day = {
   _id: string; brand: "fufu" | "nukunuku"; date: string;
   groups?: number; guests?: number; planShort?: number; planLong?: number;
-  langs?: Record<string, number>; adoptClicks?: number; adoptPage?: number; catClicks?: Record<string, number>;
+  langs?: Record<string, number>; adoptClicks?: number; adoptPage?: number; fosterViews?: number; catClicks?: Record<string, number>;
 };
 type Cat = { slug: string; name: string };
 
@@ -67,7 +67,7 @@ export function CheckinDashboard() {
     try {
       const r = await client.fetch<{ days: Day[]; cats: Cat[] }>(`{
         "days": *[_type == "checkinDayStat" && _id in path("checkin.day.**")] | order(date desc)[0...400]{
-          _id, brand, date, groups, guests, planShort, planLong, langs, adoptClicks, adoptPage, catClicks
+          _id, brand, date, groups, guests, planShort, planLong, langs, adoptClicks, adoptPage, fosterViews, catClicks
         },
         "cats": *[_type == "cat" && brand == "nukunuku" && defined(slug.current) && !(_id in path("drafts.**"))]{ "slug": slug.current, "name": name.zh }
       }`);
@@ -91,7 +91,7 @@ export function CheckinDashboard() {
   }, [days, brand, range]);
 
   const sum = useMemo(() => {
-    const t = { groups: 0, guests: 0, short: 0, long: 0, adopt: 0, adoptPage: 0, langs: { zh: 0, en: 0, ja: 0, ko: 0 } as Record<string, number>, cat: {} as Record<string, number> };
+    const t = { groups: 0, guests: 0, short: 0, long: 0, adopt: 0, adoptPage: 0, views: 0, langs: { zh: 0, en: 0, ja: 0, ko: 0 } as Record<string, number>, cat: {} as Record<string, number> };
     for (const d of rows) {
       t.groups += d.groups ?? 0;
       t.guests += d.guests ?? 0;
@@ -99,6 +99,7 @@ export function CheckinDashboard() {
       t.long += d.planLong ?? 0;
       t.adopt += d.adoptClicks ?? 0;
       t.adoptPage += d.adoptPage ?? 0;
+      t.views += d.fosterViews ?? 0;
       for (const [k, v] of Object.entries(d.langs ?? {})) t.langs[k] = (t.langs[k] ?? 0) + v;
       for (const [k, v] of Object.entries(d.catClicks ?? {})) t.cat[k] = (t.cat[k] ?? 0) + v;
     }
@@ -111,10 +112,10 @@ export function CheckinDashboard() {
 
   const exportCsv = () =>
     downloadCsv(`入場紀錄_${new Date().toISOString().slice(0, 10)}.csv`, [
-      ["日期", "店", "確認組數", "確認人數", "短暫停留人數", "悠閒停留人數", "中文組", "英文組", "日文組", "韓文組", "中途貓介紹點閱", "認養流程點閱"],
+      ["日期", "店", "確認組數", "確認人數", "短暫停留人數", "悠閒停留人數", "中文組", "英文組", "日文組", "韓文組", "等家孩子頁瀏覽", "中途貓介紹點閱", "認養流程點閱"],
       ...rows.map((d) => [
         d.date, BRAND_NAME[d.brand], d.groups ?? 0, d.guests ?? 0, d.planShort ?? 0, d.planLong ?? 0,
-        d.langs?.zh ?? 0, d.langs?.en ?? 0, d.langs?.ja ?? 0, d.langs?.ko ?? 0, d.adoptClicks ?? 0, d.adoptPage ?? 0,
+        d.langs?.zh ?? 0, d.langs?.en ?? 0, d.langs?.ja ?? 0, d.langs?.ko ?? 0, d.fosterViews ?? 0, d.adoptClicks ?? 0, d.adoptPage ?? 0,
       ]),
     ]);
 
@@ -124,7 +125,7 @@ export function CheckinDashboard() {
         <div style={s.head}>
           <div>
             <h1 style={s.h1}>入場確認・紀錄</h1>
-            <p style={s.note}>客人網址 /checkin/fufu、/checkin/nukunuku。只記錄確認時間、語言、方案人數與認養資訊點閱，不含任何個資。</p>
+            <p style={s.note}>客人網址 /checkin/fufu、/checkin/nukunuku。只記錄確認時間、語言、方案人數與認養資訊點閱，不含任何個資。店內「等家的孩子」QR：/checkin/nukunuku/cats/qr、/checkin/fufu/cats/qr。</p>
           </div>
           <div style={s.row}>
             <a style={s.btn} href="/checkin/nukunuku/counter" target="_blank" rel="noopener">NUKUNUKU 櫃檯看板</a>
@@ -155,6 +156,7 @@ export function CheckinDashboard() {
               <div style={s.tile}><span style={s.big}>{sum.guests}</span><span style={s.small}>完成確認人數</span></div>
               <div style={s.tile}><span style={s.big}>{pct(foreign, sum.groups)}%</span><span style={s.small}>使用外語的組（英日韓）</span></div>
               <div style={s.tile}><span style={s.big}>{pct(sum.long, sum.guests)}%</span><span style={s.small}>選悠閒停留的人</span></div>
+              <div style={s.tile}><span style={s.big}>{sum.views}</span><span style={s.small}>「等家的孩子」頁瀏覽</span></div>
               <div style={s.tile}><span style={s.big}>{sum.adopt}</span><span style={s.small}>中途貓介紹點閱</span></div>
               <div style={s.tile}><span style={s.big}>{sum.adoptPage}</span><span style={s.small}>認養流程點閱</span></div>
             </div>
@@ -198,7 +200,7 @@ export function CheckinDashboard() {
                         <th style={s.th}>日期</th><th style={s.th}>店</th>
                         <th style={{ ...s.th, ...s.num }}>組</th><th style={{ ...s.th, ...s.num }}>人</th>
                         <th style={{ ...s.th, ...s.num }}>短暫</th><th style={{ ...s.th, ...s.num }}>悠閒</th>
-                        <th style={{ ...s.th, ...s.num }}>外語組</th><th style={{ ...s.th, ...s.num }}>中途貓點閱</th>
+                        <th style={{ ...s.th, ...s.num }}>外語組</th><th style={{ ...s.th, ...s.num }}>等家頁瀏覽</th><th style={{ ...s.th, ...s.num }}>中途貓點閱</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -211,6 +213,7 @@ export function CheckinDashboard() {
                           <td style={{ ...s.td, ...s.num }}>{d.planShort ?? 0}</td>
                           <td style={{ ...s.td, ...s.num }}>{d.planLong ?? 0}</td>
                           <td style={{ ...s.td, ...s.num }}>{(d.groups ?? 0) - (d.langs?.zh ?? 0)}</td>
+                          <td style={{ ...s.td, ...s.num }}>{d.fosterViews ?? 0}</td>
                           <td style={{ ...s.td, ...s.num }}>{(d.adoptClicks ?? 0) + (d.adoptPage ?? 0)}</td>
                         </tr>
                       ))}

@@ -33,6 +33,7 @@ export type Day = {
   langs?: Partial<Record<Lang, number>>;
   adoptClicks?: number;
   adoptPage?: number;
+  fosterViews?: number;
   catClicks?: Record<string, number>;
   entries?: Entry[];
 };
@@ -93,7 +94,7 @@ export async function recordConfirm(input: ConfirmInput) {
   return entry;
 }
 
-/** 認養資訊的點閱：cat 為貓咪網址代稱，"page" 代表認養流程頁 */
+/** 認養資訊的點閱：cat 為貓咪網址代稱，"page" 代表認養流程頁，"view" 代表打開「等家的孩子」頁 */
 export async function recordAdoptClick(brand: BrandId, cat: string) {
   const client = checkinClient();
   if (!client) return false;
@@ -103,7 +104,8 @@ export async function recordAdoptClick(brand: BrandId, cat: string) {
     .transaction()
     .createIfNotExists({ _id: id, _type: "checkinDayStat", brand, date: taipeiDate(), groups: 0, guests: 0, adoptClicks: 0, adoptPage: 0, catClicks: {}, entries: [] })
     .patch(id, (p) => {
-      let q = p.setIfMissing({ adoptClicks: 0, adoptPage: 0, catClicks: {} });
+      let q = p.setIfMissing({ adoptClicks: 0, adoptPage: 0, fosterViews: 0, catClicks: {} });
+      if (cat === "view") return q.inc({ fosterViews: 1 });
       if (!key) return q.inc({ adoptPage: 1 });
       q = q.inc({ adoptClicks: 1 }).setIfMissing({ [`catClicks.${key}`]: 0 }).inc({ [`catClicks.${key}`]: 1 });
       return q;

@@ -157,16 +157,6 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     return () => clearTimeout(t);
   }, [kiosk, step, reset]);
 
-  const trackAdopt = (cat: string) => {
-    try {
-      const body = JSON.stringify({ brand: data.brand, cat });
-      if (!navigator.sendBeacon?.("/api/checkin/adopt", new Blob([body], { type: "text/plain" }))) {
-        fetch("/api/checkin/adopt", { method: "POST", body, keepalive: true }).catch(() => {});
-      }
-    } catch {
-      /* 統計失敗不影響客人 */
-    }
-  };
 
   const pricePoints = useMemo(() => T.pricePoints[lang].map((s) => s.replace("{capMin}", String(PRICE_CAP_MIN))), [lang]);
 
@@ -307,26 +297,11 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               </dl>
             </div>
 
-            {data.cats.length > 0 && (
-              <div className="ck-cats-block">
-                <h2>{tr(T.fosterTitle, lang)}</h2>
-                <p className="ck-muted">{tr(data.brand === "fufu" ? T.fosterLeadFufu : T.fosterLead, lang)}</p>
-                <ul className="ck-cats">
-                  {data.cats.map((c) => (
-                    <li key={c.slug}>
-                      <a href={href(`/nukunuku/cats/${c.slug}`)} target="_blank" rel="noopener" onClick={() => trackAdopt(c.slug)}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        {c.photo && <img src={c.photo} alt="" width={180} height={180} loading="lazy" />}
-                        <span className="ck-cat-name">{c.name[lang]}{c.status === "matching" && <em>{tr(T.matching, lang)}</em>}</span>
-                        {c.traits && <span className="ck-cat-traits">{c.traits[lang].slice(0, 2).join("・")}</span>}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <a className="btn btn-ghost btn-block" href={href("/nukunuku/adoption")} target="_blank" rel="noopener" onClick={() => trackAdopt("page")}>
-                  {tr(T.adoptHow, lang)}
-                </a>
-              </div>
+            {/* 手機版只留一行連結，入座後再看；櫃檯平板完全不顯示，避免客人停在帶位區 */}
+            {!kiosk && data.cats.length > 0 && (
+              <a className="ck-foster-link" href={`/checkin/${data.brand}/cats${lang === "zh" ? "" : `?lang=${lang}`}`}>
+                {tr(T.fosterLink, lang)} →
+              </a>
             )}
 
             {!kiosk && (
