@@ -124,7 +124,9 @@
     "yearsMonths": "{y} yrs {m} mos",
     "months": "{n} mos",
     "allCats": "All cats",
-    "brandCats": "{brand} cats"
+    "brandCats": "{brand} cats",
+    "applyCta": "Apply to adopt",
+    "applyHint": "The form is in Chinese. After submitting, please send a message to NUKUNUKU on Instagram — we reply within 3 days."
   },
   "catStatus": {
     "resident": "Resident",

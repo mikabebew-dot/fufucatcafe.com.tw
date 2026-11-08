@@ -124,7 +124,9 @@
     "yearsMonths": "{y} 歲 {m} 個月",
     "months": "{n} 個月",
     "allCats": "所有貓咪",
-    "brandCats": "{brand} 的貓咪"
+    "brandCats": "{brand} 的貓咪",
+    "applyCta": "我想認養牠",
+    "applyHint": "表單送出後，請私訊 NUKUNUKU 的 IG 小編，我們會在 3 天內回覆。"
   },
   "catStatus": {
     "resident": "常駐",

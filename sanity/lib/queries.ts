@@ -183,6 +183,7 @@ export const CAT_QUERY = /* groq */ `*[_type == "cat" && brand == $brand && slug
   cover${IMG},
   "photos": photos[defined(asset)]${IMG},
   "graduateStory": *[_type == "graduateStory" && cat._ref == ^._id][0]{ "slug": slug.current },
+  "applyUrl": *[_id == "adoptionGuide"][0].applyUrl,
   ${SEO}
 }`;
 

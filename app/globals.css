@@ -496,3 +496,8 @@ p { margin: 0; }
   .quest-banner .img { aspect-ratio: auto; min-height: 280px; }
   .quest-banner .body { padding: 32px; justify-content: center; }
 }
+
+/* 貓咪頁：認養申請 */
+.apply-box { margin-top: 20px; }
+.apply-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.apply-hint { margin-top: 10px; font-size: 14px; color: var(--muted, #6b6b6b); line-height: 1.6; }

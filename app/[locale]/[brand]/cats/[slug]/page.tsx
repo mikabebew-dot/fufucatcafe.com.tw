@@ -38,8 +38,20 @@ type Cat = {
   cover?: Img;
   photos?: NonNullable<Img>[];
   graduateStory?: { slug: string } | null;
+  applyUrl?: string;
+  nameZh?: string;
   seo?: Seo;
 };
+
+/** Google 表單預先填好「想認養哪隻」 */
+const APPLY_ENTRY = "entry.1409116492";
+function applyLink(url: string, name: string) {
+  if (!/docs\.google\.com\/forms\/.+\/viewform/.test(url)) return url;
+  const u = new URL(url);
+  u.searchParams.set("usp", "pp_url");
+  u.searchParams.set(APPLY_ENTRY, name);
+  return u.toString();
+}
 
 type Props = { params: Promise<{ locale: string; brand: string; slug: string }> };
 
@@ -124,7 +136,16 @@ export default async function CatPage({ params }: Props) {
               {[cat.healthNote, cat.adoptionNote].filter(Boolean).join("\n\n")}
             </div>
           )}
-          {isNuku && (cat.status === "adoptable" || cat.status === "matching") && (
+          {isNuku && cat.status === "adoptable" && cat.applyUrl && (
+            <div className="apply-box">
+              <p className="apply-actions">
+                <a className="btn" href={applyLink(cat.applyUrl, cat.nameZh || cat.name)} target="_blank" rel="noopener noreferrer">{tc("applyCta")} ↗</a>
+                <Link className="text-link" href={`/${brand}/adoption`}>{tc("adoptCta")} →</Link>
+              </p>
+              <p className="apply-hint">{tc("applyHint")}</p>
+            </div>
+          )}
+          {isNuku && (cat.status === "matching" || (cat.status === "adoptable" && !cat.applyUrl)) && (
             <p style={{ marginTop: 20 }}><Link className="btn" href={`/${brand}/adoption`}>{tc("adoptCta")}</Link></p>
           )}
           {cat.graduateStory?.slug && (

@@ -124,7 +124,9 @@
     "yearsMonths": "{y} 歳 {m} か月",
     "months": "{n} か月",
     "allCats": "すべての猫",
-    "brandCats": "{brand} の猫たち"
+    "brandCats": "{brand} の猫たち",
+    "applyCta": "この子の譲渡を申し込む",
+    "applyHint": "申込フォームは中国語です。送信後、NUKUNUKUのInstagramにメッセージをお送りください。3日以内にご連絡します。"
   },
   "catStatus": {
     "resident": "在籍中",

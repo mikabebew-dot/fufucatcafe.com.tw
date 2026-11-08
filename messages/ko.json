@@ -124,7 +124,9 @@
     "yearsMonths": "{y}살 {m}개월",
     "months": "{n}개월",
     "allCats": "모든 고양이",
-    "brandCats": "{brand}의 고양이"
+    "brandCats": "{brand}의 고양이",
+    "applyCta": "이 아이 입양 신청하기",
+    "applyHint": "신청서는 중국어로 되어 있어요. 제출 후 NUKUNUKU 인스타그램으로 메시지를 보내 주시면 3일 이내에 답변드려요."
   },
   "catStatus": {
     "resident": "상주",
