@@ -128,7 +128,11 @@ export function shopLd(shopIn: Shop, locale: Locale, image?: unknown) {
       opens: s.closed ? "00:00" : s.open,
       closes: s.closed ? "00:00" : s.close,
     })),
-    priceRange: prices.length ? `NT$${Math.min(...prices)}–${Math.max(...prices)}` : undefined,
+    priceRange: prices.length
+      ? Math.min(...prices) === Math.max(...prices)
+        ? `NT$${Math.min(...prices)}`
+        : `NT$${Math.min(...prices)}–${Math.max(...prices)}`
+      : undefined,
     currenciesAccepted: "TWD",
     paymentAccepted: (shop.payments ?? []).map((p) => PAYMENTS.find((x) => x.value === p)?.title ?? p).join(", ") || undefined,
     sameAs: [shop.mapUrl, ...(b.socials ?? []).map((x) => x.url)].filter(Boolean),
