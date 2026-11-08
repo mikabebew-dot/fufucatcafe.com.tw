@@ -39,6 +39,7 @@
   border: 0; border-radius: 999px; background: var(--soft); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer;
 }
 .ck-listen span { font-size: 10px; }
+.ck-novoice { font-size: 14px; color: var(--warn); background: var(--warn-bg); border-radius: var(--r-sm); padding: 8px 12px; margin: 0 0 12px; }
 
 .ck-card { background: var(--surface); border-radius: var(--r-card); padding: 16px 18px; box-shadow: var(--frame); }
 

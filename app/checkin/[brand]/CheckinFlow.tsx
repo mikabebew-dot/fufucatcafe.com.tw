@@ -49,6 +49,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
   const [result, setResult] = useState<Result | null>(null);
   const [kiosk, setKiosk] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [noVoice, setNoVoice] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
 
   // 語言：網址 ?lang= 或瀏覽器語言；?kiosk=1 是櫃檯平板模式（完成後可換下一組）
@@ -71,6 +72,22 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     }
   }, [data.brand]);
 
+  // 有些瀏覽器的語音清單要等一下才會載入
+  useEffect(() => {
+    try {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      synth.getVoices();
+      synth.addEventListener?.("voiceschanged", () => synth.getVoices());
+    } catch {
+      /* 不支援就略過 */
+    }
+  }, []);
+
+  useEffect(() => {
+    setNoVoice(false);
+  }, [lang, step]);
+
   useEffect(() => {
     document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko" }[lang];
   }, [lang]);
@@ -90,18 +107,48 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     window.scrollTo({ top: 0 });
   }, [step, lang, stopSpeech]);
 
+  // 依語言挑選裝置上的語音：只設定 lang 時，有些平板會用預設的中文語音唸外文
+  const pickVoice = (l: Lang) => {
+    const voices = window.speechSynthesis?.getVoices() ?? [];
+    const want = SPEECH_LANG[l].toLowerCase();
+    const base = want.split("-")[0];
+    const norm = (v: SpeechSynthesisVoice) => v.lang.toLowerCase().replace("_", "-");
+    const same = voices.filter((v) => norm(v).startsWith(base));
+    if (base === "zh") {
+      return same.find((v) => /tw|hant/.test(norm(v))) ?? same.find((v) => /hk/.test(norm(v))) ?? same[0];
+    }
+    return same.find((v) => norm(v) === want) ?? same[0];
+  };
+
   const speak = () => {
     if (speaking) return stopSpeech();
+    setNoVoice(false);
     const synth = window.speechSynthesis;
     // 只朗讀內容本身，不唸「聆聽本頁」按鈕
     const text = mainRef.current?.querySelector("section")?.innerText;
     if (!synth || !text) return;
-    const u = new SpeechSynthesisUtterance(text.replace(/[−＋+]/g, " "));
-    u.lang = SPEECH_LANG[lang];
-    u.rate = 0.95;
-    u.onend = u.onerror = () => setSpeaking(false);
+    const voice = pickVoice(lang);
+    if (!voice) {
+      setNoVoice(true);
+      return;
+    }
+    // 分段朗讀：Chrome 一次唸太長會中途停止
+    const parts = text
+      .replace(/[−＋+]/g, " ")
+      .replace(/([。！？.!?])\s*/g, "$1\n")
+      .split(/\n+/)
+      .map((t) => t.trim())
+      .filter(Boolean);
     synth.cancel();
-    synth.speak(u);
+    parts.forEach((t, i) => {
+      const u = new SpeechSynthesisUtterance(t);
+      u.voice = voice;
+      u.lang = voice.lang;
+      u.rate = 0.95;
+      if (i === parts.length - 1) u.onend = () => setSpeaking(false);
+      u.onerror = () => setSpeaking(false);
+      synth.speak(u);
+    });
     setSpeaking(true);
   };
 
@@ -191,6 +238,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
           </button>
         )}
+        {noVoice && <p className="ck-novoice" role="status">{tr(T.noVoice, lang)}</p>}
 
         {step === 0 && (
           <section className="ck-welcome">

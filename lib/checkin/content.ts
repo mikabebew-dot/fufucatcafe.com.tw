@@ -99,6 +99,12 @@ export const T = {
   back: { zh: "上一步", en: "Back", ja: "戻る", ko: "이전" },
   listen: { zh: "聆聽本頁", en: "Listen", ja: "読み上げ", ko: "듣기" },
   stop: { zh: "停止", en: "Stop", ja: "停止", ko: "정지" },
+  noVoice: {
+    zh: "這台裝置沒有中文語音，無法朗讀。",
+    en: "This device has no English voice installed, so it can't read aloud.",
+    ja: "この端末には日本語の音声がないため、読み上げできません。",
+    ko: "이 기기에는 한국어 음성이 없어 읽어 줄 수 없어요.",
+  },
   stepOf: { zh: "第 {n} / 3 步", en: "Step {n} of 3", ja: "ステップ {n} / 3", ko: "{n} / 3 단계" },
 
   priceTitle: { zh: "費用", en: "Prices", ja: "料金", ko: "요금" },
