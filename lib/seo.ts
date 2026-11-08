@@ -40,7 +40,7 @@ export async function pageMetadata(o: PageMeta): Promise<Metadata> {
   ]);
   const siteName = d?.siteName || t("name");
   const sep = o.locale === "zh-Hant" || o.locale === "ja" ? "｜" : " | ";
-  const title = o.title ? `${o.title}${sep}${siteName}` : d?.title || siteName;
+  const title = o.title ? (o.title.includes(siteName) ? o.title : `${o.title}${sep}${siteName}`) : d?.title || siteName;
   const description = o.description || d?.description || t("description");
   const image = ogImageUrl((o.image ?? d?.image) as SanityImageSource | undefined);
 
