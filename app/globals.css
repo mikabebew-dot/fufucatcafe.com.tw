@@ -300,12 +300,17 @@ p { margin: 0; }
 .story { display: grid; gap: 20px; }
 @media (min-width: 900px) { .story { grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; } }
 .story .img { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-card); overflow: hidden; background: var(--ph); }
-.spend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-@media (min-width: 900px) { .spend-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.spend-item { padding: 12px; border-radius: 20px; background: var(--soft); }
-.spend-item .img { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; background: var(--ph); margin-bottom: 10px; }
-.spend-item b { font-weight: 500; }
-.spend-item p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.spend-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 768px) { .spend-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; } }
+.spend-item { padding: 16px; border-radius: 20px; background: var(--soft); }
+.spend-item .img { position: relative; aspect-ratio: 3 / 2; border-radius: 14px; overflow: hidden; background: var(--ph); margin-bottom: 14px; }
+.spend-item b { display: block; font-weight: 500; font-size: 18px; line-height: 1.5; margin-bottom: 6px; }
+.spend-item p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+/* 只有一張卡片時：寬螢幕左圖右文 */
+@media (min-width: 768px) {
+  .spend-grid:has(> .spend-item:only-child) .spend-item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; padding: 20px; }
+  .spend-grid:has(> .spend-item:only-child) .spend-item .img { margin-bottom: 0; grid-row: span 2; }
+}
 .space-scroller { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-left: var(--gutter); padding-right: var(--gutter-r); scrollbar-width: none; }
 .space-scroller::-webkit-scrollbar { display: none; }
 .space-scroller figure { flex: 0 0 min(76vw, 420px); margin: 0; scroll-snap-align: start; }

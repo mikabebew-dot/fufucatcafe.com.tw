@@ -12,6 +12,7 @@ import { load } from "@/lib/data";
 import { pageMetadata, shopLd } from "@/lib/seo";
 import type { CatCard as CatCardT, Img, NewsCard, Seo, Shop, Step, Story } from "@/lib/types";
 import { BRAND_QUERY } from "@/sanity/lib/queries";
+import { PlainText } from "@/components/PlainText";
 
 type BrandData = {
   brand: {
@@ -202,9 +203,9 @@ function SpendSection({ title, items }: { title: string; items: Step[] }) {
       <div className="spend-grid">
         {items.map((s) => (
           <div key={s._key} className="spend-item">
-            <div className="img">{s.image?.asset && <SanityImage image={s.image} fill sizes="(max-width: 899px) 50vw, 25vw" />}</div>
+            <div className="img">{s.image?.asset && <SanityImage image={s.image} fill sizes="(max-width: 767px) 100vw, 50vw" />}</div>
             <b>{s.title}</b>
-            {s.text && <p>{s.text}</p>}
+            {s.text && <p><PlainText text={s.text} /></p>}
           </div>
         ))}
       </div>
