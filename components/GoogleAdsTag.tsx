@@ -31,7 +31,10 @@ const SHOP_COORDS: { brand: Brand; lat: number; lng: number }[] = [
 ];
 
 // 在 Google Ads 建立轉換動作後，把「轉換標籤」填在這裡（格式：AW-826827438/xxxxxxxx 的斜線後半段）
-const CONVERSION_LABELS: Partial<Record<`${Action}_${Brand}`, string>> = {};
+const CONVERSION_LABELS: Partial<Record<`${Action}_${Brand}`, string>> = {
+  line_fufu: "KpClCP7zw7QdEK7FoYoD", // 官網 LINE 點擊 - FUFU
+  line_nukunuku: "e0fBCIH0w7QdEK7FoYoD", // 官網 LINE 點擊 - NUKUNUKU
+};
 
 function brandFromLine(href: string): Brand | undefined {
   const decoded = decodeURIComponent(href).toLowerCase();
