@@ -1,4 +1,5 @@
 import { useFormatter, useTranslations } from "next-intl";
+import { PlainText } from "@/components/PlainText";
 import { Link } from "@/i18n/navigation";
 import { BRANDS, DAYS } from "@/lib/constants";
 import { directionsUrl, lineUrl, telUrl } from "@/lib/contact";
@@ -94,7 +95,7 @@ export function PriceTable({ shop }: { shop: Shop }) {
             <tr key={p._key}>
               <td>
                 {p.name}
-                {p.note && <small>{p.note}</small>}
+                {p.note && <small><PlainText text={p.note} /></small>}
               </td>
               <td className="num">{nt(p.weekday)}</td>
               <td className="num">{nt(p.holiday)}</td>
@@ -103,7 +104,7 @@ export function PriceTable({ shop }: { shop: Shop }) {
         </tbody>
       </table>
       <p className="table-foot">
-        {shop.priceNote && <span style={{ display: "block", whiteSpace: "pre-line" }}>{shop.priceNote}</span>}
+        {shop.priceNote && <span style={{ display: "block", marginBottom: 8 }}><PlainText text={shop.priceNote} /></span>}
         {shop.verifiedAt && tc("verifiedOn", { date: format.dateTime(new Date(shop.verifiedAt), { year: "numeric", month: "2-digit", day: "2-digit" }) })}
       </p>
     </div>
@@ -132,7 +133,7 @@ export function RulesList({ rules }: { rules?: Shop["rules"] }) {
               <path d={RULE_PATHS[r.icon ?? "time"] ?? RULE_PATHS.time} />
             </svg>
           </span>
-          <span>{r.text}</span>
+          <span><PlainText text={r.text} /></span>
         </li>
       ))}
     </ul>
@@ -208,9 +209,9 @@ export function VisitFull({ shop, headingLevel = 2 }: { shop: Shop; headingLevel
         ) : null}
         <dl className="access-list">
           {shop.address && (<div><dt>{t("visit.address")}</dt><dd>{shop.address}</dd></div>)}
-          {shop.mrt && (<div><dt>{t("visit.mrt")}</dt><dd>{shop.mrt}</dd></div>)}
-          {shop.bus && (<div><dt>{t("visit.bus")}</dt><dd>{shop.bus}</dd></div>)}
-          {shop.parking && (<div><dt>{t("visit.parking")}</dt><dd>{shop.parking}</dd></div>)}
+          {shop.mrt && (<div><dt>{t("visit.mrt")}</dt><dd><PlainText text={shop.mrt} /></dd></div>)}
+          {shop.bus && (<div><dt>{t("visit.bus")}</dt><dd><PlainText text={shop.bus} /></dd></div>)}
+          {shop.parking && (<div><dt>{t("visit.parking")}</dt><dd><PlainText text={shop.parking} /></dd></div>)}
           {shop.phone && (<div><dt>{t("visit.phone")}</dt><dd className="tabular">{shop.phone}</dd></div>)}
         </dl>
         <ContactButtons shop={shop} brand={shop.brand} />
