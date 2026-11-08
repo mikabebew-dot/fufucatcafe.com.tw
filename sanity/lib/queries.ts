@@ -44,6 +44,7 @@ export const SHOP = /* groq */ `{
   "rules": rules[]{ _key, icon, "text": ${T("text")} },
   "mrt": ${T("mrt")}, "bus": ${T("bus")}, "parking": ${T("parking")},
   mapImage${IMG},
+  "menuImages": menuImages[defined(asset)]${IMG},
   verifiedAt,
   ${SEO}
 }`;

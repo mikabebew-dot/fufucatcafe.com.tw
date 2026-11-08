@@ -90,7 +90,9 @@
     "closed": "Closed",
     "details": "Prices & rules",
     "fullRules": "Full rules and directions",
-    "notReady": "Visit information is being confirmed. Please contact us on social media for now."
+    "notReady": "Visit information is being confirmed. Please contact us on social media for now.",
+    "menu": "Menu",
+    "menuNote": "All-you-can-drink beverages are included in the time-based charge; food is ordered separately. Tap an image to enlarge it."
   },
   "payments": {
     "cash": "Cash",

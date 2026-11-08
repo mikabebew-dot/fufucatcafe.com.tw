@@ -9,6 +9,8 @@ import { load } from "@/lib/data";
 import { absUrl, breadcrumbLd, pageMetadata, shopLd } from "@/lib/seo";
 import type { Shop } from "@/lib/types";
 import { SHOP_QUERY } from "@/sanity/lib/queries";
+import { SanityImage } from "@/components/SanityImage";
+import { urlFor } from "@/sanity/lib/image";
 
 type Props = { params: Promise<{ locale: string; brand: string }> };
 
@@ -40,6 +42,19 @@ export default async function BrandVisitPage({ params }: Props) {
       <div className="wrap narrow">
         {shop ? <VisitFull shop={shop} /> : <p className="notice">{t("notReady")}</p>}
       </div>
+      {!!shop?.menuImages?.length && (
+        <section id="menu" className="wrap section menu-section" aria-labelledby="menu-title">
+          <h2 id="menu-title">{t("menu")}</h2>
+          <p className="menu-note">{t("menuNote")}</p>
+          <div className="menu-grid">
+            {shop.menuImages.map((img, i) => (
+              <a key={i} className="menu-img" href={urlFor(img).width(1600).url()} target="_blank" rel="noopener noreferrer">
+                <SanityImage image={img} fill sizes="(max-width: 767px) 100vw, 50vw" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
       {shop && (
         <JsonLd
           data={[

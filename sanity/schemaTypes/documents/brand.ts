@@ -79,6 +79,7 @@ export const shopInfo = defineType({
     defineField({ name: "mapUrl", title: "Google 地圖連結", type: "url", group: "basic" }),
     defineField({ name: "phone", title: "電話", type: "string", group: "basic" }),
     defineField({ name: "lineUrl", title: "LINE 官方帳號連結", type: "url", group: "basic" }),
+    defineField({ name: "menuImages", title: "菜單圖片", type: "array", group: "price", of: [defineArrayMember({ type: "imageWithAlt" })], options: { layout: "grid" }, description: "飲料與餐點菜單，顯示在「價格・時間・交通」頁。" }),
     defineField({
       name: "hours",
       title: "每週營業時間",

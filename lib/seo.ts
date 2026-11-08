@@ -118,6 +118,7 @@ export function shopLd(shopIn: Shop, locale: Locale, image?: unknown) {
       : undefined,
     geo: shop.location ? { "@type": "GeoCoordinates", latitude: shop.location.lat, longitude: shop.location.lng } : undefined,
     hasMap: shop.mapUrl || undefined,
+    hasMenu: shop.menuImages?.length ? `${absUrl(locale, `/${shop.brand}/visit`)}#menu` : undefined,
     openingHoursSpecification: groupHours(shop.hours)
       .filter((g) => !g.closed && g.open && g.close)
       .map((g) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: g.days.map(schemaDay), opens: g.open, closes: g.close })),

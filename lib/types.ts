@@ -41,6 +41,7 @@ export type Shop = {
   bus?: string | null;
   parking?: string | null;
   mapImage?: Img;
+  menuImages?: NonNullable<Img>[];
   verifiedAt?: string | null;
   seo?: Seo;
 };
