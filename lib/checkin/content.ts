@@ -18,7 +18,7 @@ export type L10n = Record<Lang, string>;
 /** 後台「來店資訊 → 入場確認」沒填時的備用值（取自原本入場系統 V1.4） */
 export const DEFAULTS: Record<BrandId, { shortDrinks: L10n; longMin: number }> = {
   fufu: {
-    shortDrinks: { zh: "原味奶茶、蜂蜜水", en: "Classic milk tea, honey water", ja: "ミルクティー、はちみつ水", ko: "밀크티, 꿀물" },
+    shortDrinks: { zh: "原味奶茶、綠茶", en: "Classic milk tea, green tea", ja: "ミルクティー、緑茶", ko: "밀크티, 녹차" },
     longMin: 220,
   },
   nukunuku: {
