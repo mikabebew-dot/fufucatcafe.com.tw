@@ -46,7 +46,8 @@
     "external": "(opens in a new tab)",
     "directions": "Directions",
     "line": "Message on LINE",
-    "call": "Call"
+    "call": "Call",
+    "visitShort": "Prices & Map"
   },
   "status": {
     "openUntil": "Open until {time}",

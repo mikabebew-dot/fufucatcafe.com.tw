@@ -46,7 +46,8 @@
     "external": "（新しいタブで開きます）",
     "directions": "ルート案内",
     "line": "LINEで問い合わせ",
-    "call": "電話する"
+    "call": "電話する",
+    "visitShort": "料金・アクセス"
   },
   "status": {
     "openUntil": "営業中・{time} まで",

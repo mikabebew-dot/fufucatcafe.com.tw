@@ -46,7 +46,8 @@
     "external": "(새 탭에서 열림)",
     "directions": "길찾기",
     "line": "LINE 문의",
-    "call": "전화하기"
+    "call": "전화하기",
+    "visitShort": "요금·위치"
   },
   "status": {
     "openUntil": "영업 중 · {time}까지",

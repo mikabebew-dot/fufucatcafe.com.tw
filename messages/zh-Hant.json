@@ -46,7 +46,8 @@
     "external": "（開啟新分頁）",
     "directions": "導航前往",
     "line": "LINE 詢問",
-    "call": "打電話"
+    "call": "打電話",
+    "visitShort": "價格交通"
   },
   "status": {
     "openUntil": "營業中・至 {time}",

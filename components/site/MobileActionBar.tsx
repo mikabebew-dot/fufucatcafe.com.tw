@@ -37,7 +37,7 @@ export function MobileActionBar({ shops }: { shops: ShopLite[] }) {
           </a>
         ) : null;
       })}
-      <Link href="/visit"><span aria-hidden="true">📍</span>{t("nav.visit")}</Link>
+      <Link href="/visit"><span aria-hidden="true">📍</span>{t("common.visitShort")}</Link>
     </nav>
   );
 }
