@@ -164,6 +164,7 @@
     "category": {
       "announcement": "Notice",
       "event": "Event",
+      "story": "Stories",
       "newCat": "New cat",
       "adoption": "Adoption",
       "media": "Press"

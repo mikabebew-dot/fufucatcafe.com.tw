@@ -36,6 +36,7 @@ export type CatStatus = (typeof CAT_STATUS)[number]["value"];
 export const NEWS_CATEGORIES = [
   { value: "announcement", title: "公告" },
   { value: "event", title: "活動" },
+  { value: "story", title: "專題" },
   { value: "newCat", title: "新貓咪" },
   { value: "adoption", title: "認養" },
   { value: "media", title: "媒體" },
