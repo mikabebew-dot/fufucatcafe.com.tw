@@ -17,6 +17,7 @@ import { organizationLd, websiteLd } from "@/lib/seo";
 import { SanityLive } from "@/sanity/lib/live";
 import { MobileActionBar } from "@/components/site/MobileActionBar";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAdsTag } from "@/components/GoogleAdsTag";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import "../globals.css";
 
@@ -72,6 +73,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <SanityLive />
           {/* 訪客統計（Vercel Web Analytics，不使用 cookie） */}
           <Analytics />
+          {/* Google Ads 代碼：追蹤廣告成效，以及 LINE／導航／電話點擊 */}
+          {!isDraft && <GoogleAdsTag />}
           {isDraft && (
             <>
               <DraftModeBar />
