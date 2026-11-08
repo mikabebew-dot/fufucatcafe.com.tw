@@ -131,6 +131,7 @@ export function shopLd(shopIn: Shop, locale: Locale, image?: unknown) {
     priceRange: prices.length ? `NT$${Math.min(...prices)}–${Math.max(...prices)}` : undefined,
     currenciesAccepted: "TWD",
     paymentAccepted: (shop.payments ?? []).map((p) => PAYMENTS.find((x) => x.value === p)?.title ?? p).join(", ") || undefined,
+    sameAs: [shop.mapUrl, ...(b.socials ?? []).map((x) => x.url)].filter(Boolean),
     parentOrganization: { "@id": `${siteUrl}/#organization` },
   };
 }
