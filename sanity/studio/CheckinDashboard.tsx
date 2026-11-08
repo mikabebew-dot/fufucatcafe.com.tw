@@ -112,7 +112,7 @@ export function CheckinDashboard() {
 
   const exportCsv = () =>
     downloadCsv(`入場紀錄_${new Date().toISOString().slice(0, 10)}.csv`, [
-      ["日期", "店", "確認組數", "確認人數", "短暫停留人數", "悠閒停留人數", "中文組", "英文組", "日文組", "韓文組", "等家孩子頁瀏覽", "中途貓介紹點閱", "認養流程點閱"],
+      ["日期", "店", "確認組數", "確認人數", "先喝指定飲品人數", "一入場全部飲品人數", "中文組", "英文組", "日文組", "韓文組", "等家孩子頁瀏覽", "中途貓介紹點閱", "認養流程點閱"],
       ...rows.map((d) => [
         d.date, BRAND_NAME[d.brand], d.groups ?? 0, d.guests ?? 0, d.planShort ?? 0, d.planLong ?? 0,
         d.langs?.zh ?? 0, d.langs?.en ?? 0, d.langs?.ja ?? 0, d.langs?.ko ?? 0, d.fosterViews ?? 0, d.adoptClicks ?? 0, d.adoptPage ?? 0,
@@ -155,7 +155,7 @@ export function CheckinDashboard() {
               <div style={s.tile}><span style={s.big}>{sum.groups}</span><span style={s.small}>完成確認組數</span></div>
               <div style={s.tile}><span style={s.big}>{sum.guests}</span><span style={s.small}>完成確認人數</span></div>
               <div style={s.tile}><span style={s.big}>{pct(foreign, sum.groups)}%</span><span style={s.small}>使用外語的組（英日韓）</span></div>
-              <div style={s.tile}><span style={s.big}>{pct(sum.long, sum.guests)}%</span><span style={s.small}>選悠閒停留的人</span></div>
+              <div style={s.tile}><span style={s.big}>{pct(sum.long, sum.guests)}%</span><span style={s.small}>選一入場全部飲品的人</span></div>
               <div style={s.tile}><span style={s.big}>{sum.views}</span><span style={s.small}>「等家的孩子」頁瀏覽</span></div>
               <div style={s.tile}><span style={s.big}>{sum.adopt}</span><span style={s.small}>中途貓介紹點閱</span></div>
               <div style={s.tile}><span style={s.big}>{sum.adoptPage}</span><span style={s.small}>認養流程點閱</span></div>
@@ -199,7 +199,7 @@ export function CheckinDashboard() {
                       <tr>
                         <th style={s.th}>日期</th><th style={s.th}>店</th>
                         <th style={{ ...s.th, ...s.num }}>組</th><th style={{ ...s.th, ...s.num }}>人</th>
-                        <th style={{ ...s.th, ...s.num }}>短暫</th><th style={{ ...s.th, ...s.num }}>悠閒</th>
+                        <th style={{ ...s.th, ...s.num }}>指定飲品</th><th style={{ ...s.th, ...s.num }}>全部飲品</th>
                         <th style={{ ...s.th, ...s.num }}>外語組</th><th style={{ ...s.th, ...s.num }}>等家頁瀏覽</th><th style={{ ...s.th, ...s.num }}>中途貓點閱</th>
                       </tr>
                     </thead>

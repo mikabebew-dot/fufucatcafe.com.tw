@@ -296,7 +296,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
                 <div className="ck-plan-head">
                   <div>
                     <p className="ck-plan-name">{tr(T.longName, lang)}</p>
-                    <p className="ck-plan-when">{tr(T.longWhen, lang)}</p>
+                    <p className="ck-plan-when">{tr(T.longWhen, lang).replace("220", String(data.longMin))}</p>
                   </div>
                   <Stepper value={long} onChange={setLong} label={tr(T.longName, lang)} />
                 </div>
