@@ -12,6 +12,7 @@ import { load } from "@/lib/data";
 import { faqLd, pageMetadata } from "@/lib/seo";
 import type { CatCard as CatCardT, FaqItem, GameCard, Img, NewsCard, Seo, Shop, Step } from "@/lib/types";
 import { HOME_QUERY } from "@/sanity/lib/queries";
+import { PlainText } from "@/components/PlainText";
 
 type HomeData = {
   page: {
@@ -109,8 +110,8 @@ export default async function HomePage({ params }: Props) {
       {(page?.aboutTitle || page?.aboutSummary) && (
         <section className="wrap narrow section">
           <p className="eyebrow" style={{ marginBottom: 8 }}>{t("home.aboutEyebrow")}</p>
-          {page.aboutTitle && <h2 style={{ fontSize: 24, marginBottom: 12 }}>{page.aboutTitle}</h2>}
-          {page.aboutSummary && <p className="muted" style={{ marginBottom: 16, whiteSpace: "pre-line" }}>{page.aboutSummary}</p>}
+          {page.aboutTitle && <h2 style={{ fontSize: 24, marginBottom: 12, lineHeight: 1.5 }}><PlainText text={page.aboutTitle} /></h2>}
+          {page.aboutSummary && <p className="muted" style={{ marginBottom: 16 }}><PlainText text={page.aboutSummary} /></p>}
           <Link className="text-link" href="/about">{t("home.aboutCta")} →</Link>
         </section>
       )}
