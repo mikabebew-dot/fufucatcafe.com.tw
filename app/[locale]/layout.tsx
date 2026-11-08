@@ -15,6 +15,7 @@ import { load } from "@/lib/data";
 import { HREFLANG } from "@/lib/locale";
 import { organizationLd, websiteLd } from "@/lib/seo";
 import { SanityLive } from "@/sanity/lib/live";
+import { MobileActionBar } from "@/components/site/MobileActionBar";
 import { Analytics } from "@vercel/analytics/next";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import "../globals.css";
@@ -65,6 +66,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <SiteHeader siteName={siteName} />
           <main id="main">{children}</main>
           <SiteFooter data={{ siteName, shops: data?.shops ?? [], socials: s?.socials ?? [], footerLinks: s?.footerLinks ?? [] }} />
+          <MobileActionBar shops={data?.shops ?? []} />
           <JsonLd data={[organizationLd(siteName, s?.socials), websiteLd(siteName, locale)]} />
           {/* 內容發布後自動更新頁面，不需重新部署 */}
           <SanityLive />

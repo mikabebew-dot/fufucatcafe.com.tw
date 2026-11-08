@@ -109,6 +109,7 @@ export const HOME_QUERY = /* groq */ `{
     "game": playroomGame->${GAME_CARD},
     ${SEO}
   },
+  "quest": *[_id == "game-cat-city-quest"][0]${GAME_CARD},
   "brands": *[_type == "brand" && _id in ["brand-fufu", "brand-nukunuku"]]{ brand, "tagline": ${T("tagline")}, "image": coalesce(cardImage, hero)${IMG} },
   "shops": *[_type == "shopInfo" && _id in ["shop-fufu", "shop-nukunuku"]]${SHOP},
   "steps": *[_id == "firstVisitGuide"][0].steps[0...3]${STEP},

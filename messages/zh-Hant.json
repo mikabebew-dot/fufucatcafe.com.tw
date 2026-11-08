@@ -211,7 +211,11 @@
     "catsTitle": "店裡的貓咪",
     "newsTitle": "最新消息",
     "faqTitle": "常見問題",
-    "graduatesCta": "畢業故事"
+    "graduatesCta": "畢業故事",
+    "questEyebrow": "來店限定冒險",
+    "questText": "西門町裡藏著一座看不見的貓咪城市。來 FUFU 或 NUKUNUKU 請店員解鎖任務、收集貓之靈，一起守護牠們。免費參加。",
+    "questCta": "看活動介紹",
+    "questPlay": "開始冒險"
   },
   "brand": {
     "tabIntro": "介紹",

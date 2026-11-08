@@ -24,6 +24,7 @@ type HomeData = {
     game?: GameCard | null;
     seo?: Seo;
   } | null;
+  quest?: GameCard | null;
   brands: { brand: string; tagline?: string; image?: Img }[];
   shops: Shop[];
   steps?: Step[];
@@ -105,6 +106,24 @@ export default async function HomePage({ params }: Props) {
           })}
         </div>
       </section>
+
+      {/* 3.5 來店限定冒險：守護貓咪城市 */}
+      {d?.quest && (
+        <section className="wrap section">
+          <div className="quest-banner">
+            <div className="img">{d.quest.cover?.asset && <SanityImage image={d.quest.cover} fill sizes="(max-width: 767px) 100vw, 50vw" />}</div>
+            <div className="body">
+              <p className="eyebrow">{t("home.questEyebrow")}</p>
+              <h2>{d.quest.title}</h2>
+              <p className="muted">{t("home.questText")}</p>
+              <div className="actions">
+                <Link className="btn" href="/news/cat-city-quest">{t("home.questCta")}</Link>
+                {d.quest.url && <a className="btn btn-ghost" href={d.quest.url} target="_blank" rel="noopener noreferrer">{t("home.questPlay")} ↗</a>}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 4. 品牌理念 */}
       {(page?.aboutTitle || page?.aboutSummary) && (

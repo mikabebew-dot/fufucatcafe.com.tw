@@ -211,7 +211,11 @@
     "catsTitle": "Our cats",
     "newsTitle": "News",
     "faqTitle": "FAQ",
-    "graduatesCta": "Graduate stories"
+    "graduatesCta": "Graduate stories",
+    "questEyebrow": "In-store adventure",
+    "questText": "An invisible cat city is hidden in Ximending. Ask our staff at FUFU or NUKUNUKU to unlock quests, collect Cat Spirits and help protect it. Free to play.",
+    "questCta": "About the event",
+    "questPlay": "Start the adventure"
   },
   "brand": {
     "tabIntro": "About",

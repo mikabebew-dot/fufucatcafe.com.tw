@@ -211,7 +211,11 @@
     "catsTitle": "매장의 고양이들",
     "newsTitle": "소식",
     "faqTitle": "자주 묻는 질문",
-    "graduatesCta": "졸업 이야기"
+    "graduatesCta": "졸업 이야기",
+    "questEyebrow": "매장 한정 어드벤처",
+    "questText": "시먼딩에는 보이지 않는 고양이 도시가 숨어 있어요. FUFU나 NUKUNUKU에서 직원에게 퀘스트 잠금 해제를 부탁하고, 고양이의 영혼을 모아 함께 지켜 주세요. 무료 참여.",
+    "questCta": "이벤트 소개 보기",
+    "questPlay": "모험 시작하기"
   },
   "brand": {
     "tabIntro": "소개",

@@ -211,7 +211,11 @@
     "catsTitle": "お店の猫たち",
     "newsTitle": "お知らせ",
     "faqTitle": "よくある質問",
-    "graduatesCta": "卒業ストーリー"
+    "graduatesCta": "卒業ストーリー",
+    "questEyebrow": "来店限定アドベンチャー",
+    "questText": "西門町には目に見えない猫の街が隠れています。FUFUやNUKUNUKUでスタッフにクエストを解除してもらい、猫の霊を集めて一緒に守りましょう。参加無料。",
+    "questCta": "イベント紹介を見る",
+    "questPlay": "冒険を始める"
   },
   "brand": {
     "tabIntro": "紹介",
