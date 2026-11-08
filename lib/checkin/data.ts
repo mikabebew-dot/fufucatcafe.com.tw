@@ -39,19 +39,19 @@ const fill = (v: Partial<L10n> | null | undefined, fallback?: L10n): L10n | null
 };
 
 export async function loadCheckin(brand: BrandId): Promise<CheckinData> {
-  // NUKUNUKU：可認養與媒合中的中途貓；FUFU：常駐店貓（有照片的才顯示）
-  const statuses = brand === "nukunuku" ? ["adoptable", "matching"] : ["resident"];
+  // 兩店的完成畫面都介紹 NUKUNUKU 可認養與媒合中的中途貓（有照片的才顯示）
+  const statuses = ["adoptable", "matching"];
   const raw = await client.fetch<Raw>(
     `{
       "shop": *[_type == "shopInfo" && _id == $shopId][0]{
         "per10": prices[0].weekday, entryNote, checkinShortDrinks, checkinLongMin
       },
-      "cats": *[_type == "cat" && brand == $brand && status in $statuses && defined(slug.current) && defined(cover.asset)]
+      "cats": *[_type == "cat" && brand == "nukunuku" && status in $statuses && defined(slug.current) && defined(cover.asset)]
         | order(coalesce(order, 9999) asc, _createdAt asc)[0...24]{
           "slug": slug.current, status, name, summary, traits, cover
         }
     }`,
-    { shopId: `shop-${brand}`, brand, statuses },
+    { shopId: `shop-${brand}`, statuses },
     { stega: false, next: { revalidate: 60 } },
   );
   const d = DEFAULTS[brand];

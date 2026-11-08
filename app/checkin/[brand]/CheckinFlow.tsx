@@ -307,10 +307,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               </dl>
             </div>
 
-            {data.brand === "nukunuku" && data.cats.length > 0 && (
+            {data.cats.length > 0 && (
               <div className="ck-cats-block">
                 <h2>{tr(T.fosterTitle, lang)}</h2>
-                <p className="ck-muted">{tr(T.fosterLead, lang)}</p>
+                <p className="ck-muted">{tr(data.brand === "fufu" ? T.fosterLeadFufu : T.fosterLead, lang)}</p>
                 <ul className="ck-cats">
                   {data.cats.map((c) => (
                     <li key={c.slug}>
@@ -326,35 +326,6 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
                 <a className="btn btn-ghost btn-block" href={href("/nukunuku/adoption")} target="_blank" rel="noopener" onClick={() => trackAdopt("page")}>
                   {tr(T.adoptHow, lang)}
                 </a>
-              </div>
-            )}
-
-            {data.brand === "fufu" && (
-              <div className="ck-cats-block">
-                {data.cats.length > 0 && (
-                  <>
-                    <h2>{tr(T.fufuTitle, lang)}</h2>
-                    <p className="ck-muted">{tr(T.fufuLead, lang)}</p>
-                    <ul className="ck-cats">
-                      {data.cats.map((c) => (
-                        <li key={c.slug}>
-                          <a href={href(`/fufu/cats/${c.slug}`)} target="_blank" rel="noopener">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            {c.photo && <img src={c.photo} alt="" width={180} height={180} loading="lazy" />}
-                            <span className="ck-cat-name">{c.name[lang]}</span>
-                            {c.traits && <span className="ck-cat-traits">{c.traits[lang].slice(0, 2).join("・")}</span>}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-                <div className="ck-card ck-notes">
-                  <p>{tr(T.fufuToNuku, lang)}</p>
-                  <a className="text-link" href={href("/nukunuku/adoption")} target="_blank" rel="noopener" onClick={() => trackAdopt("page")}>
-                    {tr(T.fufuToNukuLink, lang)} →
-                  </a>
-                </div>
               </div>
             )}
 

@@ -18,7 +18,7 @@ export type L10n = Record<Lang, string>;
 /** 後台「來店資訊 → 入場確認」沒填時的備用值（取自原本入場系統 V1.4） */
 export const DEFAULTS: Record<BrandId, { shortDrinks: L10n; longMin: number }> = {
   fufu: {
-    shortDrinks: { zh: "原味奶茶、清香綠茶", en: "Classic milk tea, green tea", ja: "ミルクティー、緑茶", ko: "밀크티, 녹차" },
+    shortDrinks: { zh: "原味奶茶、蜂蜜水", en: "Classic milk tea, honey water", ja: "ミルクティー、はちみつ水", ko: "밀크티, 꿀물" },
     longMin: 220,
   },
   nukunuku: {
@@ -212,20 +212,12 @@ export const T = {
   },
   matching: { zh: "媒合中", en: "Matching", ja: "お見合い中", ko: "매칭 중" },
   adoptHow: { zh: "認養流程與條件", en: "How adoption works", ja: "譲渡の流れと条件", ko: "입양 절차와 조건" },
-  fufuTitle: { zh: "認識 FUFU 的貓咪", en: "Meet FUFU's cats", ja: "FUFUの猫たち", ko: "FUFU의 고양이들" },
-  fufuLead: {
-    zh: "FUFU 的貓咪都是店貓，會一直在這裡生活。牠們各有個性，先認識一下吧。",
-    en: "All of FUFU's cats live here for good. Each has its own personality, so say hello first.",
-    ja: "FUFUの猫たちはずっとここで暮らす店猫です。それぞれの性格を知ってから会いに行きましょう。",
-    ko: "FUFU의 고양이들은 이곳에서 계속 사는 매장 고양이예요. 각자 성격이 다르니 먼저 알아봐요.",
+  fosterLeadFufu: {
+    zh: "FUFU 的貓咪都是店貓。走路 3 分鐘的姊妹店 NUKUNUKU 是中途貓咖啡廳，這些孩子正在那裡找家人，點照片可以認識牠。",
+    en: "FUFU's cats all live here for good. Our sister café NUKUNUKU, a 3-minute walk away, is a foster-cat café where these cats are looking for a family. Tap a photo to get to know them.",
+    ja: "FUFUの猫はずっとここで暮らす店猫です。徒歩3分の姉妹店NUKUNUKUは保護猫カフェで、この子たちが家族を探しています。写真をタップして知ってください。",
+    ko: "FUFU의 고양이들은 이곳에서 계속 사는 매장 고양이예요. 걸어서 3분 거리의 자매점 NUKUNUKU는 보호묘 카페로, 이 아이들이 가족을 찾고 있어요. 사진을 눌러 알아봐 주세요.",
   },
-  fufuToNuku: {
-    zh: "想認識正在等家的中途貓？步行 3 分鐘就是 NUKUNUKU。",
-    en: "Want to meet foster cats waiting for a home? NUKUNUKU is a 3-minute walk away.",
-    ja: "家族を待つ保護猫に会いたい方は、徒歩3分のNUKUNUKUへ。",
-    ko: "가족을 기다리는 보호묘를 만나고 싶다면 걸어서 3분 거리의 NUKUNUKU로 오세요.",
-  },
-  fufuToNukuLink: { zh: "認識 NUKUNUKU", en: "About NUKUNUKU", ja: "NUKUNUKUについて", ko: "NUKUNUKU 알아보기" },
 } satisfies Record<string, L10n | Record<Lang, string[]>>;
 
 /** 取文字並代入 {變數} */
