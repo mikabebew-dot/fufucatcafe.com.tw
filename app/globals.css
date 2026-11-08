@@ -503,7 +503,7 @@ p { margin: 0; }
 .apply-hint { margin-top: 10px; font-size: 14px; color: var(--muted, #6b6b6b); line-height: 1.6; }
 
 /* 價格・時間・交通頁：菜單 */
-.menu-section { padding-top: 8px; }
+.menu-section { padding-top: 8px; scroll-margin-top: 150px; }
 .menu-section h2 { margin-bottom: 8px; }
 .menu-note { color: var(--muted); margin-bottom: 20px; line-height: 1.7; }
 .menu-grid { display: grid; gap: 16px; grid-template-columns: 1fr; max-width: 960px; }
