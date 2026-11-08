@@ -13,7 +13,9 @@ export default async function QrPage({ params }: { params: Promise<{ brand: stri
   const { brand } = await params;
   if (!isBrand(brand)) notFound();
   const b = brandOf(brand);
-  const url = `${siteUrl.replace(/\/$/, "")}/checkin/${brand}`;
+  // 預覽環境沒有設定正式網址時，QR 仍指向正式網站
+  const origin = siteUrl.includes("localhost") ? "https://fufucatcafe.com.tw" : siteUrl.replace(/\/$/, "");
+  const url = `${origin}/checkin/${brand}`;
   const svg = await QRCode.toString(url, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2b2523", light: "#ffffff" } });
   return (
     <div className="qr-page" data-brand={brand}>

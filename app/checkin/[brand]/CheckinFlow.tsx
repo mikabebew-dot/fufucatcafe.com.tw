@@ -92,7 +92,8 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
   const speak = () => {
     if (speaking) return stopSpeech();
     const synth = window.speechSynthesis;
-    const text = mainRef.current?.innerText;
+    // 只朗讀內容本身，不唸「聆聽本頁」按鈕
+    const text = mainRef.current?.querySelector("section")?.innerText;
     if (!synth || !text) return;
     const u = new SpeechSynthesisUtterance(text.replace(/[−＋+]/g, " "));
     u.lang = SPEECH_LANG[lang];
@@ -181,7 +182,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
   return (
     <div className="ck" data-brand={data.brand}>
       <header className="ck-top">
-        <div className="ck-brand">
+        <div className={step > 0 ? "ck-brand compact" : "ck-brand"}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={logo} alt="" width={36} height={36} />
           <span>{brandName}</span>
