@@ -3,7 +3,7 @@ import { siteUrl } from "@/sanity/env";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/studio", "/api/"] }],
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/studio", "/api/", "/checkin"] }],
     sitemap: new URL("/sitemap.xml", siteUrl).toString(),
     host: siteUrl,
   };
