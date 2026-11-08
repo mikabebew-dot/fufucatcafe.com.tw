@@ -18,8 +18,9 @@ import { SanityLive } from "@/sanity/lib/live";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import "../globals.css";
 
-// 後備機制：就算即時更新沒觸發，頁面最多 60 秒也會抓到後台最新發布的內容
-export const revalidate = 60;
+// 每次有人打開頁面都向 Sanity CDN 取最新已發布內容，
+// 後台一按「發布」，幾秒內官網就會更新（不再出現舊版本頁面）
+export const dynamic = "force-dynamic";
 
 // 字型由 Next.js 在建置時下載並自行託管，訪客不需連到 Google
 const sans = Noto_Sans_TC({ weight: ["400", "500", "700"], variable: "--font-noto-sans", display: "swap", preload: false });
