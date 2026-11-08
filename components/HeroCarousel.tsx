@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Img } from "@/lib/types";
 import { SanityImage } from "./SanityImage";
+import { PlainText } from "@/components/PlainText";
 
 export type HeroSlide = {
   _key: string;
@@ -76,7 +77,7 @@ export function HeroCarousel({ slides, autoplaySeconds = 6 }: { slides: HeroSlid
               {(s.heading || s.subheading) && (
                 <div className="hero-caption">
                   {s.heading && <h2>{s.heading}</h2>}
-                  {s.subheading && <p>{s.subheading}</p>}
+                  {s.subheading && <p><PlainText text={s.subheading} /></p>}
                 </div>
               )}
             </>
