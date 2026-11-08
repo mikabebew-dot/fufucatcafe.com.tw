@@ -47,7 +47,7 @@
     "directions": "Directions",
     "line": "Message on LINE",
     "call": "Call",
-    "visitShort": "Prices & Map"
+    "visitShort": "Access"
   },
   "status": {
     "openUntil": "Open until {time}",

@@ -47,7 +47,7 @@
     "directions": "ルート案内",
     "line": "LINEで問い合わせ",
     "call": "電話する",
-    "visitShort": "料金・アクセス"
+    "visitShort": "アクセス"
   },
   "status": {
     "openUntil": "営業中・{time} まで",

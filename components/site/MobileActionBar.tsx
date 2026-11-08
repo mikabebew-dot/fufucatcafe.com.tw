@@ -20,7 +20,7 @@ export function MobileActionBar({ shops }: { shops: ShopLite[] }) {
     const tel = telUrl(shop?.phone);
     return (
       <nav className={`action-bar ${brand}`} aria-label={t("common.line")}>
-        {line && <a className="primary" href={line} target="_blank" rel="noopener noreferrer"><span aria-hidden="true">💬</span>{t("common.line")}</a>}
+        {line && <a className="primary" href={line} target="_blank" rel="noopener noreferrer"><span aria-hidden="true">💬</span>LINE</a>}
         {nav && <a href={nav} target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📍</span>{t("common.directions")}</a>}
         {tel && <a href={tel}><span aria-hidden="true">📞</span>{t("common.call")}</a>}
       </nav>
