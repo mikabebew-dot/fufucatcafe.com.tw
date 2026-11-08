@@ -201,6 +201,7 @@ export const T = {
   code: { zh: "確認碼", en: "Code", ja: "確認コード", ko: "확인 코드" },
   confirmedAt: { zh: "確認時間", en: "Confirmed", ja: "確認時刻", ko: "확인 시간" },
   restart: { zh: "下一組客人", en: "Next guests", ja: "次のお客様", ko: "다음 손님" },
+  again: { zh: "重新填寫（換下一組）", en: "Start over (next group)", ja: "最初からやり直す（次のグループ）", ko: "처음부터 다시 (다음 그룹)" },
 
   fosterTitle: { zh: "這些孩子正在等一個家", en: "These cats are waiting for a home", ja: "おうちを待っている猫たち", ko: "가족을 기다리는 고양이들" },
   fosterLead: {

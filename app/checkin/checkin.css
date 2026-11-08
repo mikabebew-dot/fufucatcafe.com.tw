@@ -126,6 +126,7 @@
 .ck-foot > * { max-width: 640px; margin: 0 auto; }
 .ck-row { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
 .ck-cta { min-height: 56px; font-size: 18px; }
+.ck-again { margin-top: 12px; }
 
 /* 櫃檯看板 */
 .cb { min-height: 100dvh; background: var(--ground); }
