@@ -55,9 +55,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
   useEffect(() => {
     setLang(detectLang());
     try {
-      setKiosk(new URLSearchParams(window.location.search).get("kiosk") === "1");
-      // 手機重新整理後仍保留確認畫面（只保留到當天）
-      const saved = sessionStorage.getItem(STORE_KEY(data.brand));
+      const isKiosk = new URLSearchParams(window.location.search).get("kiosk") === "1";
+      setKiosk(isKiosk);
+      // 手機重新整理後仍保留確認畫面（櫃檯平板不保留，每次都從頭開始）
+      const saved = isKiosk ? null : sessionStorage.getItem(STORE_KEY(data.brand));
       if (saved) {
         const r = JSON.parse(saved) as Result;
         if (Date.now() - new Date(r.at).getTime() < 6 * 3600_000) {
@@ -126,7 +127,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
       r = { code: String(1000 + Math.floor(Math.random() * 9000)), at: new Date().toISOString(), short, long, online: false };
     }
     try {
-      sessionStorage.setItem(STORE_KEY(data.brand), JSON.stringify(r));
+      if (!kiosk) sessionStorage.setItem(STORE_KEY(data.brand), JSON.stringify(r));
     } catch {
       /* 存不了就只留在畫面上 */
     }
@@ -357,13 +358,18 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               </div>
             )}
 
-            {kiosk && (
-              <button type="button" className="btn btn-block" onClick={reset}>{tr(T.restart, lang)}</button>
+            {!kiosk && (
+              <button type="button" className="btn btn-ghost btn-block ck-again" onClick={reset}>{tr(T.again, lang)}</button>
             )}
           </section>
         )}
       </main>
 
+      {step === 3 && kiosk && (
+        <footer className="ck-foot">
+          <button type="button" className="btn btn-block ck-cta" onClick={reset}>{tr(T.restart, lang)}</button>
+        </footer>
+      )}
       {step < 3 && (
         <footer className="ck-foot">
           {step === 0 && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.start, lang)}</button>}
