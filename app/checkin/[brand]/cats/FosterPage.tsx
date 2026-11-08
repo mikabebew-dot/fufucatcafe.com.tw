@@ -75,7 +75,7 @@ export function FosterPage({ brand, brandName, logo, cats }: { brand: string; br
           <ul className="ck-cats">
             {cats.map((c) => (
               <li key={c.slug}>
-                <a href={href(`/nukunuku/cats/${c.slug}`)} onClick={() => track(brand, c.slug)}>
+                <a href={href(`/${brand}/cats/${c.slug}`)} onClick={() => brand === "nukunuku" && track(brand, c.slug)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   {c.photo && <img src={c.photo} alt="" width={180} height={180} loading="lazy" />}
                   <span className="ck-cat-name">{c.name[lang]}{c.status === "matching" && <em>{tr(T.matching, lang)}</em>}</span>
@@ -84,10 +84,16 @@ export function FosterPage({ brand, brandName, logo, cats }: { brand: string; br
               </li>
             ))}
           </ul>
-          <p className="ck-muted">{tr(T.fosterAsk, lang)}</p>
-          <a className="btn btn-block" href={href("/nukunuku/adoption")} onClick={() => track(brand, "page")}>
-            {tr(T.adoptHow, lang)}
-          </a>
+          {brand === "fufu" ? (
+            <p className="ck-muted">{tr(T.fufuAsk, lang)}</p>
+          ) : (
+            <>
+              <p className="ck-muted">{tr(T.fosterAsk, lang)}</p>
+              <a className="btn btn-block" href={href("/nukunuku/adoption")} onClick={() => track(brand, "page")}>
+                {tr(T.adoptHow, lang)}
+              </a>
+            </>
+          )}
         </div>
       </main>
     </div>

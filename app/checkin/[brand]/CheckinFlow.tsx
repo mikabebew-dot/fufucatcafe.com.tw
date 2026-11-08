@@ -300,7 +300,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             {/* 手機版只留一行連結，入座後再看；櫃檯平板完全不顯示，避免客人停在帶位區 */}
             {!kiosk && data.cats.length > 0 && (
               <a className="ck-foster-link" href={`/checkin/${data.brand}/cats${lang === "zh" ? "" : `?lang=${lang}`}`}>
-                {tr(T.fosterLink, lang)} →
+                {tr(data.brand === "fufu" ? T.fosterLinkFufu : T.fosterLink, lang)} →
               </a>
             )}
 

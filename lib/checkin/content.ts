@@ -210,7 +210,19 @@ export const T = {
     ko: "자리에 앉으면, 가족을 기다리는 고양이들을 만나 보세요",
   },
   fosterPageTitle: { zh: "今天在店裡等家的孩子", en: "Cats waiting for a home today", ja: "今日おうちを待っている子たち", ko: "오늘 가족을 기다리는 아이들" },
-  fosterPageTitleFufu: { zh: "姊妹店 NUKUNUKU 等家的孩子", en: "Cats waiting for a home at NUKUNUKU", ja: "姉妹店NUKUNUKUでおうちを待つ子たち", ko: "자매점 NUKUNUKU에서 가족을 기다리는 아이들" },
+  fosterLinkFufu: {
+    zh: "入座後，來認識 FUFU 的貓咪",
+    en: "Once you're seated, meet FUFU's cats",
+    ja: "お席に着いたら、FUFUの猫たちに会いに",
+    ko: "자리에 앉으면, FUFU의 고양이들을 만나 보세요",
+  },
+  fosterPageTitleFufu: { zh: "認識 FUFU 的貓咪", en: "Meet FUFU's cats", ja: "FUFUの猫たち", ko: "FUFU의 고양이들" },
+  fufuAsk: {
+    zh: "每隻貓咪個性不同，想摸摸前可以先問店員牠今天的心情。",
+    en: "Every cat is different. Ask our staff how a cat is feeling today before you pet it.",
+    ja: "猫それぞれ性格が違います。なでる前に、今日の様子をスタッフに聞いてみてください。",
+    ko: "고양이마다 성격이 달라요. 쓰다듬기 전에 오늘 기분이 어떤지 직원에게 물어보세요.",
+  },
   fosterAsk: {
     zh: "想多認識哪一隻，歡迎直接問店員。",
     en: "Want to know more about one of them? Just ask our staff.",
@@ -227,10 +239,10 @@ export const T = {
   matching: { zh: "媒合中", en: "Matching", ja: "お見合い中", ko: "매칭 중" },
   adoptHow: { zh: "認養流程與條件", en: "How adoption works", ja: "譲渡の流れと条件", ko: "입양 절차와 조건" },
   fosterLeadFufu: {
-    zh: "FUFU 的貓咪都是店貓。走路 3 分鐘的姊妹店 NUKUNUKU 是中途貓咖啡廳，這些孩子正在那裡找家人，點照片可以認識牠。",
-    en: "FUFU's cats all live here for good. Our sister café NUKUNUKU, a 3-minute walk away, is a foster-cat café where these cats are looking for a family. Tap a photo to get to know them.",
-    ja: "FUFUの猫はずっとここで暮らす店猫です。徒歩3分の姉妹店NUKUNUKUは保護猫カフェで、この子たちが家族を探しています。写真をタップして知ってください。",
-    ko: "FUFU의 고양이들은 이곳에서 계속 사는 매장 고양이예요. 걸어서 3분 거리의 자매점 NUKUNUKU는 보호묘 카페로, 이 아이들이 가족을 찾고 있어요. 사진을 눌러 알아봐 주세요.",
+    zh: "FUFU 的貓咪都是店貓，會一直在這裡生活。點照片可以認識牠們的名字和個性。",
+    en: "All of FUFU's cats live here for good. Tap a photo to learn their names and personalities.",
+    ja: "FUFUの猫たちはずっとここで暮らす店猫です。写真をタップして名前と性格を知ってください。",
+    ko: "FUFU의 고양이들은 이곳에서 계속 사는 매장 고양이예요. 사진을 눌러 이름과 성격을 알아보세요.",
   },
 } satisfies Record<string, L10n | Record<Lang, string[]>>;
 

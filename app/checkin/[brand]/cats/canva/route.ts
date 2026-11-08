@@ -25,18 +25,20 @@ export async function GET(_req: Request, { params }: { params: Promise<{ brand: 
   const url = `${origin}/checkin/${brand}/cats`;
   const qr = await QRCode.toString(url, { type: "svg", margin: 0, errorCorrectionLevel: "M", color: { dark: "#2b2523", light: "#ffffff" } });
   const fufu = brand === "fufu";
-  const title = fufu ? "姊妹店 NUKUNUKU<br>等家的孩子" : "今天在店裡<br>等家的孩子";
-  const en = fufu ? "Meet the cats waiting for a home at NUKUNUKU" : "Meet the cats waiting for a home";
-  const foot = fufu ? "走路 3 分鐘就到・掃描認識牠們" : "掃描認識牠們・想多了解歡迎問店員";
+  const title = fufu ? "認識<br>FUFU 的貓咪" : "今天在店裡<br>等家的孩子";
+  const en = fufu ? "Meet FUFU's cats" : "Meet the cats waiting for a home";
+  const langs = fufu ? "FUFUの猫たち・FUFU의 고양이들" : "おうちを待つ猫たち・가족을 기다리는 아이들";
+  const foot = fufu ? "掃描認識牠們的名字和個性" : "掃描認識牠們・想多了解歡迎問店員";
 
   const html = `<!doctype html>
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8">
-<title>${b.name}｜等家的孩子 QR 卡</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
+<title>${b.name}｜貓咪介紹 QR 卡</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Sans+KR:wght@400&family=Noto+Sans+JP:wght@400&display=swap">
 <style>
-  body { margin: 0; background: #fff; font-family: "Noto Sans TC", sans-serif; }
+  body { margin: 0; background: #fff; font-family: "Noto Sans TC", "Noto Sans JP", "Noto Sans KR", sans-serif; }
+  .langs { font-family: "Noto Sans KR", "Noto Sans JP", "Noto Sans TC", sans-serif; }
   .page { width: 600px; height: 900px; box-sizing: border-box; padding: 56px 48px; background: ${c.ground}; color: ${c.ink};
     display: flex; flex-direction: column; align-items: center; text-align: center; }
   .logo { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; }
@@ -50,11 +52,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ brand: 
 </style>
 </head>
 <body>
-<div class="page" data-document-role="page" data-label="${b.name} 等家的孩子 QR 卡">
+<div class="page" data-document-role="page" data-label="${b.name} 貓咪介紹 QR 卡">
   <img class="logo" src="${origin}${b.logo}" alt="${b.name}">
   <h1>${title}</h1>
   <p class="en">${en}</p>
-  <p class="langs">おうちを待つ猫たち・가족을 기다리는 아이들</p>
+  <p class="langs">${langs}</p>
   <div class="qr">${qr}</div>
   <p class="foot">${foot}</p>
   <p class="url">${url.replace("https://", "")}</p>

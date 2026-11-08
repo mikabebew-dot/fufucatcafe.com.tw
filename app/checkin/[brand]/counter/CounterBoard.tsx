@@ -78,7 +78,7 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
           <div className="cb-links">
             <a className="btn" href={`/checkin/${brand}?kiosk=1`} target="_blank" rel="noopener">開啟平板確認畫面</a>
             <a className="btn btn-ghost" href={`/checkin/${brand}/qr`} target="_blank" rel="noopener">列印入場 QR 立牌</a>
-            <a className="btn btn-ghost" href={`/checkin/${brand}/cats/qr`} target="_blank" rel="noopener">列印「等家的孩子」QR 卡</a>
+            <a className="btn btn-ghost" href={`/checkin/${brand}/cats/qr`} target="_blank" rel="noopener">列印貓咪介紹 QR 卡</a>
             <a className="btn btn-ghost" href={`/checkin/${other.id}/counter`}>切換到 {other.name}</a>
           </div>
         </div>
