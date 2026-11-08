@@ -204,6 +204,22 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     return () => clearTimeout(t);
   }, [kiosk, step, reset]);
 
+  // 櫃檯平板：看到一半沒人操作 3 分鐘，自動回到歡迎畫面（避免下一位客人接手前一位的選擇）
+  useEffect(() => {
+    if (!kiosk || step === 0 || step === 3) return;
+    let t = setTimeout(() => { stopSpeech(); reset(); }, 180_000);
+    const bump = () => {
+      clearTimeout(t);
+      t = setTimeout(() => { stopSpeech(); reset(); }, 180_000);
+    };
+    const events = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
+    events.forEach((e) => window.addEventListener(e, bump, { passive: true }));
+    return () => {
+      clearTimeout(t);
+      events.forEach((e) => window.removeEventListener(e, bump));
+    };
+  }, [kiosk, step, reset, stopSpeech]);
+
 
   const pricePoints = useMemo(() => T.pricePoints[lang].map((s) => s.replace("{capMin}", String(PRICE_CAP_MIN))), [lang]);
 
@@ -321,6 +337,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             <div className="ck-card ck-notes">
               <p>{tr(T.scratch, lang)}</p>
               {data.entryNote && <p>{data.entryNote[lang]}</p>}
+              {data.brand === "nukunuku" && <p>{tr(T.childWithParent, lang)}</p>}
             </div>
             <label className="ck-agree">
               <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />

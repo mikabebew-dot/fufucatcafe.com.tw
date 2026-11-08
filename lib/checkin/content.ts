@@ -182,6 +182,12 @@ export const T = {
     ja: "ここは猫たちのおうちです。触れ合うかどうかは猫が決めるので、毎回甘えてくれるとは限りません。",
     ko: "이곳은 고양이들의 집이에요. 교감할지는 고양이가 정하니, 매번 애교를 부리지는 않을 수 있어요.",
   },
+  childWithParent: {
+    zh: "13 歲以下兒童入場，需家長全程在同一樓層陪同。",
+    en: "Children under 13 must be accompanied by a parent on the same floor at all times.",
+    ja: "13歳未満のお子様は、保護者の方が常に同じフロアで付き添ってください。",
+    ko: "13세 미만 어린이는 보호자가 항상 같은 층에서 함께해야 해요.",
+  },
   scratch: {
     zh: "如果被抓傷或咬傷，請馬上告訴店員。",
     en: "If you get scratched or bitten, tell our staff right away.",
