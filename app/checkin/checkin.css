@@ -71,6 +71,25 @@
 .ck-choose { margin-top: 12px; font-size: 15px; font-weight: 500; color: var(--muted); }
 .ck-note { font-size: 14px; color: var(--muted); margin-top: 4px; }
 
+/* 歡迎頁（沿用舊版入場系統的版面） */
+.ck-welcome2 { gap: 14px; }
+.ck-listen-center { margin: 0 auto; }
+.ck-langcard { display: grid; gap: 12px; }
+.ck-langcard-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+.ck-langcard-count { flex: none; font-size: 12px; color: var(--muted); }
+.ck-langcard .ck-langs-big { max-width: none; }
+.ck-langcard .ck-langs-big button { box-shadow: inset 0 0 0 1px var(--line); }
+.ck-langcard .ck-langs-big button.on { box-shadow: none; }
+.ck-langcard .ck-langs-big button.on::after { content: " ✓"; }
+.ck-hello { display: grid; gap: 10px; }
+.ck-hello-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: .06em; font-size: 15px; color: var(--accent-text); }
+.ck-hello-brand img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.ck-hello h1 { font-size: clamp(22px, 6vw, 28px); }
+.ck-hello .ck-lead { font-size: 16px; color: var(--ink); }
+.ck-infolist { list-style: none; margin: 0; padding: 14px 18px; display: grid; gap: 10px; }
+.ck-infolist li, .ck-infolist li strong { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.6; }
+.ck-infolist li > span:first-child, .ck-infolist strong > span:first-child { flex: none; width: 22px; text-align: center; }
+
 /* 費用 */
 .ck-price-head { font-size: 19px; font-weight: 700; color: var(--accent-text); line-height: 1.5; }
 .ck-points { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; }

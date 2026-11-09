@@ -257,14 +257,35 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
         {noVoice && <p className="ck-novoice" role="status">{tr(T.noVoice, lang)}</p>}
 
         {step === 0 && (
-          <section className="ck-welcome">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="ck-hero-logo" src={logo} alt={brandName} width={96} height={96} />
-            <p className="ck-eyebrow">{tr(T.welcome, lang)}</p>
-            <h1>{brandName} CAT CAFE</h1>
-            <p className="ck-lead">{tr(T.intro, lang)}</p>
-            <p className="ck-choose">{tr(T.chooseLangPrompt, lang)}</p>
-            <LangSwitch big />
+          <section className="ck-stack ck-welcome2">
+            {/* 版面沿用舊版入場系統的歡迎頁：語言卡片 → 歡迎卡片 → 說明卡片 */}
+            <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
+              <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
+            </button>
+
+            <div className="ck-card ck-langcard">
+              <div className="ck-langcard-head">
+                <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
+                <span className="ck-langcard-count">4 Languages</span>
+              </div>
+              <LangSwitch big />
+            </div>
+
+            <div className="ck-card ck-hello">
+              <p className="ck-hello-brand">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={logo} alt="" width={28} height={28} />
+                <span>{brandName} CAT CAFE</span>
+              </p>
+              <h1>{tr(T.welcome, lang)} {brandName} CAT CAFE</h1>
+              <p className="ck-lead">{tr(T.intro, lang)}</p>
+            </div>
+
+            <ul className="ck-card ck-infolist">
+              <li><span aria-hidden="true">🕒</span><span>{tr(T.infoTime, lang)}</span></li>
+              <li><span aria-hidden="true">☕</span><span>{tr(T.infoStaff, lang)}</span></li>
+              <li><strong><span aria-hidden="true">🛡️</span><span>{tr(T.infoNotCharged, lang)}</span></strong></li>
+            </ul>
           </section>
         )}
 
@@ -387,7 +408,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
       )}
       {step < 3 && (
         <footer className="ck-foot">
-          {step === 0 && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.start, lang)}</button>}
+          {step === 0 && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.startLong, lang)} ›</button>}
           {step === 1 && (
             <div className="btn-row ck-row">
               <button type="button" className="btn btn-ghost" onClick={() => setStep(0)}>{tr(T.back, lang)}</button>
