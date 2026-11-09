@@ -258,18 +258,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
 
         {step === 0 && (
           <section className="ck-stack ck-welcome2">
-            {/* 版面沿用舊版入場系統的歡迎頁：語言卡片 → 歡迎卡片 → 說明卡片 */}
+            {/* 版面沿用舊版入場系統的歡迎頁：歡迎卡片 → 說明卡片 → 語言卡片 */}
             <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
               <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
             </button>
-
-            <div className="ck-card ck-langcard">
-              <div className="ck-langcard-head">
-                <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
-                <span className="ck-langcard-count">4 Languages</span>
-              </div>
-              <LangSwitch big />
-            </div>
 
             <div className="ck-card ck-hello">
               <p className="ck-hello-brand">
@@ -286,6 +278,14 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               <li><span aria-hidden="true">☕</span><span>{tr(T.infoStaff, lang)}</span></li>
               <li><strong><span aria-hidden="true">🛡️</span><span>{tr(T.infoNotCharged, lang)}</span></strong></li>
             </ul>
+
+            <div className="ck-card ck-langcard">
+              <div className="ck-langcard-head">
+                <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
+                <span className="ck-langcard-count">4 Languages</span>
+              </div>
+              <LangSwitch big />
+            </div>
           </section>
         )}
 
