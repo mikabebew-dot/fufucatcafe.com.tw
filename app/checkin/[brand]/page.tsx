@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { checkinLogo } from "@/lib/checkin/content";
 import { brandOf, isBrand } from "@/lib/constants";
 import { loadCheckin } from "@/lib/checkin/data";
 import { CheckinFlow } from "./CheckinFlow";
@@ -21,5 +22,5 @@ export default async function CheckinPage({ params }: { params: Promise<{ brand:
   if (!isBrand(brand)) notFound();
   const data = await loadCheckin(brand);
   const b = brandOf(brand);
-  return <CheckinFlow data={data} brandName={b.name} logo={b.logo} />;
+  return <CheckinFlow data={data} brandName={b.name} logo={checkinLogo(brand, b.logo)} />;
 }

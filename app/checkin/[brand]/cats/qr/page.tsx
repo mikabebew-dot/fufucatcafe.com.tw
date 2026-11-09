@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { checkinLogo } from "@/lib/checkin/content";
 import QRCode from "qrcode";
 import { BRANDS, brandOf, isBrand } from "@/lib/constants";
 import { siteUrl } from "@/sanity/env";
@@ -27,7 +28,7 @@ export default async function FosterQrPage({ params }: { params: Promise<{ brand
     <div className="qr-page" data-brand={brand}>
       <div className="qr-card">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={b.logo} alt={b.name} width={72} height={72} style={{ borderRadius: "50%" }} />
+        <img src={checkinLogo(brand, b.logo)} alt={b.name} width={72} height={72} style={{ borderRadius: "50%" }} />
         <h1>{fufu ? "認識 FUFU 的貓咪" : "今天在店裡等家的孩子"}</h1>
         <p className="qr-langs">
           {fufu ? "Meet FUFU's cats・FUFUの猫たち・FUFU의 고양이들" : "Meet the cats waiting for a home・おうちを待つ猫たち・가족을 기다리는 아이들"}

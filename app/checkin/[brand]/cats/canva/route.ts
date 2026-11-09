@@ -3,6 +3,7 @@
  * 匯入後在 Canva 裡可以改字、換圖、調排版再列印。
  */
 import QRCode from "qrcode";
+import { checkinLogo } from "@/lib/checkin/content";
 import { brandOf, isBrand } from "@/lib/constants";
 import { siteUrl } from "@/sanity/env";
 
@@ -53,7 +54,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ brand: 
 </head>
 <body>
 <div class="page" data-document-role="page" data-label="${b.name} 貓咪介紹 QR 卡">
-  <img class="logo" src="${origin}${b.logo}" alt="${b.name}">
+  <img class="logo" src="${origin}${checkinLogo(brand, b.logo)}" alt="${b.name}">
   <h1>${title}</h1>
   <p class="en">${en}</p>
   <p class="langs">${langs}</p>

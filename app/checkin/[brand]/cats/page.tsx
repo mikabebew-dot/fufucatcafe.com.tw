@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { checkinLogo } from "@/lib/checkin/content";
 import { brandOf, isBrand } from "@/lib/constants";
 import { loadCheckin } from "@/lib/checkin/data";
 import { FosterPage } from "./FosterPage";
@@ -21,5 +22,5 @@ export default async function CatsPage({ params }: { params: Promise<{ brand: st
   if (!isBrand(brand)) notFound();
   const data = await loadCheckin(brand);
   const b = brandOf(brand);
-  return <FosterPage brand={brand} brandName={b.name} logo={b.logo} cats={data.cats} />;
+  return <FosterPage brand={brand} brandName={b.name} logo={checkinLogo(brand, b.logo)} cats={data.cats} />;
 }

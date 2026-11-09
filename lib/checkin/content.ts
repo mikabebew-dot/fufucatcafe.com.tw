@@ -27,6 +27,9 @@ export const DEFAULTS: Record<BrandId, { shortDrinks: L10n; longMin: number }> =
   },
 };
 
+/** 入場確認頁用的 Logo：FUFU 用裁到圓形邊緣的版本，Logo 會填滿圓框 */
+export const checkinLogo = (brand: string, fallback: string) => (brand === "fufu" ? "/brand/fufu-logo-circle.png" : fallback);
+
 export const PRICE_PER_10 = 55;
 export const PRICE_CAP_MIN = 100;
 
