@@ -154,7 +154,7 @@ export const T = {
     ko: "+ − 로 플랜별 인원을 입력해 주세요.",
   },
   shortName: { zh: "短暫停留", en: "Quick visit", ja: "ショート", ko: "짧은 방문" },
-  shortWhen: { zh: "預計 30 分鐘內", en: "Planning 30 min or less", ja: "30分以内の予定", ko: "30분 이내 예정" },
+  shortWhen: { zh: "30 分鐘以內", en: "30 min or less", ja: "30分以内", ko: "30분 이내" },
   shortDrinks: { zh: "指定飲品暢飲：{d}", en: "Free refills of: {d}", ja: "指定ドリンク飲み放題：{d}", ko: "지정 음료 무제한: {d}" },
   shortUpgrade: {
     zh: "待超過 40 分鐘，自動升級成全品項暢飲，不另收費。",
@@ -163,7 +163,7 @@ export const T = {
     ko: "40분을 넘기면 추가 요금 없이 전 음료 무제한으로 바뀌어요.",
   },
   longName: { zh: "悠閒停留", en: "Relaxed stay", ja: "ゆったり", ko: "여유로운 방문" },
-  longWhen: { zh: "預計 40 分鐘以上", en: "Planning 40 min or more", ja: "40分以上の予定", ko: "40분 이상 예정" },
+  longWhen: { zh: "40 分鐘以上", en: "40 min or more", ja: "40分以上", ko: "40분 이상" },
   longDrinks: { zh: "全品項飲品暢飲", en: "Free refills of all drinks", ja: "全ドリンク飲み放題", ko: "전 음료 무제한" },
   longMin: {
     zh: "每人最低 NT${v}，提早離開也以 NT${v} 計。",
