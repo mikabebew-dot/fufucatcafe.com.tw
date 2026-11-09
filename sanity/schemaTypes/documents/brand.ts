@@ -190,14 +190,14 @@ export const shopInfo = defineType({
     }),
     defineField({
       name: "checkinShortDrinks",
-      title: "「先喝指定飲品」的飲品",
+      title: "「短暫停留」方案的指定飲品",
       type: "l10nString",
       group: "checkin",
       description: "顯示在入場確認頁（/checkin）。例如：原味奶茶、蜂蜜水。沒填時使用系統預設。",
     }),
     defineField({
       name: "checkinLongMin",
-      title: "「一入場就喝全部飲品」每人最低收費（新台幣）",
+      title: "「悠閒停留」方案每人最低收費（新台幣）",
       type: "number",
       group: "checkin",
       description: "沒填時為 220。",

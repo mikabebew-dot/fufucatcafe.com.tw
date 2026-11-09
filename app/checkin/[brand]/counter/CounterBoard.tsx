@@ -86,8 +86,8 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
         <div className="cb-tiles">
           <div className="cb-tile"><strong>{data?.groups ?? "—"}</strong><span>今日確認組數</span></div>
           <div className="cb-tile"><strong>{data?.guests ?? "—"}</strong><span>今日確認人數</span></div>
-          <div className="cb-tile"><strong>{data?.planShort ?? "—"}</strong><span>先喝指定飲品（人）</span></div>
-          <div className="cb-tile"><strong>{data?.planLong ?? "—"}</strong><span>一入場全部飲品（人）</span></div>
+          <div className="cb-tile"><strong>{data?.planShort ?? "—"}</strong><span>短暫停留（人）</span></div>
+          <div className="cb-tile"><strong>{data?.planLong ?? "—"}</strong><span>悠閒停留（人）</span></div>
           <div className="cb-tile"><strong>{data ? waiting : "—"}</strong><span>還沒按入場的組</span></div>
         </div>
 
@@ -109,9 +109,9 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
                 <span className="cb-code tabular">{e.code}</span>
                 <div className="cb-meta">
                   <span>
-                    {e.short > 0 && `指定飲品 ${e.short} 人`}
+                    {e.short > 0 && `短暫 ${e.short} 人`}
                     {e.short > 0 && e.long > 0 && "・"}
-                    {e.long > 0 && `全部飲品 ${e.long} 人`}
+                    {e.long > 0 && `悠閒 ${e.long} 人`}
                   </span>
                   <small className="tabular">{fmt(e.at)}・{LANG_NAME[e.lang] ?? e.lang}</small>
                 </div>
