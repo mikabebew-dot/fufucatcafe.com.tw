@@ -261,10 +261,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="ck-hero-logo" src={logo} alt={brandName} width={96} height={96} />
             <p className="ck-eyebrow">{tr(T.welcome, lang)}</p>
-            <h1>{brandName}</h1>
+            <h1>{brandName} CAT CAFE</h1>
             <p className="ck-lead">{tr(T.intro, lang)}</p>
+            <p className="ck-choose">{tr(T.chooseLangPrompt, lang)}</p>
             <LangSwitch big />
-            <p className="ck-note">{tr(T.notCharged, lang)}</p>
           </section>
         )}
 

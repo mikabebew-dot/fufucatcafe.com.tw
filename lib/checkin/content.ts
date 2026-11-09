@@ -83,19 +83,14 @@ export const RULES: { title: L10n; body: L10n }[] = [
 ];
 
 export const T = {
-  welcome: { zh: "歡迎來到", en: "Welcome to", ja: "ようこそ", ko: "어서 오세요" },
+  welcome: { zh: "歡迎光臨", en: "Welcome to", ja: "ようこそ", ko: "어서 오세요" },
   intro: {
-    zh: "入場前，請花 1 分鐘看完三件事：費用、飲品方案、和貓咪的約定。",
-    en: "Before you go in, take one minute for three things: prices, drink plans and how to be with the cats.",
-    ja: "入店前に1分だけ、料金・ドリンクプラン・猫との約束の3つをご確認ください。",
-    ko: "입장 전 1분만 시간을 내어 요금, 음료 플랜, 고양이와의 약속 세 가지를 확인해 주세요.",
+    zh: "為了讓您和貓咪都有愉快的時光，\n入場前請花一點時間閱讀以下說明。",
+    en: "So that you and the cats can have a lovely time,\nplease take a moment to read the following before you enter.",
+    ja: "お客様と猫たちが楽しい時間を過ごせるよう、\nご入店前に以下のご案内をお読みください。",
+    ko: "고객님과 고양이 모두 즐거운 시간을 보낼 수 있도록,\n입장 전에 아래 안내를 잠시 읽어 주세요.",
   },
-  notCharged: {
-    zh: "閱讀時間不計費，入場時間由店員登記。",
-    en: "Reading time isn't charged. Staff will record your entry time.",
-    ja: "お読みいただく時間は料金に含まれません。入店時刻はスタッフが記録します。",
-    ko: "읽는 시간은 요금에 포함되지 않아요. 입장 시간은 직원이 기록해요.",
-  },
+  chooseLangPrompt: { zh: "請選擇語言", en: "Please choose your language", ja: "言語を選択してください", ko: "언어를 선택해 주세요" },
   chooseLang: { zh: "選擇語言", en: "Language", ja: "言語", ko: "언어" },
   start: { zh: "開始", en: "Start", ja: "はじめる", ko: "시작하기" },
   next: { zh: "下一步", en: "Next", ja: "次へ", ko: "다음" },
