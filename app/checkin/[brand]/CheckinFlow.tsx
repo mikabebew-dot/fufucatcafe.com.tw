@@ -284,8 +284,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               <div className={`ck-plan${short ? " on" : ""}`}>
                 <div className="ck-plan-head">
                   <div>
-                    <p className="ck-plan-name">{tr(T.shortName, lang)}</p>
-                    <p className="ck-plan-when">{tr(T.shortWhen, lang)}</p>
+                    <p className="ck-plan-title">
+                      <span className="ck-plan-name">{tr(T.shortName, lang)}</span>
+                      <span className="ck-plan-when">{tr(T.shortWhen, lang)}</span>
+                    </p>
                   </div>
                   <Stepper value={short} onChange={setShort} label={tr(T.shortName, lang)} />
                 </div>
@@ -295,8 +297,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
               <div className={`ck-plan${long ? " on" : ""}`}>
                 <div className="ck-plan-head">
                   <div>
-                    <p className="ck-plan-name">{tr(T.longName, lang)}</p>
-                    <p className="ck-plan-when">{tr(T.longWhen, lang)}</p>
+                    <p className="ck-plan-title">
+                      <span className="ck-plan-name">{tr(T.longName, lang)}</span>
+                      <span className="ck-plan-when">{tr(T.longWhen, lang)}</span>
+                    </p>
                   </div>
                   <Stepper value={long} onChange={setLong} label={tr(T.longName, lang)} />
                 </div>
