@@ -1,17 +1,17 @@
 /*
  * 入場確認系統（/checkin）樣式：沿用官網的品牌色票（data-brand），手機與櫃檯平板優先。
  */
-/* 入場確認系統裡的 FUFU：字體、字級、框線與 NUKUNUKU 相同（黑體粗標題），配色改用奶茶色 + 墨綠 */
+/* 入場確認系統裡的 FUFU：字體、字級、框線與 NUKUNUKU 相同（黑體粗標題）；淡灰綠底、奶茶色卡片與標籤、墨綠按鈕 */
 :is(.ck, .cb, .qr-page)[data-brand="fufu"] {
-  --ground: #f7f0e6;
+  --ground: #eef2ee;
   --surface: #fffdf9;
-  --soft: #eadbc6;
-  --ph: #dccab2;
+  --soft: #ead9c4;
+  --ph: #d9e1d9;
   --ink: #33302c;
-  --muted: #6c6258;
-  --line: #e6d8c4;
-  --accent: #2f5d50;
-  --accent-text: #24493f;
+  --muted: #5f665f;
+  --line: #dfe3db;
+  --accent: #4f7a72;
+  --accent-text: #3f6560;
   --on-accent: #ffffff;
   --font-display: var(--font-sans);
   --display-weight: 700;

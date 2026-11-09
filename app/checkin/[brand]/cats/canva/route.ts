@@ -12,7 +12,7 @@ export function generateStaticParams() {
 }
 
 const COLORS = {
-  fufu: { ground: "#f7f0e6", soft: "#eadbc6", ink: "#33302c", muted: "#6c6258", accent: "#2f5d50" },
+  fufu: { ground: "#eef2ee", soft: "#ead9c4", ink: "#33302c", muted: "#5f665f", accent: "#4f7a72" },
   nukunuku: { ground: "#fdf5ee", soft: "#f9d1b7", ink: "#3b2a22", muted: "#7a6258", accent: "#a75337" },
 } as const;
 
