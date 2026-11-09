@@ -96,6 +96,12 @@ export function FosterPage({ brand, brandName, logo, cats }: { brand: string; br
           )}
         </div>
       </main>
+
+      <footer className="ck-foot">
+        <a className="btn btn-block ck-cta" href={`/checkin/${brand}${lang === "zh" ? "" : `?lang=${lang}`}`}>
+          ← {tr(T.backHome, lang)}
+        </a>
+      </footer>
     </div>
   );
 }

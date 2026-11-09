@@ -103,6 +103,7 @@ export const T = {
     ja: "お読みいただいている間は、入店時間に含まれません。",
     ko: "읽는 동안에는 이용 시간이 계산되지 않아요.",
   },
+  backHome: { zh: "回到首頁", en: "Back to home", ja: "トップに戻る", ko: "처음으로" },
   startLong: { zh: "開始了解入場資訊", en: "See entry info", ja: "ご入店案内を見る", ko: "입장 안내 보기" },
   chooseLangPrompt: { zh: "請選擇語言", en: "Please choose your language", ja: "言語を選択してください", ko: "언어를 선택해 주세요" },
   chooseLang: { zh: "選擇語言", en: "Language", ja: "言語", ko: "언어" },
