@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { BRANDS, brandOf, isBrand } from "@/lib/constants";
@@ -7,6 +8,11 @@ import { PrintButton } from "./PrintButton";
 /** 可列印的 QR 立牌：掃描後開啟該店的入場確認頁 */
 export function generateStaticParams() {
   return BRANDS.map((b) => ({ brand: b.id }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ brand: string }> }): Promise<Metadata> {
+  const { brand } = await params;
+  return { title: isBrand(brand) ? `${brandOf(brand).name}｜入場 QR 立牌` : "入場 QR 立牌" };
 }
 
 export default async function QrPage({ params }: { params: Promise<{ brand: string }> }) {

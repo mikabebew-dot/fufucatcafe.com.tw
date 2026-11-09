@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { BRANDS, brandOf, isBrand } from "@/lib/constants";
@@ -7,6 +8,11 @@ import { PrintButton } from "../../qr/PrintButton";
 /** 店內桌卡／牆面用的 QR：掃描後開啟「今天在店裡等家的孩子」 */
 export function generateStaticParams() {
   return BRANDS.map((b) => ({ brand: b.id }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ brand: string }> }): Promise<Metadata> {
+  const { brand } = await params;
+  return { title: isBrand(brand) ? `${brandOf(brand).name}｜貓咪介紹 QR 卡` : "貓咪介紹 QR 卡" };
 }
 
 export default async function FosterQrPage({ params }: { params: Promise<{ brand: string }> }) {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { brandOf, isBrand } from "@/lib/constants";
 import { loadCheckin } from "@/lib/checkin/data";
@@ -8,6 +9,11 @@ export const revalidate = 60;
 
 export function generateStaticParams() {
   return [{ brand: "fufu" }, { brand: "nukunuku" }];
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ brand: string }> }): Promise<Metadata> {
+  const { brand } = await params;
+  return { title: isBrand(brand) ? `${brandOf(brand).name}｜貓咪介紹` : "貓咪介紹" };
 }
 
 export default async function CatsPage({ params }: { params: Promise<{ brand: string }> }) {
