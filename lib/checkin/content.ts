@@ -82,6 +82,31 @@ export const RULES: { title: L10n; body: L10n }[] = [
   },
 ];
 
+/** 各店額外的約定（接在共同約定後面） */
+export const EXTRA_RULES: Record<BrandId, { title: L10n; body: L10n }[]> = {
+  fufu: [
+    {
+      title: { zh: "包包、外套請放指定置物櫃", en: "Bags and coats go in the lockers", ja: "バッグ・上着は指定のロッカーへ", ko: "가방과 외투는 지정 사물함에" },
+      body: {
+        zh: "避免貓咪抓咬或鑽進包包裡，也讓座位區更寬敞。",
+        en: "This keeps cats from scratching or crawling into them, and leaves more room to sit.",
+        ja: "猫がひっかいたり中に入ったりしないよう、また席を広く使えるようにご協力ください。",
+        ko: "고양이가 긁거나 안에 들어가지 않도록, 그리고 자리를 넓게 쓸 수 있도록 부탁드려요.",
+      },
+    },
+    {
+      title: { zh: "進入綠色地毯區請脫鞋", en: "Shoes off on the green carpet", ja: "緑のカーペットでは靴を脱いでください", ko: "초록색 카펫 구역에서는 신발을 벗어 주세요" },
+      body: {
+        zh: "綠色地毯是貓咪休息玩耍的地方，請保持乾淨。",
+        en: "The green carpet is where the cats rest and play, so please keep it clean.",
+        ja: "緑のカーペットは猫たちが休んだり遊んだりする場所です。清潔にご協力ください。",
+        ko: "초록색 카펫은 고양이들이 쉬고 노는 곳이니 깨끗하게 지켜 주세요.",
+      },
+    },
+  ],
+  nukunuku: [],
+};
+
 export const T = {
   welcome: { zh: "歡迎光臨", en: "Welcome to", ja: "ようこそ", ko: "어서 오세요" },
   intro: {

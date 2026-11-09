@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CheckinData } from "@/lib/checkin/data";
 import {
-  LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, SPEECH_LANG, T,
+  EXTRA_RULES, LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, SPEECH_LANG, T,
   isLang, perPerson, tr, type Lang,
 } from "@/lib/checkin/content";
 
@@ -349,7 +349,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             <h1>{tr(T.rulesTitle, lang)}</h1>
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
             <ol className="ck-rules">
-              {RULES.map((r, i) => (
+              {[...RULES, ...EXTRA_RULES[data.brand]].map((r, i) => (
                 <li key={i}>
                   <span className="ck-num" aria-hidden="true">{i + 1}</span>
                   <div>
