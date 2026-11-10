@@ -2,11 +2,11 @@
  * 入場確認 API
  * POST  客人完成確認 → 回傳確認碼
  * GET   ?brand=nukunuku  櫃檯看板讀取今日紀錄
- * PATCH 櫃檯標記「已入場」
+ * PATCH 櫃檯標記「已入場」／「客人離場」
  */
 import { NextResponse, type NextRequest } from "next/server";
 import { isBrand } from "@/lib/constants";
-import { getToday, markEntered, parseConfirm, recordConfirm } from "@/lib/checkin/store";
+import { getToday, markEntry, parseConfirm, recordConfirm } from "@/lib/checkin/store";
 
 export const dynamic = "force-dynamic";
 const NO_STORE = { "Cache-Control": "no-store" };
@@ -42,7 +42,9 @@ export async function GET(req: NextRequest) {
   try {
     const day = await getToday(brand);
     if (day === undefined) return NextResponse.json({ error: "unconfigured" }, { status: 503 });
-    const entries = [...(day?.entries ?? [])].reverse().map(({ _key, code, at, lang, short, long, entered }) => ({ key: _key, code, at, lang, short, long, entered: !!entered }));
+    const entries = [...(day?.entries ?? [])].reverse().map(({ _key, code, at, lang, short, long, entered, enteredAt, leftAt }) => ({
+      key: _key, code, at, lang, short, long, entered: !!entered, enteredAt: enteredAt ?? null, leftAt: leftAt ?? null,
+    }));
     return NextResponse.json(
       { date: day?.date ?? null, groups: day?.groups ?? 0, guests: day?.guests ?? 0, planShort: day?.planShort ?? 0, planLong: day?.planLong ?? 0, entries },
       { headers: NO_STORE },
@@ -61,11 +63,13 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
-  if (typeof b.brand !== "string" || !isBrand(b.brand) || typeof b.key !== "string" || typeof b.entered !== "boolean") {
+  // { entered: true/false } 標記入場；{ left: true/false } 標記離場
+  const action = typeof b.left === "boolean" ? "leave" : typeof b.entered === "boolean" ? "enter" : null;
+  if (typeof b.brand !== "string" || !isBrand(b.brand) || typeof b.key !== "string" || !action) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
   try {
-    const ok = await markEntered(b.brand, b.key, b.entered);
+    const ok = await markEntry(b.brand, b.key, action, (action === "leave" ? b.left : b.entered) as boolean);
     return NextResponse.json({ ok }, { status: ok ? 200 : 400 });
   } catch (e) {
     console.error("[checkin] 標記失敗", e);

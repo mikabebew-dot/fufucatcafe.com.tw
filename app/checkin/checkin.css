@@ -204,7 +204,14 @@
 .cb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .cb-item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; background: var(--surface); border-radius: var(--r-sm); padding: 12px 14px; box-shadow: var(--frame); }
 .cb-item.new { box-shadow: 0 0 0 2px var(--accent); }
-.cb-item.done { opacity: .55; }
+.cb-item.cb-left { opacity: .6; }
+.cb-item.cb-inside { box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.cb-meta b { color: var(--accent-text); }
+.cb-actions { display: grid; gap: 4px; justify-items: end; }
+.cb-undo { border: 0; background: none; padding: 2px 4px; font: inherit; font-size: 13px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.cb-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.cb-filter button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; font: inherit; font-size: 15px; background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; }
+.cb-filter button.on { background: var(--accent); color: var(--on-accent); box-shadow: none; }
 .cb-code { font-family: var(--font-jost), var(--font-sans); font-size: 30px; font-weight: 500; letter-spacing: .12em; color: var(--accent-text); }
 .cb-meta { display: grid; gap: 2px; font-size: 15px; }
 .cb-meta small { color: var(--muted); font-size: 13px; }

@@ -2,10 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-type Entry = { key: string; code: string; at: string; lang: string; short: number; long: number; entered: boolean };
+type Entry = {
+  key: string; code: string; at: string; lang: string; short: number; long: number;
+  entered: boolean; enteredAt: string | null; leftAt: string | null;
+};
 type Today = { date: string | null; groups: number; guests: number; planShort: number; planLong: number; entries: Entry[] };
 
 const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어" };
+/** 停留分鐘數（入場到離場；還沒離場就算到現在） */
+const stayMin = (e: Entry, now: number) =>
+  e.enteredAt ? Math.max(0, Math.round(((e.leftAt ? new Date(e.leftAt).getTime() : now) - new Date(e.enteredAt).getTime()) / 60_000)) : 0;
+
 const fmt = (iso: string) =>
   new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
 
@@ -13,12 +20,31 @@ const fmt = (iso: string) =>
  * 櫃檯看板：每 4 秒更新一次今日確認紀錄。客人出示確認碼 → 找到那一組 → 按「已入場」。
  * 只顯示確認碼、時間、語言、方案人數，沒有任何個資。
  */
-export function CounterBoard({ brand, brandName, other }: { brand: string; brandName: string; other: { id: string; name: string } }) {
+export function CounterBoard({
+  brand, brandName, other, per10, longMin,
+}: { brand: string; brandName: string; other: { id: string; name: string }; per10: number; longMin: number }) {
   const [data, setData] = useState<Today | null>(null);
   const [error, setError] = useState(false);
   const [updated, setUpdated] = useState<Date | null>(null);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "waiting" | "inside" | "left">("all");
+  const [now, setNow] = useState(() => Date.now());
+
+  // 每 30 秒更新「已待幾分鐘」
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(t);
+  }, []);
+
+  /** 參考費用：依停留時間，以 10 分鐘四捨五入、上限 100 分鐘；悠閒停留每人最低 longMin */
+  const fee = (e: Entry) => {
+    const m = stayMin(e, now);
+    const blocks = Math.min(10, Math.max(1, Math.round(m / 10)));
+    const perShort = blocks * per10;
+    const perLong = Math.max(perShort, longMin);
+    return { m, perShort, perLong, total: e.short * perShort + e.long * perLong };
+  };
 
   const load = useCallback(async () => {
     try {
@@ -40,30 +66,41 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
     return () => clearInterval(t);
   }, [load]);
 
-  const toggle = async (e: Entry) => {
+  /** 標記入場／離場；先在畫面上變更，失敗再改回來 */
+  const act = async (e: Entry, action: "enter" | "leave", on: boolean) => {
     setBusy(e.key);
-    // 先在畫面上變更，失敗再改回來
-    setData((d) => d && { ...d, entries: d.entries.map((x) => (x.key === e.key ? { ...x, entered: !e.entered } : x)) });
+    const stamp = new Date().toISOString();
+    const next: Entry =
+      action === "enter"
+        ? { ...e, entered: on, enteredAt: on ? stamp : null, leftAt: on ? e.leftAt : null }
+        : { ...e, leftAt: on ? stamp : null };
+    setData((d) => d && { ...d, entries: d.entries.map((x) => (x.key === e.key ? next : x)) });
     try {
       const res = await fetch("/api/checkin", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brand, key: e.key, entered: !e.entered }),
+        body: JSON.stringify(action === "enter" ? { brand, key: e.key, entered: on } : { brand, key: e.key, left: on }),
       });
       if (!res.ok) throw new Error();
     } catch {
-      setData((d) => d && { ...d, entries: d.entries.map((x) => (x.key === e.key ? { ...x, entered: e.entered } : x)) });
+      setData((d) => d && { ...d, entries: d.entries.map((x) => (x.key === e.key ? e : x)) });
     } finally {
       setBusy(null);
     }
   };
 
+  const all = data?.entries ?? [];
+  const stateOf = (e: Entry) => (!e.entered ? "waiting" : e.leftAt ? "left" : "inside");
   const list = useMemo(() => {
-    const all = data?.entries ?? [];
     const term = q.trim();
-    return term ? all.filter((e) => e.code.includes(term)) : all;
-  }, [data, q]);
-  const waiting = (data?.entries ?? []).filter((e) => !e.entered).length;
+    return all.filter((e) => (term ? e.code.includes(term) : filter === "all" || stateOf(e) === filter));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, q, filter]);
+  const waiting = all.filter((e) => stateOf(e) === "waiting").length;
+  const inside = all.filter((e) => stateOf(e) === "inside");
+  const insideGuests = inside.reduce((n, e) => n + e.short + e.long, 0);
+  const leftGroups = all.filter((e) => stateOf(e) === "left");
+  const avgStay = leftGroups.length ? Math.round(leftGroups.reduce((n, e) => n + stayMin(e, now), 0) / leftGroups.length) : null;
 
   return (
     <div className="cb" data-brand={brand}>
@@ -88,7 +125,18 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
           <div className="cb-tile"><strong>{data?.guests ?? "—"}</strong><span>今日確認人數</span></div>
           <div className="cb-tile"><strong>{data?.planShort ?? "—"}</strong><span>短暫停留（人）</span></div>
           <div className="cb-tile"><strong>{data?.planLong ?? "—"}</strong><span>悠閒停留（人）</span></div>
-          <div className="cb-tile"><strong>{data ? waiting : "—"}</strong><span>還沒按入場的組</span></div>
+          <div className="cb-tile"><strong>{data ? waiting : "—"}</strong><span>等候入場（組）</span></div>
+          <div className="cb-tile"><strong>{data ? insideGuests : "—"}</strong><span>目前店內（人）</span></div>
+          <div className="cb-tile"><strong>{data ? leftGroups.length : "—"}</strong><span>已離場（組）</span></div>
+          <div className="cb-tile"><strong>{avgStay ?? "—"}</strong><span>平均停留（分）</span></div>
+        </div>
+
+        <div className="cb-filter" role="tablist" aria-label="篩選">
+          {([["all", "全部"], ["waiting", `等候入場 ${waiting}`], ["inside", `店內 ${inside.length}`], ["left", `已離場 ${leftGroups.length}`]] as const).map(([k, label]) => (
+            <button key={k} type="button" role="tab" aria-selected={filter === k} className={filter === k ? "on" : ""} onClick={() => setFilter(k)}>
+              {label}
+            </button>
+          ))}
         </div>
 
         <input
@@ -100,12 +148,14 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
           onChange={(e) => setQ(e.target.value.replace(/\D/g, "").slice(0, 4))}
         />
 
-        {data && list.length === 0 && <p className="cb-empty">{q ? "找不到這個確認碼" : "今天還沒有客人完成確認。"}</p>}
+        {data && list.length === 0 && <p className="cb-empty">{q ? "找不到這個確認碼" : filter === "all" ? "今天還沒有客人完成確認。" : "目前沒有符合的組別。"}</p>}
         <ul className="cb-list">
           {list.map((e) => {
-            const fresh = !e.entered && Date.now() - new Date(e.at).getTime() < 15 * 60_000;
+            const st = stateOf(e);
+            const fresh = st === "waiting" && now - new Date(e.at).getTime() < 15 * 60_000;
+            const f = fee(e);
             return (
-              <li key={e.key} className={`cb-item${fresh ? " new" : ""}${e.entered ? " done" : ""}`}>
+              <li key={e.key} className={`cb-item cb-${st}${fresh ? " new" : ""}`}>
                 <span className="cb-code tabular">{e.code}</span>
                 <div className="cb-meta">
                   <span>
@@ -113,16 +163,38 @@ export function CounterBoard({ brand, brandName, other }: { brand: string; brand
                     {e.short > 0 && e.long > 0 && "・"}
                     {e.long > 0 && `悠閒 ${e.long} 人`}
                   </span>
-                  <small className="tabular">{fmt(e.at)}・{LANG_NAME[e.lang] ?? e.lang}</small>
+                  {st === "waiting" && <small className="tabular">確認 {fmt(e.at)}・{LANG_NAME[e.lang] ?? e.lang}</small>}
+                  {st === "inside" && e.enteredAt && (
+                    <small className="tabular">入場 {fmt(e.enteredAt)}・已待 <b>{f.m}</b> 分</small>
+                  )}
+                  {st === "left" && e.enteredAt && e.leftAt && (
+                    <small className="tabular">
+                      {fmt(e.enteredAt)}–{fmt(e.leftAt)}・{f.m} 分・參考 <b>NT${f.total}</b>
+                      {e.short > 0 && e.long > 0 ? `（短暫每人 ${f.perShort}／悠閒每人 ${f.perLong}）` : `（每人 ${e.long > 0 ? f.perLong : f.perShort}）`}
+                    </small>
+                  )}
                 </div>
-                <button type="button" className={e.entered ? "btn btn-ghost" : "btn"} onClick={() => toggle(e)} disabled={busy === e.key}>
-                  {e.entered ? "已入場 ✓" : "已入場"}
-                </button>
+                <div className="cb-actions">
+                  {st === "waiting" && (
+                    <button type="button" className="btn" onClick={() => act(e, "enter", true)} disabled={busy === e.key}>已入場</button>
+                  )}
+                  {st === "inside" && (
+                    <>
+                      <button type="button" className="btn" onClick={() => act(e, "leave", true)} disabled={busy === e.key}>客人離場</button>
+                      <button type="button" className="cb-undo" onClick={() => act(e, "enter", false)} disabled={busy === e.key}>取消入場</button>
+                    </>
+                  )}
+                  {st === "left" && (
+                    <button type="button" className="cb-undo" onClick={() => act(e, "leave", false)} disabled={busy === e.key}>復原離場</button>
+                  )}
+                </div>
               </li>
             );
           })}
         </ul>
-        <p className="cb-status">實際計費時間與人數仍以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。</p>
+        <p className="cb-status">
+          停留時間從按「已入場」算到按「客人離場」。費用是依時間自動算的參考金額，實際結帳仍以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。
+        </p>
       </main>
     </div>
   );

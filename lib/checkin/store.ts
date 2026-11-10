@@ -21,7 +21,10 @@ export const taipeiDate = (d = new Date()) =>
 
 export const dayId = (brand: BrandId, date = taipeiDate()) => `checkin.day.${brand}.${date}`;
 
-export type Entry = { _key: string; code: string; at: string; lang: Lang; short: number; long: number; entered?: boolean };
+export type Entry = {
+  _key: string; code: string; at: string; lang: Lang; short: number; long: number;
+  entered?: boolean; enteredAt?: string; leftAt?: string;
+};
 export type Day = {
   _id: string;
   brand: BrandId;
@@ -120,10 +123,20 @@ export async function getToday(brand: BrandId) {
   return client.fetch<Day | null>(`*[_id == $id][0]`, { id: dayId(brand) });
 }
 
-/** 櫃檯按「已入場」：標記某一組 */
-export async function markEntered(brand: BrandId, key: string, entered: boolean) {
+/** 櫃檯按「已入場」／「客人離場」：記錄時間（再按一次可取消） */
+export async function markEntry(brand: BrandId, key: string, action: "enter" | "leave", on: boolean) {
   const client = checkinClient();
   if (!client || !/^[a-z0-9]{6,20}$/.test(key)) return false;
-  await client.patch(dayId(brand)).set({ [`entries[_key=="${key}"].entered`]: entered }).commit({ visibility: "sync" });
+  const base = `entries[_key=="${key}"]`;
+  const now = new Date().toISOString();
+  const patch = client.patch(dayId(brand));
+  if (action === "enter") {
+    if (on) patch.set({ [`${base}.entered`]: true, [`${base}.enteredAt`]: now });
+    else patch.set({ [`${base}.entered`]: false }).unset([`${base}.enteredAt`, `${base}.leftAt`]);
+  } else {
+    if (on) patch.set({ [`${base}.leftAt`]: now });
+    else patch.unset([`${base}.leftAt`]);
+  }
+  await patch.commit({ visibility: "sync" });
   return true;
 }
