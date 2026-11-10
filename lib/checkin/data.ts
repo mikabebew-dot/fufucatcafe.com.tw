@@ -41,6 +41,7 @@ const fill = (v: Partial<L10n> | null | undefined, fallback?: L10n): L10n | null
 export async function loadCheckin(brand: BrandId): Promise<CheckinData> {
   // NUKUNUKU：可認養與媒合中的中途貓；FUFU：自己的店貓（有照片的才顯示）
   const statuses = brand === "nukunuku" ? ["adoptable", "matching"] : ["resident"];
+  // 後台暫時連不上時，入場頁仍用預設值正常運作（不顯示貓咪清單）
   const raw = await client.fetch<Raw>(
     `{
       "shop": *[_type == "shopInfo" && _id == $shopId][0]{
@@ -53,7 +54,10 @@ export async function loadCheckin(brand: BrandId): Promise<CheckinData> {
     }`,
     { shopId: `shop-${brand}`, brand, statuses },
     { stega: false, next: { revalidate: 60 } },
-  );
+  ).catch((e) => {
+    console.error("[checkin] 後台讀取失敗，改用預設值", e);
+    return { shop: null, cats: [] } as Raw;
+  });
   const d = DEFAULTS[brand];
   return {
     brand,

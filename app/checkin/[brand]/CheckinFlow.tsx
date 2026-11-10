@@ -125,7 +125,11 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     setNoVoice(false);
     const synth = window.speechSynthesis;
     // 只朗讀內容本身，不唸「聆聽本頁」按鈕
-    const text = mainRef.current?.querySelector("section")?.innerText;
+    const text = mainRef.current
+      ?.querySelector("section")
+      ?.innerText.split(tr(T.listen, lang)).join("")
+      .split(tr(T.stop, lang)).join("")
+      .replace(/[▶■]/g, "");
     if (!synth || !text) return;
     const voice = pickVoice(lang);
     if (!voice) {
@@ -235,25 +239,31 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
 
   return (
     <div className="ck" data-brand={data.brand}>
+      {/* 頁首與進度條沿用舊版入場系統（Studio 版）的樣式 */}
       <header className="ck-top">
-        <div className={step > 0 ? "ck-brand compact" : "ck-brand"}>
+        <div className="ck-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logo} alt="" width={36} height={36} />
-          <span>{brandName}</span>
+          <img src={logo} alt="" width={40} height={40} />
+          <span className="ck-brand-text">
+            <strong>{brandName}</strong>
+            <small>CATCAFE・{tr(T.headerSub, lang)}</small>
+          </span>
         </div>
-        {step > 0 && step < 3 && <span className="ck-progress tabular">{tr(T.stepOf, lang, { n: step })}</span>}
-        {step > 0 && <LangSwitch />}
+        {step > 0 && (
+          <select className="ck-langsel" value={lang} onChange={(e) => setLang(e.target.value as Lang)} aria-label={tr(T.chooseLang, lang)}>
+            {LANGS.map((l) => <option key={l} value={l}>{LANG_LABEL[l]}</option>)}
+          </select>
+        )}
+        <span className="ck-progress mono" aria-label={`${step + 1} / 4`}>
+          <b>{String(step + 1).padStart(2, "0")}</b> / 04
+        </span>
       </header>
-      {step > 0 && step < 3 && (
-        <div className="ck-bar" aria-hidden="true"><span style={{ width: `${(step / 3) * 100}%` }} /></div>
-      )}
+      <div className="ck-steps" aria-hidden="true">
+        {[0, 1, 2, 3].map((i) => <span key={i} className={i < step ? "done" : i === step ? "on" : ""} />)}
+      </div>
+      <p className="ck-steplabel">{step + 1}. {T.stepLabels[lang][step]}</p>
 
       <main ref={mainRef} className="ck-main">
-        {step > 0 && step < 3 && (
-          <button type="button" className="ck-listen" onClick={speak} aria-pressed={speaking}>
-            <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
-          </button>
-        )}
         {noVoice && <p className="ck-novoice" role="status">{tr(T.noVoice, lang)}</p>}
 
         {step === 0 && (
@@ -291,7 +301,14 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
 
         {step === 1 && (
           <section className="ck-stack">
-            <h1>{tr(T.priceTitle, lang)}</h1>
+            <header className="ck-head">
+              <p className="ck-eyebrow2" data-text="STEP 02 · PRICING & DRINK PLAN" />
+              <h1>{tr(T.priceTitle, lang)}</h1>
+              <p className="ck-sub">{tr(T.priceSub, lang)}</p>
+              <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
+                <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
+              </button>
+            </header>
             <div className="ck-card ck-price">
               <p className="ck-price-head">{tr(T.priceHead, lang, { p: data.per10, cap })}</p>
               <ul className="ck-points">
@@ -303,6 +320,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
             <p className="ck-muted">{tr(T.planHint, lang)}</p>
             <div className="ck-plans">
               <div className={`ck-plan${short ? " on" : ""}`}>
+                <p className="ck-plan-tag mono">PLAN A</p>
                 <div className="ck-plan-head">
                   <div>
                     <p className="ck-plan-title">
@@ -312,10 +330,15 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
                   </div>
                   <Stepper value={short} onChange={setShort} label={tr(T.shortName, lang)} />
                 </div>
-                <p>{tr(T.shortDrinks, lang, { d: data.shortDrinks[lang] })}</p>
+                <p className="ck-plan-drinks">
+                  {T.shortDrinks[lang].split("{d}")[0]}
+                  <strong>{data.shortDrinks[lang]}</strong>
+                  {T.shortDrinks[lang].split("{d}")[1]}
+                </p>
                 <p className="ck-small">{tr(T.shortUpgrade, lang)}</p>
               </div>
               <div className={`ck-plan${long ? " on" : ""}`}>
+                <p className="ck-plan-tag mono">PLAN B</p>
                 <div className="ck-plan-head">
                   <div>
                     <p className="ck-plan-title">
@@ -325,7 +348,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
                   </div>
                   <Stepper value={long} onChange={setLong} label={tr(T.longName, lang)} />
                 </div>
-                <p>{tr(T.longDrinks, lang)}</p>
+                <p className="ck-plan-drinks"><strong>{tr(T.longDrinks, lang)}</strong></p>
                 <p className="ck-small">{tr(T.longMin, lang, { v: data.longMin })}</p>
               </div>
             </div>
@@ -346,12 +369,19 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
 
         {step === 2 && (
           <section className="ck-stack">
-            <h1>{tr(T.rulesTitle, lang)}</h1>
+            <header className="ck-head">
+              <p className="ck-eyebrow2" data-text="STEP 03 · CAT CARE & SAFETY" />
+              <h1>{tr(T.rulesTitle, lang)}</h1>
+              <p className="ck-sub">{tr(T.rulesSub, lang)}</p>
+              <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
+                <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
+              </button>
+            </header>
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
             <ol className="ck-rules">
               {[...RULES, ...EXTRA_RULES[data.brand]].map((r, i) => (
                 <li key={i}>
-                  <span className="ck-num" aria-hidden="true">{i + 1}</span>
+                  <span className="ck-num mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <div>
                     <p className="ck-rule-title">{tr(r.title, lang)}</p>
                     <p className="ck-muted">{tr(r.body, lang)}</p>
@@ -374,6 +404,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
         {step === 3 && result && (
           <section className="ck-stack">
             <div className="ck-done" role="status">
+              <p className="ck-eyebrow2" data-text="STEP 04 · CONFIRMED" />
               <div className="ck-check" aria-hidden="true">✓</div>
               <h1>{tr(T.doneTitle, lang)}</h1>
               <p className="ck-done-show">{tr(T.doneShow, lang)}</p>
@@ -411,15 +442,15 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
           {step === 0 && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.startLong, lang)} ›</button>}
           {step === 1 && (
             <div className="btn-row ck-row">
-              <button type="button" className="btn btn-ghost" onClick={() => setStep(0)}>{tr(T.back, lang)}</button>
+              <button type="button" className="btn btn-ghost" onClick={() => setStep(0)}>‹ {tr(T.back, lang)}</button>
               <button type="button" className="btn" onClick={() => setStep(2)} disabled={party < 1}>
-                {party < 1 ? tr(T.needPeople, lang) : `${tr(T.next, lang)}・${tr(T.partyTotal, lang, { n: party })}`}
+                {party < 1 ? tr(T.needPeople, lang) : `${tr(T.next, lang)}・${tr(T.partyTotal, lang, { n: party })} ›`}
               </button>
             </div>
           )}
           {step === 2 && (
             <div className="btn-row ck-row">
-              <button type="button" className="btn btn-ghost" onClick={() => setStep(1)}>{tr(T.back, lang)}</button>
+              <button type="button" className="btn btn-ghost" onClick={() => setStep(1)}>‹ {tr(T.back, lang)}</button>
               <button type="button" className="btn" onClick={submit} disabled={!agree || sending}>
                 {sending ? tr(T.sending, lang) : tr(T.finish, lang)}
               </button>

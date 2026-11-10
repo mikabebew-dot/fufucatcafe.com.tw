@@ -143,9 +143,17 @@ export const T = {
     ja: "この端末には日本語の音声がないため、読み上げできません。",
     ko: "이 기기에는 한국어 음성이 없어 읽어 줄 수 없어요.",
   },
+  headerSub: { zh: "入場確認", en: "Check-in", ja: "ご入店案内", ko: "입장 안내" },
+  stepLabels: {
+    zh: ["歡迎光臨", "費用與飲品方案", "和貓咪的約定", "確認完成"],
+    en: ["Welcome", "Prices & drinks", "With the cats", "All set"],
+    ja: ["ようこそ", "料金とドリンク", "猫との約束", "確認完了"],
+    ko: ["환영합니다", "요금과 음료", "고양이와의 약속", "확인 완료"],
+  },
   stepOf: { zh: "第 {n} / 3 步", en: "Step {n} of 3", ja: "ステップ {n} / 3", ko: "{n} / 3 단계" },
 
-  priceTitle: { zh: "費用", en: "Prices", ja: "料金", ko: "요금" },
+  priceTitle: { zh: "費用與飲品方案", en: "Prices & drink plans", ja: "料金とドリンクプラン", ko: "요금과 음료 플랜" },
+  priceSub: { zh: "清楚標示每人費用與付款方式", en: "Per-person prices and how to pay", ja: "お一人様の料金とお支払い方法", ko: "1인 요금과 결제 방법" },
   priceHead: {
     zh: "每人每 10 分鐘 NT${p}，最高 NT${cap}",
     en: "NT${p} per person per 10 min, up to NT${cap}",
@@ -214,6 +222,7 @@ export const T = {
   needPeople: { zh: "請至少選 1 人", en: "Choose at least 1 person", ja: "1名以上を選んでください", ko: "1명 이상 선택해 주세요" },
 
   rulesTitle: { zh: "和貓咪的約定", en: "With the cats", ja: "猫との約束", ko: "고양이와의 약속" },
+  rulesSub: { zh: "相處禮儀・安全規範", en: "Cat etiquette and safety", ja: "猫とのマナーと安全のために", ko: "고양이 예절과 안전 수칙" },
   rulesLead: {
     zh: "這裡是貓咪的家。牠們可以自己決定要不要互動，我們不保證每次都會被撒嬌。",
     en: "This is the cats' home. They decide whether to interact, so cuddles aren't guaranteed.",
