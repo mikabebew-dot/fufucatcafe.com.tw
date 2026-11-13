@@ -180,7 +180,7 @@ export const CAT_QUERY = /* groq */ `*[_type == "cat" && brand == $brand && slug
   "story": ${RICH("story")},
   "healthNote": ${T("healthNote")},
   "adoptionNote": ${T("adoptionNote")},
-  "translated": ${TR("name")},
+  "translated": ($lang == "zh" || defined(name[$lang]) || defined(summary[$lang])),
   cover${IMG},
   "photos": photos[defined(asset)]${IMG},
   "graduateStory": *[_type == "graduateStory" && cat._ref == ^._id][0]{ "slug": slug.current },
@@ -305,7 +305,7 @@ const LANGS = `"langs": ["zh", select(defined(LANGFIELD.en) => "en"), select(def
 const langs = (f: string) => LANGS.replaceAll("LANGFIELD", f);
 
 export const SITEMAP_QUERY = /* groq */ `{
-  "cats": *[_type == "cat" && defined(slug.current) && seo.noIndex != true]{ brand, "slug": slug.current, _updatedAt, ${langs("name")} },
+  "cats": *[_type == "cat" && defined(slug.current) && seo.noIndex != true]{ brand, "slug": slug.current, _updatedAt, ${langs("summary")} },
   "news": *[_type == "news" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt, ${langs("title")} },
   "games": *[_type == "game" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt, ${langs("title")} },
   "stories": *[_type == "graduateStory" && defined(slug.current) && seo.noIndex != true]{ "slug": slug.current, _updatedAt, ${langs("familyWords")} }
