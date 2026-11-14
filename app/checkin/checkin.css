@@ -246,3 +246,39 @@
 .ck .ck-num { background: none; width: auto; height: auto; min-width: 28px; font-size: 15px; font-weight: 600; color: var(--muted); place-items: start; }
 .ck-foot .btn { border-radius: 16px; }
 .ck-done .ck-eyebrow2 { margin-bottom: 10px; }
+
+/* 客滿／候位（入場頁） */
+.ck-full h1 { font-size: 30px; }
+.ck-waitform { display: grid; gap: 10px; }
+.ck-waitform h2 { font-size: 18px; }
+.ck-field { display: grid; gap: 6px; font-weight: 500; }
+.ck-field input { font: inherit; font-size: 20px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--ground); color: inherit; letter-spacing: .04em; }
+.ck-field input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ck-field-row { display: flex; align-items: center; justify-content: space-between; }
+.ck-err { color: #b3261e; font-weight: 500; }
+.ck-other { display: grid; gap: 8px; }
+.ck-other-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.ck-badge { font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 999px; }
+.ck-badge.ok { background: color-mix(in srgb, #2e7d4f 14%, transparent); color: #24653f; }
+.ck-badge.warn { background: color-mix(in srgb, #b26a00 14%, transparent); color: #8a5200; }
+.ck-textlink { background: none; border: 0; color: var(--accent-text); font: inherit; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; padding: 8px; cursor: pointer; }
+.ck-ticket .ck-code { font-size: 72px; }
+.ck-ticket-msg { font-size: 20px; font-weight: 700; margin: 6px 0 10px; }
+.ck-ticket.called { box-shadow: 0 0 0 3px var(--accent); animation: ck-pulse 1.4s ease-in-out infinite; }
+.ck-ticket.called .ck-ticket-msg { color: var(--accent-text); font-size: 24px; }
+@keyframes ck-pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 35%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .ck-ticket.called { animation: none; } }
+.ck-cancel { justify-self: center; }
+
+/* 客滿／候位（櫃檯看板） */
+.cb-wait { display: grid; gap: 10px; background: var(--surface); border-radius: var(--r-sm); padding: 14px 16px; box-shadow: var(--frame); }
+.cb-wait.is-full { box-shadow: 0 0 0 2px #c0602a; }
+.cb-wait-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.cb-wait-head h2 { font-size: 20px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.cb-wait-head h2 small { font-size: 14px; font-weight: 400; color: var(--muted); }
+.cb-fullbtn { font: inherit; font-weight: 700; font-size: 16px; min-height: 48px; padding: 0 18px; border-radius: 12px; border: 2px solid var(--accent); background: transparent; color: var(--accent-text); cursor: pointer; }
+.cb-fullbtn.on { background: #c0602a; border-color: #c0602a; color: #fff; }
+.cb-pin { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.cb-pin input { font: inherit; font-size: 18px; min-height: 44px; width: 160px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--ground); color: inherit; }
+.cb-wait .cb-meta a { color: var(--accent-text); font-weight: 700; }
+.cb-item.cb-w-called { box-shadow: 0 0 0 2px var(--accent); }

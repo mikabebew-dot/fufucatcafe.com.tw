@@ -39,6 +39,16 @@ export type Day = {
   fosterViews?: number;
   catClicks?: Record<string, number>;
   entries?: Entry[];
+  /** 櫃檯按「客滿」：入場頁改顯示候位登記與另一家店 */
+  full?: boolean;
+  waitlist?: Wait[];
+};
+
+/** 候位：電話只給櫃檯打電話用，入座或取消後立刻刪除 */
+export type WaitState = "waiting" | "called" | "seated" | "cancelled";
+export type Wait = {
+  _key: string; no: number; phone?: string; size: number; lang: Lang; at: string;
+  state: WaitState; calledAt?: string; doneAt?: string;
 };
 
 export type ConfirmInput = { brand: BrandId; lang: Lang; short: number; long: number };
@@ -138,5 +148,108 @@ export async function markEntry(brand: BrandId, key: string, action: "enter" | "
     else patch.unset([`${base}.leftAt`]);
   }
   await patch.commit({ visibility: "sync" });
+  return true;
+}
+
+const emptyDay = (brand: BrandId) => ({
+  _id: dayId(brand), _type: "checkinDayStat", brand, date: taipeiDate(),
+  groups: 0, guests: 0, planShort: 0, planLong: 0, adoptClicks: 0, adoptPage: 0, catClicks: {}, entries: [],
+});
+
+/** 櫃檯密碼（Vercel 環境變數 CHECKIN_COUNTER_PIN）；看候位電話、切換客滿都要 */
+export const counterPinOk = (pin: string | null | undefined) => {
+  const want = process.env.CHECKIN_COUNTER_PIN;
+  return !!want && !!pin && pin === want;
+};
+
+/** 公開狀態：只有是否客滿、目前候位幾組，沒有個資 */
+export async function getStatus(brand: BrandId) {
+  const client = checkinClient();
+  if (!client) return { full: false, waiting: 0 };
+  const r = await client.fetch<{ full?: boolean; waiting?: number } | null>(
+    `*[_id == $id][0]{ full, "waiting": count(waitlist[state in ["waiting","called"]]) }`,
+    { id: dayId(brand) },
+  );
+  return { full: !!r?.full, waiting: r?.waiting ?? 0 };
+}
+
+export async function setFull(brand: BrandId, on: boolean) {
+  const client = checkinClient();
+  if (!client) return false;
+  await client.transaction().createIfNotExists(emptyDay(brand)).patch(dayId(brand), (p) => p.set({ full: on })).commit({ visibility: "sync" });
+  return true;
+}
+
+/** 電話：台灣手機 09xxxxxxxx，或國際號碼 +xx…（8–15 碼） */
+export function normPhone(v: unknown) {
+  if (typeof v !== "string") return undefined;
+  const t = v.replace(/[\s\-()]/g, "");
+  if (/^09\d{8}$/.test(t)) return t;
+  if (/^\+?\d{8,15}$/.test(t)) return t.startsWith("+") ? t : `+${t}`;
+  return undefined;
+}
+
+/** 前一天還沒入座的候位電話一併刪除，名單不留到隔天 */
+async function purgeOldPhones(brand: BrandId) {
+  const client = checkinClient();
+  if (!client) return;
+  const y = taipeiDate(new Date(Date.now() - 86_400_000));
+  const id = dayId(brand, y);
+  const keys = await client.fetch<string[] | null>(`*[_id == $id][0].waitlist[defined(phone)]._key`, { id });
+  if (!keys?.length) return;
+  await client.patch(id).unset(keys.map((k) => `waitlist[_key=="${k}"].phone`)).commit({ visibility: "async" });
+}
+
+export async function joinWait(brand: BrandId, input: { phone: string; size: number; lang: Lang }) {
+  const client = checkinClient();
+  if (!client) return undefined;
+  const id = dayId(brand);
+  const count = await client.fetch<number | null>(`count(*[_id == $id][0].waitlist)`, { id });
+  const w: Wait = {
+    _key: crypto.randomUUID().replace(/-/g, "").slice(0, 12),
+    no: (count ?? 0) + 1,
+    phone: input.phone,
+    size: input.size,
+    lang: input.lang,
+    at: new Date().toISOString(),
+    state: "waiting",
+  };
+  await client
+    .transaction()
+    .createIfNotExists(emptyDay(brand))
+    .patch(id, (p) => p.setIfMissing({ waitlist: [] }).append("waitlist", [w]))
+    .commit({ visibility: "sync" });
+  purgeOldPhones(brand).catch(() => {});
+  return w;
+}
+
+/** 客人自己查：我是幾號、前面還有幾組、輪到了沒 */
+export async function waitInfo(brand: BrandId, key: string) {
+  const client = checkinClient();
+  if (!client || !/^[a-z0-9]{6,20}$/.test(key)) return undefined;
+  const list = await client.fetch<Wait[] | null>(`*[_id == $id][0].waitlist[]{_key, no, size, at, state}`, { id: dayId(brand) });
+  const me = list?.find((w) => w._key === key);
+  if (!me) return null;
+  const ahead = (list ?? []).filter((w) => w.state === "waiting" && w.at < me.at).length;
+  return { no: me.no, size: me.size, state: me.state, ahead };
+}
+
+export async function listWait(brand: BrandId) {
+  const client = checkinClient();
+  if (!client) return undefined;
+  return (await client.fetch<Wait[] | null>(`*[_id == $id][0].waitlist`, { id: dayId(brand) })) ?? [];
+}
+
+/** 改候位狀態；入座或取消時刪除電話 */
+export async function markWait(brand: BrandId, key: string, state: WaitState) {
+  const client = checkinClient();
+  if (!client || !/^[a-z0-9]{6,20}$/.test(key)) return false;
+  const base = `waitlist[_key=="${key}"]`;
+  const now = new Date().toISOString();
+  const p = client.patch(dayId(brand)).set({ [`${base}.state`]: state });
+  if (state === "called") p.set({ [`${base}.calledAt`]: now });
+  if (state === "waiting") p.unset([`${base}.calledAt`]);
+  if (state === "seated" || state === "cancelled") p.set({ [`${base}.doneAt`]: now }).unset([`${base}.phone`]);
+  await p.commit({ visibility: "sync" });
   return true;
 }

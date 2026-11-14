@@ -30,6 +30,12 @@ export const DEFAULTS: Record<BrandId, { shortDrinks: L10n; longMin: number }> =
 /** 入場確認頁用的 Logo：FUFU 用裁到圓形邊緣的版本，Logo 會填滿圓框 */
 export const checkinLogo = (brand: string, fallback: string) => (brand === "fufu" ? "/brand/fufu-logo-circle.png" : fallback);
 
+/** 兩家店的地址（客滿時引導去另一家） */
+export const STORE_ADDR: Record<BrandId, { addr: string; map: string }> = {
+  fufu: { addr: "台北市萬華區武昌街二段53號3樓", map: "FUFU CAT CAFE 台北市萬華區武昌街二段53號" },
+  nukunuku: { addr: "台北市萬華區漢口街二段20巷5號2樓", map: "NUKUNUKU CAT CAFE 台北市萬華區漢口街二段20巷5號" },
+};
+
 export const PRICE_PER_10 = 55;
 export const PRICE_CAP_MIN = 100;
 
@@ -303,6 +309,50 @@ export const T = {
     ja: "FUFUの猫たちはずっとここで暮らす店猫です。写真をタップして名前と性格を知ってください。",
     ko: "FUFU의 고양이들은 이곳에서 계속 사는 매장 고양이예요. 사진을 눌러 이름과 성격을 알아보세요.",
   },
+  fullTitle: { zh: "目前客滿", en: "We're full right now", ja: "ただいま満席です", ko: "지금은 만석이에요" },
+  fullLead: {
+    zh: "很抱歉，店內目前已經客滿。您可以登記候位，有空位時我們會通知您；也可以前往同在西門町的 {other}。",
+    en: "Sorry, we're full at the moment. You can join the waitlist and we'll let you know when a spot opens, or visit {other}, also in Ximending.",
+    ja: "申し訳ありません、ただいま満席です。順番待ちに登録いただくと、空き次第お知らせします。同じ西門町の {other} もご利用いただけます。",
+    ko: "죄송합니다. 지금은 만석이에요. 대기 등록을 하시면 자리가 나는 대로 알려드려요. 같은 시먼딩에 있는 {other}도 이용하실 수 있어요.",
+  },
+  waitTitle: { zh: "登記候位", en: "Join the waitlist", ja: "順番待ちに登録", ko: "대기 등록" },
+  waitPhone: { zh: "聯絡電話", en: "Phone number", ja: "電話番号", ko: "전화번호" },
+  waitPhoneHint: {
+    zh: "台灣手機，或含國碼的號碼（例如 +81…）。電話只用來通知入座，入座或取消後立即刪除。",
+    en: "A Taiwan mobile number or one with a country code (e.g. +1…). Used only to call you when it's your turn, and deleted once you're seated or cancel.",
+    ja: "台湾の携帯番号、または国番号付きの番号（例：+81…）。ご案内の連絡のみに使い、ご案内後またはキャンセル後すぐに削除します。",
+    ko: "대만 휴대폰 번호 또는 국가번호 포함 번호(예: +82…). 입장 안내 연락에만 쓰이며, 입장 또는 취소 후 바로 삭제돼요.",
+  },
+  waitSize: { zh: "人數", en: "Party size", ja: "人数", ko: "인원" },
+  waitSubmit: { zh: "登記候位", en: "Join waitlist", ja: "登録する", ko: "대기 등록하기" },
+  waitBadPhone: { zh: "請輸入正確的電話號碼", en: "Please enter a valid phone number", ja: "正しい電話番号を入力してください", ko: "올바른 전화번호를 입력해 주세요" },
+  waitFail: { zh: "目前無法登記，請洽櫃檯店員", en: "Couldn't register. Please ask our staff.", ja: "登録できませんでした。スタッフにお声がけください。", ko: "등록할 수 없어요. 직원에게 문의해 주세요." },
+  waitNo: { zh: "您的候位號碼", en: "Your waitlist number", ja: "あなたの順番待ち番号", ko: "대기 번호" },
+  waitAhead: { zh: "前面還有 {n} 組", en: "{n} group(s) ahead of you", ja: "前に {n} 組お待ちです", ko: "앞에 {n}팀이 있어요" },
+  waitNext: { zh: "下一組就是您", en: "You're next", ja: "次があなたの番です", ko: "다음 차례예요" },
+  waitCalled: { zh: "輪到您了！請回到櫃檯", en: "It's your turn! Please come to the counter.", ja: "お待たせしました！カウンターへお越しください", ko: "차례가 되었어요! 카운터로 와 주세요" },
+  waitKeep: {
+    zh: "請保持這個頁面開啟，輪到您時這裡會顯示，我們也會打電話通知。",
+    en: "Keep this page open. It will update when it's your turn, and we'll also call you.",
+    ja: "このページを開いたままにしてください。順番が来るとここに表示され、お電話でもお知らせします。",
+    ko: "이 페이지를 열어 두세요. 차례가 되면 여기에 표시되고 전화로도 알려드려요.",
+  },
+  waitKeepKiosk: {
+    zh: "請記下號碼，輪到您時我們會打電話通知。",
+    en: "Please note your number. We'll call you when it's your turn.",
+    ja: "番号をお控えください。順番が来たらお電話します。",
+    ko: "번호를 기억해 주세요. 차례가 되면 전화드릴게요.",
+  },
+  waitCancel: { zh: "取消候位", en: "Cancel", ja: "キャンセルする", ko: "대기 취소" },
+  waitCancelled: { zh: "已取消候位，歡迎下次再來。", en: "Your spot has been cancelled. Hope to see you next time!", ja: "キャンセルしました。またのお越しをお待ちしています。", ko: "대기를 취소했어요. 다음에 또 만나요." },
+  waitSeated: { zh: "已入座，祝您和貓咪度過愉快的時光！", en: "You're seated. Enjoy your time with the cats!", ja: "ご案内済みです。猫たちとの時間をお楽しみください！", ko: "입장 완료! 고양이들과 즐거운 시간 보내세요!" },
+  waitRead: { zh: "等候時先看入場說明 ›", en: "Read the entry guide while you wait ›", ja: "待ち時間に入場案内を読む ›", ko: "기다리는 동안 입장 안내 보기 ›" },
+  waitSkip: { zh: "店員已請我入場，開始入場確認 ›", en: "Staff said I can come in — start check-in ›", ja: "スタッフに案内されました・入場確認へ ›", ko: "직원 안내를 받았어요 — 입장 확인 시작 ›" },
+  otherTitle: { zh: "前往 {other}", en: "Visit {other}", ja: "{other} へ行く", ko: "{other}로 가기" },
+  otherOpen: { zh: "目前可入場", en: "Seats available now", ja: "ただいま入場できます", ko: "지금 입장 가능해요" },
+  otherFull: { zh: "也客滿中・候位 {n} 組", en: "Also full · {n} waiting", ja: "こちらも満席・{n} 組待ち", ko: "여기도 만석 · 대기 {n}팀" },
+  otherMap: { zh: "Google 地圖導航", en: "Open in Google Maps", ja: "Googleマップで開く", ko: "구글 지도로 열기" },
 } satisfies Record<string, L10n | Record<Lang, string[]>>;
 
 /** 取文字並代入 {變數} */

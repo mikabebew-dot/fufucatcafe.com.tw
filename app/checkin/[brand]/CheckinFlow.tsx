@@ -6,6 +6,8 @@ import {
   EXTRA_RULES, LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, SPEECH_LANG, T,
   isLang, perPerson, tr, type Lang,
 } from "@/lib/checkin/content";
+import type { BrandId } from "@/lib/constants";
+import { WaitPanel, loadTicket, type Status, type Ticket } from "./WaitPanel";
 
 type Result = { code: string; at: string; short: number; long: number; online: boolean };
 
@@ -38,7 +40,9 @@ function Stepper({ value, onChange, label }: { value: number; onChange: (v: numb
   );
 }
 
-export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; brandName: string; logo: string }) {
+export function CheckinFlow({
+  data, brandName, logo, other,
+}: { data: CheckinData; brandName: string; logo: string; other: { id: BrandId; name: string } }) {
   const [lang, setLang] = useState<Lang>("zh");
   const [step, setStep] = useState(0);
   const [short, setShort] = useState(0);
@@ -51,6 +55,10 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
   const [speaking, setSpeaking] = useState(false);
   const [noVoice, setNoVoice] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
+  // 客滿與候位
+  const [status, setStatus] = useState<Status | null>(null);
+  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [bypass, setBypass] = useState(false);
 
   // 語言：網址 ?lang= 或瀏覽器語言；?kiosk=1 是櫃檯平板模式（完成後可換下一組）
   useEffect(() => {
@@ -71,6 +79,27 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
       /* 無痕模式等情況讀不到也沒關係 */
     }
   }, [data.brand]);
+
+  // 這支手機登記過候位，就繼續顯示號碼
+  useEffect(() => {
+    if (!kiosk) setTicket(loadTicket(data.brand));
+  }, [data.brand, kiosk]);
+
+  // 在開頭畫面時每 30 秒看一次是否客滿（櫃檯看板切換後，平板會自動換成候位畫面）
+  useEffect(() => {
+    if (step !== 0) return;
+    const check = async () => {
+      try {
+        const res = await fetch(`/api/checkin/wait?brand=${data.brand}`, { cache: "no-store" });
+        if (res.ok) setStatus(await res.json());
+      } catch {
+        /* 連不上就照常入場確認 */
+      }
+    };
+    check();
+    const t = setInterval(() => document.visibilityState === "visible" && check(), 30_000);
+    return () => clearInterval(t);
+  }, [step, data.brand]);
 
   // 有些瀏覽器的語音清單要等一下才會載入
   useEffect(() => {
@@ -198,6 +227,7 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     setLong(0);
     setAgree(false);
     setMinutes(60);
+    setBypass(false);
     setStep(0);
   }, [data.brand]);
 
@@ -224,6 +254,8 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
     };
   }, [kiosk, step, reset, stopSpeech]);
 
+
+  const showWait = step === 0 && !bypass && (!!status?.full || !!ticket);
 
   const pricePoints = useMemo(() => T.pricePoints[lang].map((s) => s.replace("{capMin}", String(PRICE_CAP_MIN))), [lang]);
 
@@ -266,7 +298,28 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
       <main ref={mainRef} className="ck-main">
         {noVoice && <p className="ck-novoice" role="status">{tr(T.noVoice, lang)}</p>}
 
-        {step === 0 && (
+        {showWait && (
+          <WaitPanel
+            brand={data.brand}
+            other={other}
+            lang={lang}
+            kiosk={kiosk}
+            status={status ?? { full: false, waiting: 0 }}
+            ticket={ticket}
+            setTicket={setTicket}
+            onRead={() => setBypass(true)}
+          />
+        )}
+        {showWait && (
+          <div className="ck-card ck-langcard" style={{ marginTop: 16 }}>
+            <div className="ck-langcard-head">
+              <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
+            </div>
+            <LangSwitch big />
+          </div>
+        )}
+
+        {step === 0 && !showWait && (
           <section className="ck-stack ck-welcome2">
             {/* 版面沿用舊版入場系統的歡迎頁：歡迎卡片 → 說明卡片 → 語言卡片 */}
             <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
@@ -437,9 +490,9 @@ export function CheckinFlow({ data, brandName, logo }: { data: CheckinData; bran
           <button type="button" className="btn btn-block ck-cta" onClick={reset}>{tr(T.restart, lang)}</button>
         </footer>
       )}
-      {step < 3 && (
+      {step < 3 && !showWait && (
         <footer className="ck-foot">
-          {step === 0 && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.startLong, lang)} ›</button>}
+          {step === 0 && !showWait && <button type="button" className="btn btn-block ck-cta" onClick={() => setStep(1)}>{tr(T.startLong, lang)} ›</button>}
           {step === 1 && (
             <div className="btn-row ck-row">
               <button type="button" className="btn btn-ghost" onClick={() => setStep(0)}>‹ {tr(T.back, lang)}</button>

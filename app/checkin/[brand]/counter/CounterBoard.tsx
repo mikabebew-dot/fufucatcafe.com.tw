@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { WaitBoard } from "./WaitBoard";
 
 type Entry = {
   key: string; code: string; at: string; lang: string; short: number; long: number;
@@ -119,6 +120,8 @@ export function CounterBoard({
             <a className="btn btn-ghost" href={`/checkin/${other.id}/counter`}>切換到 {other.name}</a>
           </div>
         </div>
+
+        <WaitBoard brand={brand} now={now} />
 
         <div className="cb-tiles">
           <div className="cb-tile"><strong>{data?.groups ?? "—"}</strong><span>今日確認組數</span></div>
