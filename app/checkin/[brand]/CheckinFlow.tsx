@@ -377,6 +377,8 @@ export function CheckinFlow({
               </ul>
             </div>
 
+            {/* 方案區：手機照順序排，平板橫向放在右欄 */}
+            <div className="ck-planbox">
             <h2>{tr(T.planTitle, lang)}</h2>
             <p className="ck-muted">{tr(T.planHint, lang)}</p>
             <div className="ck-plans">
@@ -412,6 +414,7 @@ export function CheckinFlow({
                 <p className="ck-plan-drinks"><strong>{tr(T.longDrinks, lang)}</strong></p>
                 <p className="ck-small">{tr(T.longMin, lang, { v: data.longMin })}</p>
               </div>
+            </div>
             </div>
 
             <div className="ck-card ck-calc">

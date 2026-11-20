@@ -282,3 +282,66 @@
 .cb-pin input { font: inherit; font-size: 18px; min-height: 44px; width: 160px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--ground); color: inherit; }
 .cb-wait .cb-meta a { color: var(--accent-text); font-weight: 700; }
 .cb-item.cb-w-called { box-shadow: 0 0 0 2px var(--accent); }
+
+/* 底部按鈕置中（按鈕原本是 inline，margin:auto 不會置中） */
+.ck-foot > .btn { display: flex; }
+.ck-planbox { display: contents; }
+
+/* ── 平板橫向：加寬成兩欄、字放大，主要按鈕不用捲動就看得到 ── */
+@media (min-width: 900px) and (orientation: landscape) {
+  .ck { --wide: 1080px; }
+  .ck-top, .ck-steps, .ck-steplabel, .ck-main { max-width: var(--wide); margin-left: auto; margin-right: auto; width: 100%; box-sizing: border-box; }
+  .ck-top { padding-left: 32px; padding-right: 32px; }
+  .ck-steps, .ck-steplabel { padding-left: 32px; padding-right: 32px; }
+  .ck-main { padding: 16px 32px 28px; font-size: 17px; }
+  .ck h1 { font-size: 34px; }
+  .ck-brand img { width: 48px; height: 48px; }
+  .ck-brand-text strong { font-size: 19px; }
+  .ck-brand-text small { font-size: 13px; }
+  .ck-langsel { min-height: 44px; max-width: 140px; font-size: 15px; }
+  .ck-progress { font-size: 15px; }
+  .ck-progress b { font-size: 20px; }
+  .ck-steplabel { font-size: 14px; }
+  .ck-listen { min-height: 44px; font-size: 16px; padding: 0 18px; }
+
+  /* 底部按鈕：置中、加大 */
+  .ck-foot { padding-left: 32px; padding-right: 32px; }
+  .ck-foot > * { max-width: 760px; }
+  .ck-foot .btn { min-height: 64px; font-size: 20px; }
+
+  /* 1 歡迎：左邊歡迎＋說明，右邊選語言 */
+  .ck-welcome2 { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto 1fr; gap: 18px 24px; align-items: start; }
+  .ck-welcome2 > .ck-listen { grid-column: 1 / -1; }
+  .ck-welcome2 > .ck-hello { grid-column: 1; grid-row: 2; }
+  .ck-welcome2 > .ck-infolist { grid-column: 1; grid-row: 3; }
+  .ck-welcome2 > .ck-langcard { grid-column: 2; grid-row: 2 / span 2; align-self: stretch; align-content: start; }
+  .ck-hello { padding: 24px 26px; }
+  .ck-hello h1 { font-size: 34px; }
+  .ck-hello .ck-lead { font-size: 18px; }
+  .ck-infolist { font-size: 17px; }
+  .ck-langcard { padding: 22px 24px; }
+  .ck-langcard .ck-langs-big { grid-template-columns: 1fr; }
+  .ck-langcard .ck-langs-big button { min-height: 68px; font-size: 21px; }
+
+  /* 2 費用：左邊價格＋試算，右邊選方案人數 */
+  .ck-stack:has(> .ck-planbox) { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr; gap: 16px 24px; align-items: start; }
+  .ck-stack:has(> .ck-planbox) > .ck-head { grid-column: 1 / -1; }
+  .ck-stack:has(> .ck-planbox) > .ck-price { grid-column: 1; grid-row: 2; }
+  .ck-stack:has(> .ck-planbox) > .ck-calc { grid-column: 1; grid-row: 3; }
+  .ck-planbox { display: flex; flex-direction: column; gap: 10px; grid-column: 2; grid-row: 2 / span 2; }
+  .ck-planbox h2 { margin-top: 0; }
+  .ck-plans { gap: 14px; }
+  .ck-stepper button { width: 52px; height: 52px; font-size: 24px; }
+  .ck-stepper output { min-width: 2.2em; font-size: 24px; }
+
+  /* 3 約定：規則排兩欄 */
+  .ck-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ck-agree { font-size: 18px; padding: 18px 20px; }
+  .ck-agree input { width: 28px; height: 28px; }
+
+  /* 4 完成、客滿候位：置中、不要太寬 */
+  .ck-done, .ck-stack:has(> .ck-ticket) { max-width: 640px; width: 100%; margin-left: auto; margin-right: auto; }
+  .ck-done .ck-code { font-size: 88px; }
+  .ck-stack:has(> .ck-waitform) { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; align-items: start; }
+  .ck-stack:has(> .ck-waitform) > .ck-full, .ck-stack:has(> .ck-waitform) > .ck-textlink { grid-column: 1 / -1; }
+}
