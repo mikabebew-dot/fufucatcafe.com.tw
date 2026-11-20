@@ -142,9 +142,17 @@ export function CheckinFlow({
     const want = SPEECH_LANG[l].toLowerCase();
     const base = want.split("-")[0];
     const norm = (v: SpeechSynthesisVoice) => v.lang.toLowerCase().replace("_", "-");
-    const same = voices.filter((v) => norm(v).startsWith(base));
+    const same = voices.filter((v) => norm(v).startsWith(base) || (base === "zh" && norm(v).startsWith("cmn")));
     if (base === "zh") {
-      return same.find((v) => /tw|hant/.test(norm(v))) ?? same.find((v) => /hk/.test(norm(v))) ?? same[0];
+      // 中文一律用國語：台灣國語 → 中國普通話 → 其他國語；香港（廣東話）語音放到最後才用
+      const cantonese = (v: SpeechSynthesisVoice) => /hk|yue|mo\b/.test(norm(v)) || /cantonese|粵|廣東|香港|hong ?kong/i.test(v.name);
+      const mandarin = same.filter((v) => !cantonese(v));
+      return (
+        mandarin.find((v) => /(^|-)tw$|hant-tw/.test(norm(v))) ??
+        mandarin.find((v) => /(^|-)(cn|hans)/.test(norm(v)) || norm(v) === "cmn") ??
+        mandarin[0] ??
+        same[0]
+      );
     }
     return same.find((v) => norm(v) === want) ?? same[0];
   };
