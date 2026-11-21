@@ -18,7 +18,7 @@ const fmt = (iso: string) =>
   new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
 
 /**
- * 櫃檯看板：每 4 秒更新一次今日確認紀錄。客人出示確認碼 → 找到那一組 → 按「已入場」。
+ * 櫃檯看板：每 4 秒更新一次今日確認紀錄。客人按「確認入場」就算入場；離開時按「客人離場」。
  * 只顯示確認碼、時間、語言、方案人數，沒有任何個資。
  */
 export function CounterBoard({
@@ -135,12 +135,11 @@ export function CounterBoard({
           <div className="cb-tile"><strong>{data?.guests ?? "—"}</strong><span>今日確認人數</span></div>
           <div className="cb-tile cb-t-short"><strong>{data?.planShort ?? "—"}</strong><span>今日短暫停留（人）</span></div>
           <div className="cb-tile cb-t-long"><strong>{data?.planLong ?? "—"}</strong><span>今日悠閒停留（人）</span></div>
-          <div className="cb-tile"><strong>{data ? waiting : "—"}</strong><span>等候入場（組）</span></div>
           <div className="cb-tile"><strong>{data ? leftGroups.length : "—"}</strong><span>已離場（組）</span></div>
         </div>
 
         <div className="cb-filter" role="tablist" aria-label="篩選">
-          {([["all", "全部"], ["waiting", `等候入場 ${waiting}`], ["inside", `店內 ${inside.length}`], ["left", `已離場 ${leftGroups.length}`]] as const).map(([k, label]) => (
+          {([["all", "全部"], ["inside", `店內 ${inside.length}`], ["left", `已離場 ${leftGroups.length}`], ...(waiting > 0 ? ([["waiting", `未入場 ${waiting}`]] as const) : [])] as const).map(([k, label]) => (
             <button key={k} type="button" role="tab" aria-selected={filter === k} className={filter === k ? "on" : ""} onClick={() => setFilter(k)}>
               {label}
             </button>
@@ -160,7 +159,7 @@ export function CounterBoard({
         <ul className="cb-list">
           {list.map((e) => {
             const st = stateOf(e);
-            const fresh = st === "waiting" && now - new Date(e.at).getTime() < 15 * 60_000;
+            const fresh = st === "inside" && now - new Date(e.at).getTime() < 5 * 60_000;
             return (
               <li key={e.key} className={`cb-item cb-${st}${fresh ? " new" : ""}`}>
                 <span className="cb-code tabular">{e.code}</span>
@@ -169,13 +168,13 @@ export function CounterBoard({
                     {e.short > 0 && <span className="cb-chip short">短暫・30 分內 <b className="tabular">{e.short}</b> 人</span>}
                     {e.long > 0 && <span className="cb-chip long">悠閒・40 分以上 <b className="tabular">{e.long}</b> 人</span>}
                   </span>
-                  {st === "waiting" && <small className="tabular">確認 {fmt(e.at)}・{LANG_NAME[e.lang] ?? e.lang}</small>}
+                  {st === "waiting" && <small className="tabular">{fmt(e.at)} 確認・{LANG_NAME[e.lang] ?? e.lang}・標記為沒有入場</small>}
                   {st === "inside" && e.enteredAt && (
-                    <small className="tabular">{fmt(e.enteredAt)} 入場</small>
+                    <small className="tabular">{fmt(e.enteredAt)} 入場・{LANG_NAME[e.lang] ?? e.lang}</small>
                   )}
                   {st === "left" && e.enteredAt && e.leftAt && (
                     <small className="tabular">
-                      {fmt(e.leftAt)} 離場・參考 <b>NT${fee(e).total}</b>
+                      {fmt(e.leftAt)} 離場・{LANG_NAME[e.lang] ?? e.lang}・參考 <b>NT${fee(e).total}</b>
                       {e.short > 0 && e.long > 0
                         ? `（短暫每人 ${fee(e).perShort}／悠閒每人 ${fee(e).perLong}）`
                         : `（每人 ${e.long > 0 ? fee(e).perLong : fee(e).perShort}）`}
@@ -184,12 +183,12 @@ export function CounterBoard({
                 </div>
                 <div className="cb-actions">
                   {st === "waiting" && (
-                    <button type="button" className="btn" onClick={() => act(e, "enter", true)} disabled={busy === e.key}>已入場</button>
+                    <button type="button" className="cb-undo" onClick={() => act(e, "enter", true)} disabled={busy === e.key}>改回已入場</button>
                   )}
                   {st === "inside" && (
                     <>
                       <button type="button" className="btn" onClick={() => act(e, "leave", true)} disabled={busy === e.key}>客人離場</button>
-                      <button type="button" className="cb-undo" onClick={() => act(e, "enter", false)} disabled={busy === e.key}>取消入場</button>
+                      <button type="button" className="cb-undo" onClick={() => act(e, "enter", false)} disabled={busy === e.key}>沒有入場</button>
                     </>
                   )}
                   {st === "left" && (

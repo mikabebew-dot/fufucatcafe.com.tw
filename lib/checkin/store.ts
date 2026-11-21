@@ -80,13 +80,17 @@ export async function recordConfirm(input: ConfirmInput) {
   const id = dayId(input.brand);
   const existing = await client.fetch<string[] | null>(`*[_id == $id][0].entries[].code`, { id });
   const code = newCode(new Set(existing ?? []));
+  // 客人按「確認入場」就算入場，櫃檯不用再按
+  const at = new Date().toISOString();
   const entry: Entry = {
     _key: crypto.randomUUID().replace(/-/g, "").slice(0, 12),
     code,
-    at: new Date().toISOString(),
+    at,
     lang: input.lang,
     short: input.short,
     long: input.long,
+    entered: true,
+    enteredAt: at,
   };
   await client
     .transaction()
