@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CheckinData } from "@/lib/checkin/data";
 import {
-  EXTRA_RULES, LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, SPEECH_LANG, T,
+  EXTRA_RULES, LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, T,
   isLang, perPerson, tr, type Lang,
 } from "@/lib/checkin/content";
 import type { BrandId } from "@/lib/constants";
@@ -52,9 +52,6 @@ export function CheckinFlow({
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [kiosk, setKiosk] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
-  const [noVoice, setNoVoice] = useState(false);
-  const mainRef = useRef<HTMLElement>(null);
   // 客滿與候位
   const [status, setStatus] = useState<Status | null>(null);
   const [ticket, setTicket] = useState<Ticket | null>(null);
@@ -101,97 +98,14 @@ export function CheckinFlow({
     return () => clearInterval(t);
   }, [step, data.brand]);
 
-  // 有些瀏覽器的語音清單要等一下才會載入
-  useEffect(() => {
-    try {
-      const synth = window.speechSynthesis;
-      if (!synth) return;
-      synth.getVoices();
-      synth.addEventListener?.("voiceschanged", () => synth.getVoices());
-    } catch {
-      /* 不支援就略過 */
-    }
-  }, []);
-
-  useEffect(() => {
-    setNoVoice(false);
-  }, [lang, step]);
-
   useEffect(() => {
     document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko" }[lang];
   }, [lang]);
 
-  const stopSpeech = useCallback(() => {
-    try {
-      window.speechSynthesis?.cancel();
-    } catch {
-      /* 不支援就略過 */
-    }
-    setSpeaking(false);
-  }, []);
-
-  // 換頁或換語言時停止朗讀並回到頂端
+  // 換頁或換語言時回到頂端
   useEffect(() => {
-    stopSpeech();
     window.scrollTo({ top: 0 });
-  }, [step, lang, stopSpeech]);
-
-  // 依語言挑選裝置上的語音：只設定 lang 時，有些平板會用預設的中文語音唸外文
-  const pickVoice = (l: Lang) => {
-    const voices = window.speechSynthesis?.getVoices() ?? [];
-    const want = SPEECH_LANG[l].toLowerCase();
-    const base = want.split("-")[0];
-    const norm = (v: SpeechSynthesisVoice) => v.lang.toLowerCase().replace("_", "-");
-    const same = voices.filter((v) => norm(v).startsWith(base) || (base === "zh" && norm(v).startsWith("cmn")));
-    if (base === "zh") {
-      // 中文一律用國語：台灣國語 → 中國普通話 → 其他國語；香港（廣東話）語音放到最後才用
-      const cantonese = (v: SpeechSynthesisVoice) => /hk|yue|mo\b/.test(norm(v)) || /cantonese|粵|廣東|香港|hong ?kong/i.test(v.name);
-      const mandarin = same.filter((v) => !cantonese(v));
-      return (
-        mandarin.find((v) => /(^|-)tw$|hant-tw/.test(norm(v))) ??
-        mandarin.find((v) => /(^|-)(cn|hans)/.test(norm(v)) || norm(v) === "cmn") ??
-        mandarin[0] ??
-        same[0]
-      );
-    }
-    return same.find((v) => norm(v) === want) ?? same[0];
-  };
-
-  const speak = () => {
-    if (speaking) return stopSpeech();
-    setNoVoice(false);
-    const synth = window.speechSynthesis;
-    // 只朗讀內容本身，不唸「聆聽本頁」按鈕
-    const text = mainRef.current
-      ?.querySelector("section")
-      ?.innerText.split(tr(T.listen, lang)).join("")
-      .split(tr(T.stop, lang)).join("")
-      .replace(/[▶■]/g, "");
-    if (!synth || !text) return;
-    const voice = pickVoice(lang);
-    if (!voice) {
-      setNoVoice(true);
-      return;
-    }
-    // 分段朗讀：Chrome 一次唸太長會中途停止
-    const parts = text
-      .replace(/[−＋+]/g, " ")
-      .replace(/([。！？.!?])\s*/g, "$1\n")
-      .split(/\n+/)
-      .map((t) => t.trim())
-      .filter(Boolean);
-    synth.cancel();
-    parts.forEach((t, i) => {
-      const u = new SpeechSynthesisUtterance(t);
-      u.voice = voice;
-      u.lang = voice.lang;
-      u.rate = 0.95;
-      if (i === parts.length - 1) u.onend = () => setSpeaking(false);
-      u.onerror = () => setSpeaking(false);
-      synth.speak(u);
-    });
-    setSpeaking(true);
-  };
+  }, [step, lang]);
 
   const party = short + long;
   const per = perPerson(minutes, data.per10);
@@ -249,10 +163,10 @@ export function CheckinFlow({
   // 櫃檯平板：看到一半沒人操作 3 分鐘，自動回到歡迎畫面（避免下一位客人接手前一位的選擇）
   useEffect(() => {
     if (!kiosk || step === 0 || step === 3) return;
-    let t = setTimeout(() => { stopSpeech(); reset(); }, 180_000);
+    let t = setTimeout(() => reset, 180_000);
     const bump = () => {
       clearTimeout(t);
-      t = setTimeout(() => { stopSpeech(); reset(); }, 180_000);
+      t = setTimeout(() => reset, 180_000);
     };
     const events = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
     events.forEach((e) => window.addEventListener(e, bump, { passive: true }));
@@ -260,7 +174,7 @@ export function CheckinFlow({
       clearTimeout(t);
       events.forEach((e) => window.removeEventListener(e, bump));
     };
-  }, [kiosk, step, reset, stopSpeech]);
+  }, [kiosk, step, reset]);
 
 
   const showWait = step === 0 && !bypass && (!!status?.full || !!ticket);
@@ -303,8 +217,7 @@ export function CheckinFlow({
       </div>
       <p className="ck-steplabel">{step + 1}. {T.stepLabels[lang][step]}</p>
 
-      <main ref={mainRef} className="ck-main">
-        {noVoice && <p className="ck-novoice" role="status">{tr(T.noVoice, lang)}</p>}
+      <main className="ck-main">
 
         {showWait && (
           <WaitPanel
@@ -330,9 +243,6 @@ export function CheckinFlow({
         {step === 0 && !showWait && (
           <section className="ck-stack ck-welcome2">
             {/* 版面沿用舊版入場系統的歡迎頁：歡迎卡片 → 說明卡片 → 語言卡片 */}
-            <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
-              <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
-            </button>
 
             <div className="ck-card ck-hello">
               <p className="ck-hello-brand">
@@ -366,9 +276,6 @@ export function CheckinFlow({
               <p className="ck-eyebrow2" data-text="STEP 02 · PRICING & DRINK PLAN" />
               <h1>{tr(T.priceTitle, lang)}</h1>
               <p className="ck-sub">{tr(T.priceSub, lang)}</p>
-              <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
-                <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
-              </button>
             </header>
             <div className="ck-card ck-price">
               <p className="ck-price-head">{tr(T.priceHead, lang, { p: data.per10, cap })}</p>
@@ -437,9 +344,6 @@ export function CheckinFlow({
               <p className="ck-eyebrow2" data-text="STEP 03 · CAT CARE & SAFETY" />
               <h1>{tr(T.rulesTitle, lang)}</h1>
               <p className="ck-sub">{tr(T.rulesSub, lang)}</p>
-              <button type="button" className="ck-listen ck-listen-center" onClick={speak} aria-pressed={speaking}>
-                <span aria-hidden="true">{speaking ? "■" : "▶"}</span> {tr(speaking ? T.stop : T.listen, lang)}
-              </button>
             </header>
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
             <ol className="ck-rules">
