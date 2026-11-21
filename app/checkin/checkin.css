@@ -344,3 +344,10 @@
   .ck-stack:has(> .ck-waitform) { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; align-items: start; }
   .ck-stack:has(> .ck-waitform) > .ck-full, .ck-stack:has(> .ck-waitform) > .ck-textlink { grid-column: 1 / -1; }
 }
+
+/* 停留時間費用試算 */
+.ck-calc-row label { font-size: 17px; }
+.ck-calc-stay { font-weight: 700; color: var(--accent-text); }
+.ck-calc .ck-small { margin: 0; }
+.ck-calc-ends { display: flex; justify-content: space-between; margin-top: -6px !important; }
+.ck-calc-note { border-top: 1px dashed var(--line); padding-top: 8px; }

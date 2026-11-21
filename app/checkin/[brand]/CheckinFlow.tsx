@@ -327,13 +327,19 @@ export function CheckinFlow({
             <div className="ck-card ck-calc">
               <div className="ck-calc-row">
                 <label htmlFor="ck-min">{tr(T.calcTitle, lang)}</label>
-                <span className="tabular">{minutes >= PRICE_CAP_MIN ? tr(T.calcStayCap, lang, { m: PRICE_CAP_MIN }) : tr(T.calcStay, lang, { m: minutes })}</span>
+                <span className="tabular ck-calc-stay">{minutes >= PRICE_CAP_MIN ? tr(T.calcStayCap, lang, { m: PRICE_CAP_MIN }) : tr(T.calcStay, lang, { m: minutes })}</span>
               </div>
+              <p className="ck-small">{tr(T.calcHint, lang)}</p>
               <input id="ck-min" type="range" min={10} max={PRICE_CAP_MIN} step={10} value={minutes} onChange={(e) => setMinutes(Number(e.target.value))} />
+              <div className="ck-calc-ends ck-small" aria-hidden="true">
+                <span>{tr(T.calcMin, lang)}</span>
+                <span>{tr(T.calcMax, lang)}</span>
+              </div>
               <div className="ck-calc-row ck-calc-out tabular">
                 <span>{tr(T.calcPer, lang, { v: per })}</span>
                 {party > 1 && <strong>{tr(T.calcTotal, lang, { n: party, v: per * party })}</strong>}
               </div>
+              <p className="ck-small ck-calc-note">{tr(T.calcNote, lang)}</p>
             </div>
           </section>
         )}
