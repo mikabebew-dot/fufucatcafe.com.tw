@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BRANDS, brandOf, isBrand } from "@/lib/constants";
+import { loadCheckin } from "@/lib/checkin/data";
 import { CounterBoard } from "./CounterBoard";
 
 export const revalidate = 60;
@@ -18,11 +19,14 @@ export default async function CounterPage({ params }: { params: Promise<{ brand:
   const { brand } = await params;
   if (!isBrand(brand)) notFound();
   const other = BRANDS.find((b) => b.id !== brand)!;
+  const data = await loadCheckin(brand);
   return (
     <CounterBoard
       brand={brand}
       brandName={brandOf(brand).name}
       other={{ id: other.id, name: other.name }}
+      per10={data.per10}
+      longMin={data.longMin}
     />
   );
 }

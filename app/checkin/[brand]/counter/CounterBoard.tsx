@@ -10,6 +10,10 @@ type Entry = {
 type Today = { date: string | null; groups: number; guests: number; planShort: number; planLong: number; entries: Entry[] };
 
 const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어" };
+/** 入場到離場的分鐘數（只用來算參考金額，不顯示） */
+const stayMin = (e: Entry) =>
+  e.enteredAt && e.leftAt ? Math.max(0, Math.round((new Date(e.leftAt).getTime() - new Date(e.enteredAt).getTime()) / 60_000)) : 0;
+
 const fmt = (iso: string) =>
   new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
 
@@ -18,8 +22,8 @@ const fmt = (iso: string) =>
  * 只顯示確認碼、時間、語言、方案人數，沒有任何個資。
  */
 export function CounterBoard({
-  brand, brandName, other,
-}: { brand: string; brandName: string; other: { id: string; name: string } }) {
+  brand, brandName, other, per10, longMin,
+}: { brand: string; brandName: string; other: { id: string; name: string }; per10: number; longMin: number }) {
   const [data, setData] = useState<Today | null>(null);
   const [error, setError] = useState(false);
   const [updated, setUpdated] = useState<Date | null>(null);
@@ -33,6 +37,14 @@ export function CounterBoard({
     const t = setInterval(() => setNow(Date.now()), 30_000);
     return () => clearInterval(t);
   }, []);
+
+  /** 參考金額：依停留時間，以 10 分鐘四捨五入、上限 100 分鐘；悠閒停留每人最低 longMin */
+  const fee = (e: Entry) => {
+    const blocks = Math.min(10, Math.max(1, Math.round(stayMin(e) / 10)));
+    const perShort = blocks * per10;
+    const perLong = Math.max(perShort, longMin);
+    return { perShort, perLong, total: e.short * perShort + e.long * perLong };
+  };
 
   const load = useCallback(async () => {
     try {
@@ -162,7 +174,12 @@ export function CounterBoard({
                     <small className="tabular">{fmt(e.enteredAt)} 入場</small>
                   )}
                   {st === "left" && e.enteredAt && e.leftAt && (
-                    <small className="tabular">{fmt(e.leftAt)} 離場</small>
+                    <small className="tabular">
+                      {fmt(e.leftAt)} 離場・參考 <b>NT${fee(e).total}</b>
+                      {e.short > 0 && e.long > 0
+                        ? `（短暫每人 ${fee(e).perShort}／悠閒每人 ${fee(e).perLong}）`
+                        : `（每人 ${e.long > 0 ? fee(e).perLong : fee(e).perShort}）`}
+                    </small>
                   )}
                 </div>
                 <div className="cb-actions">
@@ -184,7 +201,7 @@ export function CounterBoard({
           })}
         </ul>
         <p className="cb-status">
-          <span className="cb-chip short">短暫</span> 30 分鐘以內　<span className="cb-chip long">悠閒</span> 40 分鐘以上。實際結帳以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。
+          <span className="cb-chip short">短暫</span> 30 分鐘以內　<span className="cb-chip long">悠閒</span> 40 分鐘以上。離場後顯示的是依時間自動算的參考金額，實際結帳以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。
         </p>
       </main>
     </div>
