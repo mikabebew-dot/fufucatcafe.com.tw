@@ -10,10 +10,6 @@ type Entry = {
 type Today = { date: string | null; groups: number; guests: number; planShort: number; planLong: number; entries: Entry[] };
 
 const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어" };
-/** 停留分鐘數（入場到離場；還沒離場就算到現在） */
-const stayMin = (e: Entry, now: number) =>
-  e.enteredAt ? Math.max(0, Math.round(((e.leftAt ? new Date(e.leftAt).getTime() : now) - new Date(e.enteredAt).getTime()) / 60_000)) : 0;
-
 const fmt = (iso: string) =>
   new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
 
@@ -22,8 +18,8 @@ const fmt = (iso: string) =>
  * 只顯示確認碼、時間、語言、方案人數，沒有任何個資。
  */
 export function CounterBoard({
-  brand, brandName, other, per10, longMin,
-}: { brand: string; brandName: string; other: { id: string; name: string }; per10: number; longMin: number }) {
+  brand, brandName, other,
+}: { brand: string; brandName: string; other: { id: string; name: string } }) {
   const [data, setData] = useState<Today | null>(null);
   const [error, setError] = useState(false);
   const [updated, setUpdated] = useState<Date | null>(null);
@@ -32,20 +28,11 @@ export function CounterBoard({
   const [filter, setFilter] = useState<"all" | "waiting" | "inside" | "left">("all");
   const [now, setNow] = useState(() => Date.now());
 
-  // 每 30 秒更新「已待幾分鐘」
+  // 每 30 秒更新時間（候位「已等幾分」、新確認標記）
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 30_000);
     return () => clearInterval(t);
   }, []);
-
-  /** 參考費用：依停留時間，以 10 分鐘四捨五入、上限 100 分鐘；悠閒停留每人最低 longMin */
-  const fee = (e: Entry) => {
-    const m = stayMin(e, now);
-    const blocks = Math.min(10, Math.max(1, Math.round(m / 10)));
-    const perShort = blocks * per10;
-    const perLong = Math.max(perShort, longMin);
-    return { m, perShort, perLong, total: e.short * perShort + e.long * perLong };
-  };
 
   const load = useCallback(async () => {
     try {
@@ -101,7 +88,8 @@ export function CounterBoard({
   const inside = all.filter((e) => stateOf(e) === "inside");
   const insideGuests = inside.reduce((n, e) => n + e.short + e.long, 0);
   const leftGroups = all.filter((e) => stateOf(e) === "left");
-  const avgStay = leftGroups.length ? Math.round(leftGroups.reduce((n, e) => n + stayMin(e, now), 0) / leftGroups.length) : null;
+  const insideShort = inside.reduce((n, e) => n + e.short, 0);
+  const insideLong = inside.reduce((n, e) => n + e.long, 0);
 
   return (
     <div className="cb" data-brand={brand}>
@@ -124,14 +112,19 @@ export function CounterBoard({
         <WaitBoard brand={brand} now={now} />
 
         <div className="cb-tiles">
+          <div className="cb-tile cb-tile-inside">
+            <span>目前店內 <b className="tabular">{data ? insideGuests : "—"}</b> 人</span>
+            <div className="cb-inside-split">
+              <span className="cb-chip short">短暫 <b className="tabular">{data ? insideShort : "—"}</b></span>
+              <span className="cb-chip long">悠閒 <b className="tabular">{data ? insideLong : "—"}</b></span>
+            </div>
+          </div>
           <div className="cb-tile"><strong>{data?.groups ?? "—"}</strong><span>今日確認組數</span></div>
           <div className="cb-tile"><strong>{data?.guests ?? "—"}</strong><span>今日確認人數</span></div>
-          <div className="cb-tile"><strong>{data?.planShort ?? "—"}</strong><span>短暫停留（人）</span></div>
-          <div className="cb-tile"><strong>{data?.planLong ?? "—"}</strong><span>悠閒停留（人）</span></div>
+          <div className="cb-tile cb-t-short"><strong>{data?.planShort ?? "—"}</strong><span>今日短暫停留（人）</span></div>
+          <div className="cb-tile cb-t-long"><strong>{data?.planLong ?? "—"}</strong><span>今日悠閒停留（人）</span></div>
           <div className="cb-tile"><strong>{data ? waiting : "—"}</strong><span>等候入場（組）</span></div>
-          <div className="cb-tile"><strong>{data ? insideGuests : "—"}</strong><span>目前店內（人）</span></div>
           <div className="cb-tile"><strong>{data ? leftGroups.length : "—"}</strong><span>已離場（組）</span></div>
-          <div className="cb-tile"><strong>{avgStay ?? "—"}</strong><span>平均停留（分）</span></div>
         </div>
 
         <div className="cb-filter" role="tablist" aria-label="篩選">
@@ -156,25 +149,20 @@ export function CounterBoard({
           {list.map((e) => {
             const st = stateOf(e);
             const fresh = st === "waiting" && now - new Date(e.at).getTime() < 15 * 60_000;
-            const f = fee(e);
             return (
               <li key={e.key} className={`cb-item cb-${st}${fresh ? " new" : ""}`}>
                 <span className="cb-code tabular">{e.code}</span>
                 <div className="cb-meta">
-                  <span>
-                    {e.short > 0 && `短暫 ${e.short} 人`}
-                    {e.short > 0 && e.long > 0 && "・"}
-                    {e.long > 0 && `悠閒 ${e.long} 人`}
+                  <span className="cb-plans">
+                    {e.short > 0 && <span className="cb-chip short">短暫・30 分內 <b className="tabular">{e.short}</b> 人</span>}
+                    {e.long > 0 && <span className="cb-chip long">悠閒・40 分以上 <b className="tabular">{e.long}</b> 人</span>}
                   </span>
                   {st === "waiting" && <small className="tabular">確認 {fmt(e.at)}・{LANG_NAME[e.lang] ?? e.lang}</small>}
                   {st === "inside" && e.enteredAt && (
-                    <small className="tabular">入場 {fmt(e.enteredAt)}・已待 <b>{f.m}</b> 分</small>
+                    <small className="tabular">{fmt(e.enteredAt)} 入場</small>
                   )}
                   {st === "left" && e.enteredAt && e.leftAt && (
-                    <small className="tabular">
-                      {fmt(e.enteredAt)}–{fmt(e.leftAt)}・{f.m} 分・參考 <b>NT${f.total}</b>
-                      {e.short > 0 && e.long > 0 ? `（短暫每人 ${f.perShort}／悠閒每人 ${f.perLong}）` : `（每人 ${e.long > 0 ? f.perLong : f.perShort}）`}
-                    </small>
+                    <small className="tabular">{fmt(e.leftAt)} 離場</small>
                   )}
                 </div>
                 <div className="cb-actions">
@@ -196,7 +184,7 @@ export function CounterBoard({
           })}
         </ul>
         <p className="cb-status">
-          停留時間從按「已入場」算到按「客人離場」。費用是依時間自動算的參考金額，實際結帳仍以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。
+          <span className="cb-chip short">短暫</span> 30 分鐘以內　<span className="cb-chip long">悠閒</span> 40 分鐘以上。實際結帳以櫃檯登記為準。這裡只記錄確認碼、時間、語言和方案人數，不記錄任何個資。
         </p>
       </main>
     </div>

@@ -351,3 +351,21 @@
 .ck-calc .ck-small { margin: 0; }
 .ck-calc-ends { display: flex; justify-content: space-between; margin-top: -6px !important; }
 .ck-calc-note { border-top: 1px dashed var(--line); padding-top: 8px; }
+
+/* 櫃檯看板：短暫／悠閒用不同顏色 */
+.cb { --short: #1f6aa5; --short-bg: #e2eef9; --long: #8a3f9e; --long-bg: #f3e6f7; }
+.cb-chip { display: inline-flex; align-items: baseline; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.cb-chip b { font-size: 17px; }
+.cb-chip.short { background: var(--short-bg); color: var(--short); }
+.cb-chip.long { background: var(--long-bg); color: var(--long); }
+.cb-plans { display: flex; flex-wrap: wrap; gap: 6px; }
+.cb-tile.cb-t-short { background: var(--short-bg); box-shadow: inset 0 0 0 1.5px var(--short); }
+.cb-tile.cb-t-short strong, .cb-tile.cb-t-short span { color: var(--short); }
+.cb-tile.cb-t-long { background: var(--long-bg); box-shadow: inset 0 0 0 1.5px var(--long); }
+.cb-tile.cb-t-long strong, .cb-tile.cb-t-long span { color: var(--long); }
+.cb-tile-inside { grid-column: span 2; display: grid; gap: 8px; align-content: center; }
+.cb-tile-inside > span { font-size: 15px; }
+.cb-tile-inside > span b { font-size: 26px; }
+.cb-inside-split { display: flex; gap: 8px; flex-wrap: wrap; }
+.cb-inside-split .cb-chip { font-size: 16px; padding: 6px 14px; }
+.cb-inside-split .cb-chip b { font-size: 24px; }
