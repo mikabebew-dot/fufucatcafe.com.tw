@@ -40,6 +40,10 @@ function Stepper({ value, onChange, label }: { value: number; onChange: (v: numb
   );
 }
 
+/** 條文中用 **…** 包起來的字，用醒目顏色標示（例如「不強抱」） */
+const highlight = (text: string) =>
+  text.split(/\*\*(.+?)\*\*/).map((part, i) => (i % 2 ? <mark key={i} className="ck-hl">{part}</mark> : part));
+
 export function CheckinFlow({
   data, brandName, logo, other,
 }: { data: CheckinData; brandName: string; logo: string; other: { id: BrandId; name: string } }) {
@@ -358,7 +362,7 @@ export function CheckinFlow({
                   <span className="ck-num mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <div>
                     <p className="ck-rule-title">{tr(r.title, lang)}</p>
-                    <p className="ck-muted">{tr(r.body, lang)}</p>
+                    <p className="ck-muted">{highlight(tr(r.body, lang))}</p>
                   </div>
                 </li>
               ))}

@@ -44,10 +44,10 @@ export const RULES: { title: L10n; body: L10n }[] = [
   {
     title: { zh: "讓貓咪決定要不要靠近", en: "Let the cats come to you", ja: "近づくかは猫が決めます", ko: "다가올지는 고양이가 정해요" },
     body: {
-      zh: "不追逐、不強抱、不拉扯。貓咪走開時，請讓牠走。",
-      en: "No chasing, picking up or pulling. If a cat walks away, let it go.",
-      ja: "追いかけたり、抱き上げたり、引っぱったりしないでください。離れていく猫はそっと見送ってください。",
-      ko: "쫓거나 안거나 잡아당기지 말아 주세요. 고양이가 자리를 뜨면 그대로 보내 주세요.",
+      zh: "不追逐、**不強抱**、不拉扯。貓咪走開時，請讓牠走。",
+      en: "No chasing, **no picking up**, no pulling. If a cat walks away, let it go.",
+      ja: "追いかけたり、**抱き上げたり**、引っぱったりしないでください。離れていく猫はそっと見送ってください。",
+      ko: "쫓거나 **안거나** 잡아당기지 말아 주세요. 고양이가 자리를 뜨면 그대로 보내 주세요.",
     },
   },
   {

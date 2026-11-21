@@ -369,3 +369,6 @@
 .cb-inside-split { display: flex; gap: 8px; flex-wrap: wrap; }
 .cb-inside-split .cb-chip { font-size: 16px; padding: 6px 14px; }
 .cb-inside-split .cb-chip b { font-size: 24px; }
+
+/* 條文重點（例如「不強抱」） */
+.ck-hl { background: #fde2dc; color: #b3261e; font-weight: 700; padding: 1px 6px; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
