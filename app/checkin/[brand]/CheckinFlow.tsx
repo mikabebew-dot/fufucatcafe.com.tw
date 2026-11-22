@@ -361,9 +361,10 @@ export function CheckinFlow({
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
             <ol className="ck-rules">
               {[...RULES, ...EXTRA_RULES[data.brand]].map((r, i) => (
-                <li key={i}>
+                <li key={i} className={r.strong ? "ck-rule-strong" : undefined}>
                   <span className="ck-num mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <div>
+                    {r.strong && <p className="ck-rule-key">{tr(T.ruleKey, lang)}</p>}
                     <p className="ck-rule-title">{tr(r.title, lang)}</p>
                     <p className="ck-muted">{highlight(tr(r.body, lang))}</p>
                   </div>
@@ -373,7 +374,7 @@ export function CheckinFlow({
             <div className="ck-card ck-notes">
               <p>{tr(T.scratch, lang)}</p>
               {data.entryNote && <p>{data.entryNote[lang]}</p>}
-              {data.brand === "nukunuku" && <p>{tr(T.childWithParent, lang)}</p>}
+              {data.brand === "nukunuku" && <p className="ck-note-strong">{tr(T.childWithParent, lang)}</p>}
             </div>
             <label className="ck-agree">
               <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />

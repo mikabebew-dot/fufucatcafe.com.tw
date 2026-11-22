@@ -42,18 +42,38 @@ export const STORE_ADDR: Record<BrandId, { addr: string; map: string }> = {
 export const PRICE_PER_10 = 55;
 export const PRICE_CAP_MIN = 100;
 
-/** 和貓咪的約定（入場頁精簡版；完整版在官網「來店資訊」） */
-export const RULES: { title: L10n; body: L10n }[] = [
+/** 和貓咪的約定（入場頁精簡版；完整版在官網「來店資訊」）。strong：用紅色卡片特別強調 */
+export type Rule = { title: L10n; body: L10n; strong?: boolean };
+export const RULES: Rule[] = [
   {
-    title: { zh: "讓貓咪決定要不要靠近", en: "Let the cats come to you", ja: "近づくかは猫が決めます", ko: "다가올지는 고양이가 정해요", th: "ให้แมวเป็นฝ่ายเข้ามาหาเอง", vi: "Để mèo tự quyết định có lại gần hay không", id: "Biarkan kucing yang mendekat" },
+    strong: true,
+    title: {
+      zh: "勿強抱貓咪", en: "Do not hug or hold the cats", ja: "猫を抱っこしないでください", ko: "고양이를 억지로 안지 마세요",
+      th: "ห้ามอุ้มหรือกอดแมว", vi: "Không ôm hay bế mèo", id: "Jangan memeluk atau menggendong kucing",
+    },
     body: {
-      zh: "不追逐、**不強抱**、不拉扯。貓咪走開時，請讓牠走。",
-      en: "No chasing, **no picking up**, no pulling. If a cat walks away, let it go.",
-      ja: "追いかけたり、**抱き上げたり**、引っぱったりしないでください。離れていく猫はそっと見送ってください。",
-      ko: "쫓거나 **안거나** 잡아당기지 말아 주세요. 고양이가 자리를 뜨면 그대로 보내 주세요.",
-      th: "ห้ามไล่จับ **ห้ามอุ้ม** ห้ามดึง ถ้าแมวเดินหนี ปล่อยให้มันไปนะคะ",
-      vi: "Không đuổi theo, **không bế ép**, không kéo. Khi mèo bỏ đi, hãy để bé đi.",
-      id: "Jangan mengejar, **jangan menggendong paksa**, jangan menarik. Kalau kucing pergi, biarkan saja.",
+      zh: "請不要把貓咪抱起來、抱在腿上或緊緊抱住。想親近時，讓貓咪自己走過來。",
+      en: "Please don't pick cats up, put them on your lap or hold them tight. If you'd like to be close, let the cat come to you.",
+      ja: "抱き上げたり、膝にのせたり、ぎゅっと抱きしめたりしないでください。仲良くなりたいときは、猫から近づいてくるのを待ってください。",
+      ko: "고양이를 들어 올리거나 무릎에 올리거나 꽉 안지 마세요. 친해지고 싶다면 고양이가 먼저 다가오게 해 주세요.",
+      th: "กรุณาอย่าอุ้มแมวขึ้น วางบนตัก หรือกอดแน่น ถ้าอยากใกล้ชิด ให้แมวเดินเข้ามาหาเอง",
+      vi: "Xin đừng bế mèo lên, đặt lên đùi hay ôm chặt. Muốn gần gũi, hãy để bé tự đến với bạn.",
+      id: "Mohon jangan mengangkat kucing, memangkunya, atau memeluknya erat. Kalau ingin dekat, biarkan kucing yang menghampiri Anda.",
+    },
+  },
+  {
+    title: {
+      zh: "讓貓咪決定要不要靠近", en: "Let the cats come to you", ja: "近づくかは猫が決めます", ko: "다가올지는 고양이가 정해요",
+      th: "ให้แมวเป็นฝ่ายเข้ามาหาเอง", vi: "Để mèo tự quyết định có lại gần hay không", id: "Biarkan kucing yang mendekat",
+    },
+    body: {
+      zh: "不追趕、不拉扯、不限制貓咪的行動。貓咪走開時，請讓牠走。",
+      en: "No chasing, grabbing or blocking their way. If a cat walks away, let it go.",
+      ja: "追いかけたり、引っぱったり、動きを妨げたりしないでください。離れていく猫はそっと見送ってください。",
+      ko: "쫓거나 잡아당기거나 움직임을 막지 말아 주세요. 고양이가 자리를 뜨면 그대로 보내 주세요.",
+      th: "ห้ามไล่ตาม ห้ามดึง ห้ามขวางทางแมว ถ้าแมวเดินหนี ปล่อยให้มันไปนะคะ",
+      vi: "Không đuổi theo, không kéo, không cản đường mèo. Khi mèo bỏ đi, hãy để bé đi.",
+      id: "Jangan mengejar, menarik, atau menghalangi gerak kucing. Kalau kucing pergi, biarkan saja.",
     },
   },
   {
@@ -107,7 +127,7 @@ export const RULES: { title: L10n; body: L10n }[] = [
 ];
 
 /** 各店額外的約定（接在共同約定後面） */
-export const EXTRA_RULES: Record<BrandId, { title: L10n; body: L10n }[]> = {
+export const EXTRA_RULES: Record<BrandId, Rule[]> = {
   fufu: [
     {
       title: { zh: "包包、外套請放指定置物櫃", en: "Bags and coats go in the lockers", ja: "バッグ・上着は指定のロッカーへ", ko: "가방과 외투는 지정 사물함에", th: "กรุณาเก็บกระเป๋าและเสื้อคลุมในล็อกเกอร์", vi: "Để túi xách và áo khoác vào tủ khóa", id: "Simpan tas dan jaket di loker" },
@@ -134,7 +154,23 @@ export const EXTRA_RULES: Record<BrandId, { title: L10n; body: L10n }[]> = {
       },
     },
   ],
-  nukunuku: [],
+  nukunuku: [
+    {
+      title: {
+        zh: "兒童禁止使用逗貓棒", en: "Children may not use cat teaser wands", ja: "お子様は猫じゃらしを使えません", ko: "어린이는 낚싯대 장난감을 사용할 수 없어요",
+        th: "เด็กห้ามใช้ไม้ล่อแมว", vi: "Trẻ em không được dùng cần câu mèo", id: "Anak-anak tidak boleh memakai mainan pancing kucing",
+      },
+      body: {
+        zh: "逗貓棒請由大人陪貓咪玩，避免小朋友和貓咪受傷。",
+        en: "Teaser wands are for adults only, to keep both kids and cats safe.",
+        ja: "猫じゃらしは大人の方がお使いください。お子様と猫のけがを防ぐためです。",
+        ko: "낚싯대 장난감은 어른만 사용해 주세요. 아이와 고양이 모두 다치지 않도록 하기 위해서예요.",
+        th: "ไม้ล่อแมวให้ผู้ใหญ่เป็นคนใช้เท่านั้น เพื่อความปลอดภัยของทั้งเด็กและแมว",
+        vi: "Cần câu mèo chỉ dành cho người lớn, để cả trẻ em và mèo đều an toàn.",
+        id: "Mainan pancing hanya untuk orang dewasa, agar anak-anak dan kucing sama-sama aman.",
+      },
+    },
+  ],
 };
 
 export const T = {
@@ -287,6 +323,7 @@ export const T = {
   partyTotal: { zh: "共 {n} 人", en: "{n} people in total", ja: "合計 {n} 名", ko: "총 {n}명", th: "รวม {n} คน", vi: "Tổng {n} người", id: "Total {n} orang" },
   needPeople: { zh: "請至少選 1 人", en: "Choose at least 1 person", ja: "1名以上を選んでください", ko: "1명 이상 선택해 주세요", th: "กรุณาเลือกอย่างน้อย 1 คน", vi: "Vui lòng chọn ít nhất 1 người", id: "Pilih minimal 1 orang" },
 
+  ruleKey: { zh: "特別注意", en: "Important", ja: "特に大切", ko: "특히 중요", th: "สำคัญมาก", vi: "Đặc biệt lưu ý", id: "Penting" },
   rulesTitle: { zh: "和貓咪的約定", en: "With the cats", ja: "猫との約束", ko: "고양이와의 약속", th: "ข้อตกลงกับแมว", vi: "Lời hứa với các bé mèo", id: "Janji dengan kucing" },
   rulesSub: { zh: "相處禮儀・安全規範", en: "Cat etiquette and safety", ja: "猫とのマナーと安全のために", ko: "고양이 예절과 안전 수칙", th: "มารยาทและความปลอดภัย", vi: "Phép lịch sự và an toàn", id: "Etika dan keselamatan" },
   rulesLead: {
