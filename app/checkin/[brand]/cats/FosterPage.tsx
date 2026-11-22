@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { CheckinCat } from "@/lib/checkin/data";
-import { LANGS, LOCALE_PREFIX, T, isLang, tr, type Lang } from "@/lib/checkin/content";
+import { LANGS, LANG_LABEL, LOCALE_PREFIX, T, isLang, tr, type Lang } from "@/lib/checkin/content";
 
 function detectLang(): Lang {
   try {
@@ -11,6 +11,9 @@ function detectLang(): Lang {
     const n = (navigator.language || "").toLowerCase();
     if (n.startsWith("ja")) return "ja";
     if (n.startsWith("ko")) return "ko";
+    if (n.startsWith("th")) return "th";
+    if (n.startsWith("vi")) return "vi";
+    if (n.startsWith("id") || n.startsWith("in")) return "id";
     if (n.startsWith("zh")) return "zh";
     if (n) return "en";
   } catch {
@@ -44,7 +47,7 @@ export function FosterPage({ brand, brandName, logo, cats }: { brand: string; br
   }, [brand]);
 
   useEffect(() => {
-    document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko" }[lang];
+    document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko", th: "th", vi: "vi", id: "id" }[lang];
   }, [lang]);
 
   const href = (path: string) => `${LOCALE_PREFIX[lang]}${path}`;
@@ -57,13 +60,9 @@ export function FosterPage({ brand, brandName, logo, cats }: { brand: string; br
           <img src={logo} alt="" width={36} height={36} />
           <span>{brandName}</span>
         </div>
-        <div className="ck-langs" role="radiogroup" aria-label={tr(T.chooseLang, lang)}>
-          {LANGS.map((l) => (
-            <button key={l} type="button" role="radio" aria-checked={lang === l} className={lang === l ? "on" : ""} onClick={() => setLang(l)} lang={l}>
-              {{ zh: "中", en: "EN", ja: "日", ko: "한" }[l]}
-            </button>
-          ))}
-        </div>
+        <select className="ck-langsel" aria-label={tr(T.chooseLang, lang)} value={lang} onChange={(e) => isLang(e.target.value) && setLang(e.target.value)}>
+          {LANGS.map((l) => <option key={l} value={l}>{LANG_LABEL[l]}</option>)}
+        </select>
       </header>
 
       <main className="ck-main">

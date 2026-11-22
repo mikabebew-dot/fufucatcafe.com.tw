@@ -97,7 +97,7 @@ export async function recordConfirm(input: ConfirmInput) {
     .createIfNotExists({
       _id: id, _type: "checkinDayStat", brand: input.brand, date: taipeiDate(),
       groups: 0, guests: 0, planShort: 0, planLong: 0, adoptClicks: 0, adoptPage: 0,
-      langs: { zh: 0, en: 0, ja: 0, ko: 0 }, catClicks: {}, entries: [],
+      langs: { zh: 0, en: 0, ja: 0, ko: 0, th: 0, vi: 0, id: 0 }, catClicks: {}, entries: [],
     })
     .patch(id, (p) =>
       p

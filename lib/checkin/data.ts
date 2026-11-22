@@ -2,7 +2,7 @@ import "server-only";
 import type { BrandId } from "@/lib/constants";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { DEFAULTS, LANGS, PRICE_PER_10, type L10n, type Lang } from "./content";
+import { DEFAULTS, EN_FALLBACK, LANGS, PRICE_PER_10, type L10n, type Lang } from "./content";
 
 /** 入場頁需要的資料：全部語言一次給前端，切換語言不必重新載入 */
 export type CheckinCat = {
@@ -35,7 +35,9 @@ type Raw = {
 const fill = (v: Partial<L10n> | null | undefined, fallback?: L10n): L10n | null => {
   if (!v?.zh && !fallback) return null;
   const base = v?.zh ? v : fallback!;
-  return Object.fromEntries(LANGS.map((l) => [l, (v?.[l] || base[l] || base.zh || "") as string])) as L10n;
+  // 泰、越、印尼文後台沒有填，先用英文，再用中文
+  const alt = (l: Lang) => (EN_FALLBACK.includes(l) ? v?.en : undefined);
+  return Object.fromEntries(LANGS.map((l) => [l, (v?.[l] || alt(l) || base[l] || base.zh || "") as string])) as L10n;
 };
 
 export async function loadCheckin(brand: BrandId): Promise<CheckinData> {
@@ -72,7 +74,7 @@ export async function loadCheckin(brand: BrandId): Promise<CheckinData> {
         status: c.status,
         name: fill(c.name)!,
         summary: fill(c.summary),
-        traits: c.traits?.zh ? (Object.fromEntries(LANGS.map((l) => [l, c.traits?.[l]?.length ? c.traits[l] : c.traits!.zh])) as Record<Lang, string[]>) : null,
+        traits: c.traits?.zh ? (Object.fromEntries(LANGS.map((l) => [l, c.traits?.[l]?.length ? c.traits[l] : EN_FALLBACK.includes(l) && c.traits?.en?.length ? c.traits.en : c.traits!.zh])) as Record<Lang, string[]>) : null,
         photo: c.cover?.asset ? urlFor(c.cover as never).width(360).height(360).fit("crop").url() : null,
       })),
   };

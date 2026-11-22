@@ -8,7 +8,7 @@ type Wait = {
 };
 
 const PIN_KEY = "checkin:counter-pin";
-const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어" };
+const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어", th: "泰文", vi: "越南文", id: "印尼文" };
 const fmt = (iso: string) =>
   new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
 const telHref = (p: string) => `tel:${p}`;

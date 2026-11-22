@@ -9,7 +9,7 @@ type Entry = {
 };
 type Today = { date: string | null; groups: number; guests: number; planShort: number; planLong: number; entries: Entry[] };
 
-const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어" };
+const LANG_NAME: Record<string, string> = { zh: "中文", en: "English", ja: "日本語", ko: "한국어", th: "泰文", vi: "越南文", id: "印尼文" };
 /** 入場到離場的分鐘數（只用來算參考金額，不顯示） */
 const stayMin = (e: Entry) =>
   e.enteredAt && e.leftAt ? Math.max(0, Math.round((new Date(e.leftAt).getTime() - new Date(e.enteredAt).getTime()) / 60_000)) : 0;

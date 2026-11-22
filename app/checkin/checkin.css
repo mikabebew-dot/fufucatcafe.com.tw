@@ -372,3 +372,11 @@
 
 /* 條文重點（例如「不強抱」） */
 .ck-hl { background: #fde2dc; color: #b3261e; font-weight: 700; padding: 1px 6px; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* 7 種語言：最後一顆單數時佔滿一整排 */
+.ck-langs-big button:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.ck-langs button[lang="th"] { font-family: system-ui, "Noto Sans Thai", "Leelawadee UI", "Thonburi", sans-serif; }
+@media (min-width: 900px) and (orientation: landscape) {
+  .ck-langcard .ck-langs-big { grid-template-columns: 1fr 1fr; }
+  .ck-langcard .ck-langs-big button { min-height: 60px; font-size: 19px; }
+}

@@ -36,7 +36,7 @@ const s: Record<string, CSSProperties> = {
   err: { background: "#f9e1dc", color: "#7e3c26", borderRadius: 14, padding: "14px 16px" },
 };
 
-const LANG = [["zh", "中文"], ["en", "英文"], ["ja", "日文"], ["ko", "韓文"]] as const;
+const LANG = [["zh", "中文"], ["en", "英文"], ["ja", "日文"], ["ko", "韓文"], ["th", "泰文"], ["vi", "越南文"], ["id", "印尼文"]] as const;
 const BRAND_NAME = { fufu: "FUFU", nukunuku: "NUKUNUKU" } as const;
 const keyOf = (slug: string) => slug.replace(/[^a-z0-9]/gi, "_").slice(0, 60);
 const pct = (n: number, d: number) => (d ? Math.round((n / d) * 100) : 0);
@@ -91,7 +91,7 @@ export function CheckinDashboard() {
   }, [days, brand, range]);
 
   const sum = useMemo(() => {
-    const t = { groups: 0, guests: 0, short: 0, long: 0, adopt: 0, adoptPage: 0, views: 0, langs: { zh: 0, en: 0, ja: 0, ko: 0 } as Record<string, number>, cat: {} as Record<string, number> };
+    const t = { groups: 0, guests: 0, short: 0, long: 0, adopt: 0, adoptPage: 0, views: 0, langs: { zh: 0, en: 0, ja: 0, ko: 0, th: 0, vi: 0, id: 0 } as Record<string, number>, cat: {} as Record<string, number> };
     for (const d of rows) {
       t.groups += d.groups ?? 0;
       t.guests += d.guests ?? 0;
@@ -112,10 +112,10 @@ export function CheckinDashboard() {
 
   const exportCsv = () =>
     downloadCsv(`入場紀錄_${new Date().toISOString().slice(0, 10)}.csv`, [
-      ["日期", "店", "確認組數", "確認人數", "短暫停留人數", "悠閒停留人數", "中文組", "英文組", "日文組", "韓文組", "等家孩子頁瀏覽", "中途貓介紹點閱", "認養流程點閱"],
+      ["日期", "店", "確認組數", "確認人數", "短暫停留人數", "悠閒停留人數", "中文組", "英文組", "日文組", "韓文組", "泰文組", "越南文組", "印尼文組", "等家孩子頁瀏覽", "中途貓介紹點閱", "認養流程點閱"],
       ...rows.map((d) => [
         d.date, BRAND_NAME[d.brand], d.groups ?? 0, d.guests ?? 0, d.planShort ?? 0, d.planLong ?? 0,
-        d.langs?.zh ?? 0, d.langs?.en ?? 0, d.langs?.ja ?? 0, d.langs?.ko ?? 0, d.fosterViews ?? 0, d.adoptClicks ?? 0, d.adoptPage ?? 0,
+        d.langs?.zh ?? 0, d.langs?.en ?? 0, d.langs?.ja ?? 0, d.langs?.ko ?? 0, d.langs?.th ?? 0, d.langs?.vi ?? 0, d.langs?.id ?? 0, d.fosterViews ?? 0, d.adoptClicks ?? 0, d.adoptPage ?? 0,
       ]),
     ]);
 

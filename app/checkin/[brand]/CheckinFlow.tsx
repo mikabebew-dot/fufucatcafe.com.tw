@@ -22,6 +22,9 @@ function detectLang(): Lang {
     const n = (navigator.language || "").toLowerCase();
     if (n.startsWith("ja")) return "ja";
     if (n.startsWith("ko")) return "ko";
+    if (n.startsWith("th")) return "th";
+    if (n.startsWith("vi")) return "vi";
+    if (n.startsWith("id") || n.startsWith("in")) return "id";
     if (n.startsWith("zh")) return "zh";
     if (n) return "en";
   } catch {
@@ -103,7 +106,7 @@ export function CheckinFlow({
   }, [step, data.brand]);
 
   useEffect(() => {
-    document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko" }[lang];
+    document.documentElement.lang = { zh: "zh-Hant-TW", en: "en", ja: "ja", ko: "ko", th: "th", vi: "vi", id: "id" }[lang];
   }, [lang]);
 
   // 換頁或換語言時回到頂端
@@ -189,7 +192,7 @@ export function CheckinFlow({
     <div className={big ? "ck-langs ck-langs-big" : "ck-langs"} role="radiogroup" aria-label={tr(T.chooseLang, lang)}>
       {LANGS.map((l) => (
         <button key={l} type="button" role="radio" aria-checked={lang === l} className={lang === l ? "on" : ""} onClick={() => setLang(l)} lang={l}>
-          {big ? LANG_LABEL[l] : { zh: "中", en: "EN", ja: "日", ko: "한" }[l]}
+          {big ? LANG_LABEL[l] : { zh: "中", en: "EN", ja: "日", ko: "한", th: "ไทย", vi: "VI", id: "ID" }[l]}
         </button>
       ))}
     </div>
@@ -238,7 +241,7 @@ export function CheckinFlow({
         {showWait && (
           <div className="ck-card ck-langcard" style={{ marginTop: 16 }}>
             <div className="ck-langcard-head">
-              <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
+              <span><span aria-hidden="true">🌐 </span>選擇語言 / Language</span>
             </div>
             <LangSwitch big />
           </div>
@@ -266,8 +269,8 @@ export function CheckinFlow({
 
             <div className="ck-card ck-langcard">
               <div className="ck-langcard-head">
-                <span><span aria-hidden="true">🌐 </span>切換語言 / Select Language / 言語選択 / 언어 선택</span>
-                <span className="ck-langcard-count">4 Languages</span>
+                <span><span aria-hidden="true">🌐 </span>選擇語言 / Language</span>
+                <span className="ck-langcard-count">7 Languages</span>
               </div>
               <LangSwitch big />
             </div>
