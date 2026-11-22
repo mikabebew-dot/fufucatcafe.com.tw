@@ -393,8 +393,19 @@ export function CheckinFlow({
               <p className="ck-code-label">{tr(T.code, lang)}</p>
               <p className="ck-code tabular">{result.code}</p>
               <dl className="ck-sum">
-                {result.short > 0 && (<><dt>{tr(T.shortName, lang)}</dt><dd className="tabular">{result.short} {tr(T.people, lang)}</dd></>)}
-                {result.long > 0 && (<><dt>{tr(T.longName, lang)}</dt><dd className="tabular">{result.long} {tr(T.people, lang)}</dd></>)}
+                {/* 方案顏色與櫃檯看板一致：藍＝短暫、紫＝悠閒 */}
+                {result.short > 0 && (
+                  <>
+                    <dt><span className="ck-plan-chip short">{tr(T.shortName, lang)}<small>{tr(T.shortWhen, lang)}</small></span></dt>
+                    <dd className="tabular">{result.short} {tr(T.people, lang)}</dd>
+                  </>
+                )}
+                {result.long > 0 && (
+                  <>
+                    <dt><span className="ck-plan-chip long">{tr(T.longName, lang)}<small>{tr(T.longWhen, lang)}</small></span></dt>
+                    <dd className="tabular">{result.long} {tr(T.people, lang)}</dd>
+                  </>
+                )}
                 <dt>{tr(T.confirmedAt, lang)}</dt>
                 <dd className="tabular">{fmtTime(result.at)}{!result.online && " ・ offline"}</dd>
               </dl>
