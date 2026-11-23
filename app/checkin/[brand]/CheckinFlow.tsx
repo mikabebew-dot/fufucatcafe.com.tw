@@ -47,6 +47,9 @@ function Stepper({ value, onChange, label }: { value: number; onChange: (v: numb
 const highlight = (text: string) =>
   text.split(/\*\*(.+?)\*\*/).map((part, i) => (i % 2 ? <mark key={i} className="ck-hl">{part}</mark> : part));
 
+/** 用 **…** 包起來的字改成粗體（費用說明用） */
+const bold = (text: string) => text.split(/\*\*(.+?)\*\*/).map((part, i) => (i % 2 ? <strong key={i}>{part}</strong> : part));
+
 export function CheckinFlow({
   data, brandName, logo, other,
 }: { data: CheckinData; brandName: string; logo: string; other: { id: BrandId; name: string } }) {
@@ -280,14 +283,15 @@ export function CheckinFlow({
         {step === 1 && (
           <section className="ck-stack">
             <header className="ck-head">
-              <p className="ck-eyebrow2" data-text="STEP 02 · PRICING & DRINK PLAN" />
+              <p className="ck-eyebrow2" data-text="STEP 02 · MINIMUM CHARGE & DRINKS" />
               <h1>{tr(T.priceTitle, lang)}</h1>
               <p className="ck-sub">{tr(T.priceSub, lang)}</p>
             </header>
             <div className="ck-card ck-price">
               <p className="ck-price-head">{tr(T.priceHead, lang, { p: data.per10, cap })}</p>
+              <p className="ck-meal-tag"><span aria-hidden="true">🍽 </span>{tr(T.mealTag, lang)}</p>
               <ul className="ck-points">
-                {pricePoints.map((p) => <li key={p}>{p}</li>)}
+                {pricePoints.map((p) => <li key={p}>{bold(p)}</li>)}
               </ul>
             </div>
 

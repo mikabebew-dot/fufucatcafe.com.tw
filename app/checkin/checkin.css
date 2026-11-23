@@ -400,3 +400,8 @@
 .ck-plan-chip.short { background: #e2eef9; color: #1f6aa5; }
 .ck-plan-chip.long { background: #f3e6f7; color: #8a3f9e; }
 .ck-sum dt:has(.ck-plan-chip) + dd { align-self: center; font-size: 20px; font-weight: 700; }
+
+/* 餐點另計標籤（費用框標題下方） */
+.ck-meal-tag { display: inline-flex; align-items: center; gap: 2px; margin: 2px 0 6px; padding: 6px 12px; border-radius: 10px; background: #fff3d6; color: #7a4b00; font-weight: 700; font-size: 15px; box-shadow: inset 0 0 0 1.5px #e3b04b; }
+.ck-points strong { color: var(--ink); }
+.ck-price .ck-meal-tag { display: flex; width: fit-content; max-width: 100%; margin: 4px auto 10px; text-align: center; }
