@@ -4,7 +4,7 @@
  * GET   ?brand=&key=      客人查自己的候位號碼、前面幾組、是否輪到
  * GET   ?brand=&list=1    櫃檯：完整候位名單（要櫃檯密碼）
  * POST  { brand, phone, size, lang }   客人登記候位
- * PATCH { brand, full }               櫃檯切換客滿（要櫃檯密碼）
+ * PATCH { brand, full }               櫃檯切換客滿（不用密碼）
  * PATCH { brand, key, state }         櫃檯改狀態（要密碼）；客人自己只能取消
  */
 import { NextResponse, type NextRequest } from "next/server";
@@ -83,8 +83,8 @@ export async function PATCH(req: NextRequest) {
   if (typeof b.brand !== "string" || !isBrand(b.brand)) return bad();
   const staff = counterPinOk(pin(req));
   try {
+    // 客滿開關不用密碼（櫃檯任何店員都能按）
     if (typeof b.full === "boolean") {
-      if (!staff) return NextResponse.json({ error: "pin" }, { status: 401 });
       return NextResponse.json({ ok: await setFull(b.brand, b.full) });
     }
     const state = b.state as WaitState;

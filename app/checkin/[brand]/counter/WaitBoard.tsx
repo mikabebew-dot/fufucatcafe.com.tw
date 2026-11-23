@@ -16,7 +16,8 @@ const showPhone = (p: string) => (/^09\d{8}$/.test(p) ? `${p.slice(0, 4)} ${p.sl
 
 /**
  * 櫃檯看板上方的「客滿／候位」區。
- * 候位電話屬於個資，要輸入櫃檯密碼才看得到；密碼存在這台平板上，不用每次輸入。
+ * 「客滿」開關不用密碼，任何店員都能按。
+ * 候位名單有電話（個資），要輸入櫃檯密碼才看得到；密碼存在這台平板上，不用每次輸入。
  */
 export function WaitBoard({ brand, now }: { brand: string; now: number }) {
   const [pin, setPin] = useState<string | null>(null);
@@ -26,6 +27,7 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
   const [list, setList] = useState<Wait[] | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [showDone, setShowDone] = useState(false);
+  const [waitingCount, setWaitingCount] = useState(0);
 
   useEffect(() => {
     try {
@@ -36,7 +38,20 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
   }, []);
 
   const load = useCallback(async () => {
-    if (!pin) return;
+    if (!pin) {
+      // 沒有密碼：只讀公開狀態（是否客滿、候位幾組），沒有電話
+      try {
+        const res = await fetch(`/api/checkin/wait?brand=${brand}`, { cache: "no-store" });
+        if (res.ok) {
+          const j = (await res.json()) as { full: boolean; waiting: number };
+          setFull(j.full);
+          setWaitingCount(j.waiting);
+        }
+      } catch {
+        /* 下次再試 */
+      }
+      return;
+    }
     try {
       const res = await fetch(`/api/checkin/wait?brand=${brand}&list=1`, { cache: "no-store", headers: { "x-counter-pin": pin } });
       if (res.status === 401) {
@@ -65,10 +80,11 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
   }, [load]);
 
   const send = async (body: Record<string, unknown>) => {
-    if (!pin) return false;
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (pin) headers["x-counter-pin"] = pin;
     const res = await fetch("/api/checkin/wait", {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "x-counter-pin": pin },
+      headers,
       body: JSON.stringify({ brand, ...body }),
     });
     return res.ok;
@@ -89,35 +105,28 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
     setBusy(null);
   };
 
-  if (!pin) {
-    return (
-      <section className="cb-wait">
-        <div className="cb-wait-head">
-          <h2>客滿／候位</h2>
-        </div>
-        <form
-          className="cb-pin"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const v = pinInput.trim();
-            if (!v) return;
-            try {
-              localStorage.setItem(PIN_KEY, v);
-            } catch {
-              /* 只存在這次畫面 */
-            }
-            setPinBad(false);
-            setPin(v);
-            setPinInput("");
-          }}
-        >
-          <input type="password" inputMode="numeric" autoComplete="off" placeholder="櫃檯密碼" aria-label="櫃檯密碼" value={pinInput} onChange={(e) => setPinInput(e.target.value)} />
-          <button type="submit" className="btn">解鎖</button>
-          <span className="cb-status">{pinBad ? "密碼不對，請再試一次。" : "輸入一次後這台平板會記住。"}</span>
-        </form>
-      </section>
-    );
-  }
+  const pinForm = (
+    <form
+      className="cb-pin"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const v = pinInput.trim();
+        if (!v) return;
+        try {
+          localStorage.setItem(PIN_KEY, v);
+        } catch {
+          /* 只存在這次畫面 */
+        }
+        setPinBad(false);
+        setPin(v);
+        setPinInput("");
+      }}
+    >
+      <input type="password" inputMode="numeric" autoComplete="off" placeholder="櫃檯密碼" aria-label="櫃檯密碼" value={pinInput} onChange={(e) => setPinInput(e.target.value)} />
+      <button type="submit" className="btn">看候位名單</button>
+      <span className="cb-status">{pinBad ? "密碼不對，請再試一次。" : "候位名單有客人電話，需要密碼；輸入一次後這台平板會記住。"}</span>
+    </form>
+  );
 
   const active = (list ?? []).filter((w) => w.state === "waiting" || w.state === "called");
   const done = (list ?? []).filter((w) => w.state === "seated" || w.state === "cancelled");
@@ -128,7 +137,7 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
       <div className="cb-wait-head">
         <h2>
           客滿／候位
-          <small>候位中 {active.length} 組・{active.reduce((n, w) => n + w.size, 0)} 人</small>
+          <small>{pin ? `候位中 ${active.length} 組・${active.reduce((n, w) => n + w.size, 0)} 人` : `候位中 ${waitingCount} 組`}</small>
         </h2>
         <button type="button" className={`cb-fullbtn${full ? " on" : ""}`} onClick={toggleFull} disabled={busy === "full"} aria-pressed={full}>
           {full ? "● 客滿中（按此開放入場）" : "目前開放入場（按此設為客滿）"}
@@ -139,6 +148,8 @@ export function WaitBoard({ brand, now }: { brand: string; now: number }) {
           ? "客人掃碼或用平板時，會看到「登記候位」和「前往另一家店」，不會進入入場確認。"
           : "開放中也可以讓候位的客人留著；有空位時按「通知」打電話給下一組。"}
       </p>
+
+      {!pin && pinForm}
 
       {active.length > 0 && (
         <ul className="cb-list">
