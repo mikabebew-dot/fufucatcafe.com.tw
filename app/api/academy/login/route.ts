@@ -3,7 +3,7 @@
  * 需要在 Vercel 設定 LINE_LOGIN_CHANNEL_ID、LINE_LOGIN_CHANNEL_SECRET、ACADEMY_SESSION_SECRET。
  */
 import { NextResponse, type NextRequest } from "next/server";
-import { STATE_COOKIE, academySecret, cookieBase, lineConfig, randomToken, seal } from "@/lib/academy/session";
+import { STATE_COOKIE, academySecret, cookieBase, lineConfig, makeLoginState, seal } from "@/lib/academy/session";
 
 export const dynamic = "force-dynamic";
 
@@ -16,8 +16,7 @@ export function GET(req: NextRequest) {
   const secret = academySecret();
   if (!line || !secret) return NextResponse.redirect(new URL("/academy?login=unavailable", req.url));
 
-  const state = randomToken();
-  const nonce = randomToken();
+  const { state, nonce } = makeLoginState(secret);
   const next = safeNext(req.nextUrl.searchParams.get("next"));
   const redirectUri = new URL("/api/academy/callback", req.nextUrl.origin).toString();
 
@@ -30,6 +29,7 @@ export function GET(req: NextRequest) {
   url.searchParams.set("scope", "profile openid");
 
   const res = NextResponse.redirect(url);
-  res.cookies.set(STATE_COOKIE, seal({ state, nonce, next, exp: Date.now() + 10 * 60_000 }, secret), { ...cookieBase, maxAge: 600 });
+  // cookie 只用來記住登入後要回到哪一頁；換了瀏覽器拿不到也沒關係，會回到 /academy
+  res.cookies.set(STATE_COOKIE, seal({ next, exp: Date.now() + 15 * 60_000 }, secret), { ...cookieBase, maxAge: 900 });
   return res;
 }
