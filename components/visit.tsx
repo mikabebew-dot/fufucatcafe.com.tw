@@ -62,7 +62,7 @@ export function InfoCard({ shop, brand, headingLevel = 2 }: { shop: Shop | null;
         )}
         <dt>{t("entry")}</dt>
         <dd>
-          {shop.entryAge ? t("entryAge", { age: shop.entryAge }) : t("entryAll")}
+          {shop.entryAge ? t("entryAge", { age: shop.entryAge }) : shop.entryNote || t("entryAll")}
           {shop.noReservation !== false && `・${t("noReservation")}`}
         </dd>
       </dl>
@@ -189,9 +189,9 @@ export function VisitFull({ shop, headingLevel = 2 }: { shop: Shop; headingLevel
       <section className="stack">
         <H>{t("visit.rules")}</H>
         <p>
-          {shop.entryAge ? t("visit.entryAge", { age: shop.entryAge }) : t("visit.entryAll")}
+          {shop.entryAge ? t("visit.entryAge", { age: shop.entryAge }) : shop.entryNote || t("visit.entryAll")}
           {shop.noReservation !== false && `・${t("visit.noReservation")}`}
-          {shop.entryNote && <span className="muted">（{shop.entryNote}）</span>}
+          {shop.entryAge && shop.entryNote ? <span className="muted">（{shop.entryNote}）</span> : null}
         </p>
         <RulesList rules={shop.rules} />
       </section>
