@@ -5,19 +5,20 @@
  */
 import { NextResponse, type NextRequest } from "next/server";
 import {
-  SESSION_COOKIE, SESSION_DAYS, STATE_COOKIE, academySecret, cookieBase, lineConfig, playerId, seal, unseal,
+  SESSION_COOKIE, SESSION_DAYS, STATE_COOKIE, academySecret, checkLoginState, cookieBase, lineConfig, playerId, seal, unseal,
   type Session,
 } from "@/lib/academy/session";
 import { upsertPlayer } from "@/lib/academy/store";
 
 export const dynamic = "force-dynamic";
 
-type LoginState = { state: string; nonce: string; next: string };
+type LoginState = { next?: string };
 
 export async function GET(req: NextRequest) {
   const line = lineConfig();
   const secret = academySecret();
-  const fail = (reason: string) => {
+  const fail = (reason: string, detail?: string) => {
+    if (detail) console.error(`[academy] LINE 登入失敗：${detail}`);
     const res = NextResponse.redirect(new URL(`/academy?login=${reason}`, req.url));
     res.cookies.delete(STATE_COOKIE);
     return res;
@@ -25,10 +26,16 @@ export async function GET(req: NextRequest) {
   if (!line || !secret) return fail("unavailable");
 
   const params = req.nextUrl.searchParams;
-  const saved = unseal<LoginState>(req.cookies.get(STATE_COOKIE)?.value, secret);
-  if (params.get("error")) return fail("cancelled");
+  const saved = unseal<LoginState>(req.cookies.get(STATE_COOKIE)?.value, secret) ?? {};
+  const lineError = params.get("error");
+  if (lineError) {
+    const desc = params.get("error_description") ?? "";
+    return lineError === "access_denied" && !desc.includes("channel") ? fail("cancelled") : fail("failed", `LINE 回傳 ${lineError} ${desc}`);
+  }
   const code = params.get("code");
-  if (!saved || !code || params.get("state") !== saved.state) return fail("failed");
+  const checked = checkLoginState(params.get("state"), secret);
+  if (!code) return fail("failed", "沒有授權碼");
+  if (!checked) return fail("failed", "state 驗證失敗或已過期");
 
   try {
     const redirectUri = new URL("/api/academy/callback", req.nextUrl.origin).toString();
@@ -37,25 +44,26 @@ export async function GET(req: NextRequest) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: redirectUri, client_id: line.id, client_secret: line.secret }),
     });
-    if (!tokenRes.ok) return fail("failed");
+    if (!tokenRes.ok) return fail("failed", `換 token 失敗 ${tokenRes.status} ${(await tokenRes.text()).slice(0, 200)}`);
     const { id_token } = (await tokenRes.json()) as { id_token?: string };
-    if (!id_token) return fail("failed");
+    if (!id_token) return fail("failed", "LINE 沒有回傳 id_token");
 
     const verifyRes = await fetch("https://api.line.me/oauth2/v2.1/verify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ id_token, client_id: line.id, nonce: saved.nonce }),
+      body: new URLSearchParams({ id_token, client_id: line.id, nonce: checked.nonce }),
     });
-    if (!verifyRes.ok) return fail("failed");
+    if (!verifyRes.ok) return fail("failed", `驗證 id_token 失敗 ${verifyRes.status} ${(await verifyRes.text()).slice(0, 200)}`);
     const profile = (await verifyRes.json()) as { sub?: string; name?: string; picture?: string };
-    if (!profile.sub) return fail("failed");
+    if (!profile.sub) return fail("failed", "LINE 沒有回傳使用者代號");
 
     const pid = playerId(profile.sub, secret);
     const name = (profile.name ?? "").slice(0, 60);
     await upsertPlayer(pid, { sub: profile.sub, name, picture: profile.picture });
 
     const session: Session = { pid, sub: profile.sub, name, exp: Date.now() + SESSION_DAYS * 86_400_000 };
-    const res = NextResponse.redirect(new URL(saved.next || "/academy", req.url));
+    const next = saved.next && saved.next.startsWith("/") && !saved.next.startsWith("//") ? saved.next : "/academy";
+    const res = NextResponse.redirect(new URL(next, req.url));
     res.cookies.set(SESSION_COOKIE, seal(session, secret), { ...cookieBase, maxAge: SESSION_DAYS * 86_400 });
     res.cookies.delete(STATE_COOKIE);
     return res;
