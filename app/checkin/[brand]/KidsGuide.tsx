@@ -17,7 +17,11 @@ function Both({ t, className }: { t: Partial<L10n>; className: string }) {
  * 小朋友版入場說明（NUKUNUKU）：主要靠大圖，一張配一句很短的中英文，
  * 按「我會做到！」蓋一個貓掌印，6 張看完後提醒「要和爸爸媽媽待在同一層樓」。
  */
-export function KidsGuide({ rules, onClose, onDone }: { rules: PicRule[]; onClose: () => void; onDone: () => void }) {
+export function KidsGuide({ rules, onClose, onDone, variant = "kids" }: { rules: PicRule[]; onClose: () => void; onDone: () => void; variant?: "kids" | "step" }) {
+  // kids：NUKUNUKU 小朋友版；step：FUFU「一張一張看」（同樣玩法，給所有客人）
+  const k = variant === "kids"
+    ? { title: T.kidsTitle, doIt: T.kidsDo, doneTitle: T.kidsDoneTitle, doneBody: T.kidsDoneBody, back: T.kidsBack }
+    : { title: T.stepTitle, doIt: T.stepDo, doneTitle: T.stepDoneTitle, doneBody: T.stepDoneBody, back: T.stepBack };
   const [i, setI] = useState(0);
   const done = i >= rules.length;
   const r = rules[Math.min(i, rules.length - 1)];
@@ -40,9 +44,9 @@ export function KidsGuide({ rules, onClose, onDone }: { rules: PicRule[]; onClos
   };
 
   return (
-    <div className="ck-kids" role="dialog" aria-modal="true" aria-label={`${T.kidsTitle.zh} ${T.kidsTitle.en}`}>
+    <div className="ck-kids" role="dialog" aria-modal="true" aria-label={`${k.title.zh} ${k.title.en}`}>
       <div className="ck-kids-top">
-        <Both t={T.kidsTitle} className="ck-kids-title" />
+        <Both t={k.title} className="ck-kids-title" />
         <button type="button" className="ck-kids-x" onClick={onClose} aria-label={`${T.close.zh} ${T.close.en}`}>×</button>
       </div>
 
@@ -61,8 +65,8 @@ export function KidsGuide({ rules, onClose, onDone }: { rules: PicRule[]; onClos
       ) : (
         <div className="ck-kids-card ck-kids-done">
           <p className="ck-kids-badge" aria-hidden="true">🐾🐾🐾<br />🐾🐾🐾</p>
-          <Both t={T.kidsDoneTitle} className="ck-kids-big" />
-          <Both t={T.kidsDoneBody} className="ck-kids-line" />
+          <Both t={k.doneTitle} className="ck-kids-big" />
+          <Both t={k.doneBody} className="ck-kids-line" />
         </div>
       )}
 
@@ -70,10 +74,10 @@ export function KidsGuide({ rules, onClose, onDone }: { rules: PicRule[]; onClos
         {!done ? (
           <>
             {i > 0 && <button type="button" className="btn btn-ghost" onClick={() => setI(i - 1)} aria-label="Back">‹</button>}
-            <button type="button" className="btn ck-kids-do" onClick={next}>{T.kidsDo.zh} {T.kidsDo.en} 🐾</button>
+            <button type="button" className="btn ck-kids-do" onClick={next}>{k.doIt.zh} {k.doIt.en} 🐾</button>
           </>
         ) : (
-          <button type="button" className="btn ck-kids-do" onClick={onClose}>{T.kidsBack.zh}・{T.kidsBack.en} ›</button>
+          <button type="button" className="btn ck-kids-do" onClick={onClose}>{k.back.zh}・{k.back.en} ›</button>
         )}
       </div>
     </div>

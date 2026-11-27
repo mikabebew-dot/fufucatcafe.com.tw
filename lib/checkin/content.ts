@@ -204,6 +204,16 @@ const KID = {
   chase: { zh: "貓咪走開時不要追。", en: "Don't chase the cats." },
 };
 
+/** FUFU「一張一張看」的短句（中英對照） */
+const STEP_FUFU = {
+  hug: { zh: "不要強抱貓咪，等牠自己走過來。", en: "Don't pick up the cats. Let them come to you." },
+  flash: { zh: "拍照不開閃光燈。", en: "No flash when you take photos." },
+  door: { zh: "進出請隨手關門。", en: "Please close the door behind you." },
+  feed: { zh: "不餵貓咪吃人類的食物。", en: "Don't feed the cats human food." },
+  escape: { zh: "進出貓室門注意腳邊，別讓貓咪跑出去。", en: "Watch your step at the door so no cat slips out." },
+  chase: { zh: "不追趕、不限制貓咪行動。", en: "Don't chase or hold back the cats." },
+};
+
 export const PIC_RULES: Record<BrandId, PicRule[]> = {
   nukunuku: [
     { img: pic("nukunuku", "78,251,657,597"), title: RULES[0].title, strong: true, kid: KID.hug },
@@ -214,12 +224,12 @@ export const PIC_RULES: Record<BrandId, PicRule[]> = {
     { img: pic("nukunuku", "1493,854,669,591"), title: CHASE, kid: KID.chase },
   ],
   fufu: [
-    { img: pic("fufu", "96,269,651,591"), title: RULES[0].title, strong: true },
-    { img: pic("fufu", "765,269,699,591"), title: RULES[4].title },
-    { img: pic("fufu", "1469,269,681,591"), title: RULES[5].title },
-    { img: pic("fufu", "96,872,651,573"), title: RULES[3].title },
-    { img: pic("fufu", "765,872,699,573"), title: ESCAPE },
-    { img: pic("fufu", "1469,872,681,573"), title: CHASE },
+    { img: pic("fufu", "96,269,651,591"), title: RULES[0].title, strong: true, kid: STEP_FUFU.hug },
+    { img: pic("fufu", "765,269,699,591"), title: RULES[4].title, kid: STEP_FUFU.flash },
+    { img: pic("fufu", "1469,269,681,591"), title: RULES[5].title, kid: STEP_FUFU.door },
+    { img: pic("fufu", "96,872,651,573"), title: RULES[3].title, kid: STEP_FUFU.feed },
+    { img: pic("fufu", "765,872,699,573"), title: ESCAPE, kid: STEP_FUFU.escape },
+    { img: pic("fufu", "1469,872,681,573"), title: CHASE, kid: STEP_FUFU.chase },
   ],
 };
 
@@ -414,6 +424,14 @@ export const T = {
   close: { zh: "關閉", en: "Close", ja: "閉じる", ko: "닫기", th: "ปิด", vi: "Đóng", id: "Tutup" },
   kidsOpen: { zh: "有小朋友一起來嗎？和小朋友一起看", en: "With kids? Read it together", ja: "お子さま連れの方へ：いっしょに見よう", ko: "아이와 함께 오셨나요? 같이 봐요", th: "มากับเด็กไหม? ดูด้วยกันเลย", vi: "Đi cùng bé? Cùng xem nhé", id: "Bersama anak? Lihat bersama" },
   kidsOpenSub: { zh: "小朋友版：一張一張看，蓋滿 6 個貓掌印", en: "Kids' version: one picture at a time, collect 6 paw stamps", ja: "こども版：1まいずつ見て、肉球スタンプを6こ集めよう", ko: "어린이 버전: 한 장씩 보고 발도장 6개 모으기", th: "เวอร์ชันเด็ก: ดูทีละรูป สะสมรอยเท้าแมว 6 อัน", vi: "Bản cho bé: xem từng hình, sưu tập 6 dấu chân mèo", id: "Versi anak: satu gambar per halaman, kumpulkan 6 cap kaki" },
+  stepOpen: { zh: "一張一張看", en: "One picture at a time", ja: "1枚ずつ見る", ko: "한 장씩 보기", th: "ดูทีละรูป", vi: "Xem từng hình", id: "Lihat satu per satu" },
+  stepOpenSub: { zh: "看完一張按一下，蓋滿 6 個貓掌印", en: "Tap after each one and collect 6 paw stamps", ja: "1枚ごとにタップして肉球スタンプを6こ集めよう", ko: "한 장 볼 때마다 눌러서 발도장 6개 모으기", th: "ดูแล้วแตะ สะสมรอยเท้าแมว 6 อัน", vi: "Xem xong chạm một lần, sưu tập 6 dấu chân mèo", id: "Ketuk tiap selesai, kumpulkan 6 cap kaki" },
+  stepDoneTag: { zh: "已看完", en: "Done", ja: "見ました", ko: "완료", th: "ดูครบแล้ว", vi: "Đã xem xong", id: "Selesai" },
+  stepTitle: { zh: "一張一張看", en: "One at a time" } as unknown as L10n,
+  stepDo: { zh: "我知道了！", en: "Got it!" } as unknown as L10n,
+  stepDoneTitle: { zh: "謝謝你和貓咪做好約定！", en: "Thanks for keeping our cats' promises!" } as unknown as L10n,
+  stepDoneBody: { zh: "祝你在 FUFU 度過愉快的時光。", en: "Enjoy your time at FUFU!" } as unknown as L10n,
+  stepBack: { zh: "回到圖片版說明", en: "Back to the picture guide" } as unknown as L10n,
   kidsTitle: { zh: "和貓咪做好朋友", en: "Be the cats' friend", ja: "ねこと なかよく なろう", ko: "고양이랑 친구 되기", th: "มาเป็นเพื่อนกับแมวกัน", vi: "Làm bạn với mèo nhé", id: "Ayo berteman dengan kucing" },
   kidsDo: { zh: "我會做到！", en: "I can do it!", ja: "まもれるよ！", ko: "할 수 있어요!", th: "ทำได้!", vi: "Con làm được!", id: "Aku bisa!" },
   kidsDoneTitle: { zh: "你是貓咪的好朋友！", en: "You're a friend of the cats!", ja: "きみは ねこの ともだちだね！", ko: "너는 고양이의 친구야!", th: "หนูเป็นเพื่อนของแมวแล้ว!", vi: "Con là bạn của các bé mèo rồi!", id: "Kamu teman kucing!" },

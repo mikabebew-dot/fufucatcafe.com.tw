@@ -15,6 +15,7 @@ export function PictureGuide({ brand, lang, onClose }: { brand: BrandId; lang: L
   const [zoom, setZoom] = useState<number | null>(null);
   const [kids, setKids] = useState(false);
   const [kidsDone, setKidsDone] = useState(false);
+  const isKids = brand === "nukunuku"; // NUKUNUKU 是小朋友版，FUFU 是「一張一張看」
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -39,12 +40,12 @@ export function PictureGuide({ brand, lang, onClose }: { brand: BrandId; lang: L
       </div>
 
       <div className="ck-pg-body">
-        {brand === "nukunuku" && (
+        {(
           <button type="button" className={`ck-kids-open${kidsDone ? " done" : ""}`} onClick={() => setKids(true)}>
-            <span className="ck-kids-open-icon" aria-hidden="true">{kidsDone ? "✓" : "🧒"}</span>
+            <span className="ck-kids-open-icon" aria-hidden="true">{kidsDone ? "✓" : isKids ? "🧒" : "🐾"}</span>
             <span>
-              <strong>{tr(T.kidsOpen, lang)}</strong>
-              <small>{kidsDone ? tr(T.kidsDoneTag, lang) : tr(T.kidsOpenSub, lang)}</small>
+              <strong>{tr(isKids ? T.kidsOpen : T.stepOpen, lang)}</strong>
+              <small>{kidsDone ? tr(isKids ? T.kidsDoneTag : T.stepDoneTag, lang) : tr(isKids ? T.kidsOpenSub : T.stepOpenSub, lang)}</small>
             </span>
             <span aria-hidden="true">›</span>
           </button>
@@ -88,7 +89,7 @@ export function PictureGuide({ brand, lang, onClose }: { brand: BrandId; lang: L
           <button type="button" className="btn btn-ghost">{tr(T.close, lang)}</button>
         </div>
       )}
-      {kids && <KidsGuide rules={rules} onClose={() => setKids(false)} onDone={() => setKidsDone(true)} />}
+      {kids && <KidsGuide rules={rules} variant={isKids ? "kids" : "step"} onClose={() => setKids(false)} onDone={() => setKidsDone(true)} />}
     </div>
   );
 }
