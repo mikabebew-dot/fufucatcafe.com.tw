@@ -194,14 +194,14 @@ const ESCAPE: L10n = {
   th: "เข้าออกห้องแมวระวังเท้า อย่าให้แมวหลุดออกไป", vi: "Ra vào phòng mèo chú ý dưới chân, tránh để mèo chạy thoát", id: "Perhatikan kaki saat keluar masuk ruang kucing agar kucing tidak kabur",
 };
 
-/** 小朋友版的一句話（NUKUNUKU，只有中文） */
+/** 小朋友版的一句話（NUKUNUKU）：中英對照、越短越好，主要看圖 */
 const KID = {
-  hug: { zh: "貓咪不喜歡被抱抱。用眼睛看，等牠自己走過來就好。" },
-  flash: { zh: "拍照時要關掉閃光燈，不然會嚇到貓咪。" },
-  door: { zh: "進出門要馬上關起來，貓咪才不會跑出去迷路。" },
-  feed: { zh: "我們的點心和飲料，貓咪吃了會肚子痛，不可以給牠吃。" },
-  wand: { zh: "逗貓棒請爸爸媽媽陪貓咪玩，小朋友在旁邊看就好。" },
-  chase: { zh: "貓咪走開的時候不要追，讓牠去休息。" },
+  hug: { zh: "不要抱貓咪，等牠自己走過來。", en: "Don't pick up the cats. Let them come to you." },
+  flash: { zh: "拍照不開閃光燈。", en: "No flash when you take photos." },
+  door: { zh: "進出記得關門。", en: "Always close the door." },
+  feed: { zh: "不給貓咪吃我們的食物。", en: "Don't share your food with the cats." },
+  wand: { zh: "逗貓棒讓大人來玩。", en: "Teaser wands are for grown-ups." },
+  chase: { zh: "貓咪走開時不要追。", en: "Don't chase the cats." },
 };
 
 export const PIC_RULES: Record<BrandId, PicRule[]> = {

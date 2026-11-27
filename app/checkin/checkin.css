@@ -467,8 +467,11 @@
   max-width: 720px; width: 100%; margin: 0 auto; animation: ck-pop .3s ease-out;
 }
 @keyframes ck-pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.ck-kids-card img { width: 100%; max-height: 52dvh; object-fit: contain; border-radius: 20px; background: #fbf3ea; box-shadow: 0 6px 20px rgb(120 60 20 / .15); }
-.ck-kids-line { margin: 0; font-size: clamp(21px, 5.6vw, 30px); font-weight: 700; line-height: 1.55; text-align: center; }
+.ck-kids-card img { width: 100%; max-height: 60dvh; object-fit: contain; border-radius: 20px; background: #fbf3ea; box-shadow: 0 6px 20px rgb(120 60 20 / .15); }
+.ck-kids-line { margin: 0; display: grid; gap: 2px; font-size: clamp(22px, 6vw, 30px); font-weight: 700; line-height: 1.45; text-align: center; }
+.ck-kids-en { font-size: .68em; font-weight: 600; color: #8a4a2a; }
+.ck-kids-title, .ck-kids-big { display: grid; gap: 0; }
+.ck-kids-title .ck-kids-en { font-size: 14px; }
 .ck-kids-big { margin: 0; font-size: clamp(28px, 8vw, 44px); font-weight: 800; color: #c2532a; text-align: center; }
 .ck-kids-badge { margin: 0; font-size: 44px; line-height: 1.2; text-align: center; }
 .ck-kids-foot { display: flex; gap: 10px; max-width: 720px; width: 100%; margin: 0 auto; }

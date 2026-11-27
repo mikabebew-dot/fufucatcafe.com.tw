@@ -371,8 +371,8 @@ export function CheckinFlow({
             </header>
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
 
-            {/* NUKUNUKU 可以帶小朋友：小朋友版一張一張看（只有中文，選中文時才顯示） */}
-            {data.brand === "nukunuku" && lang === "zh" && (
+            {/* NUKUNUKU 可以帶小朋友：小朋友版一張一張看（中英對照，主要看圖） */}
+            {data.brand === "nukunuku" && (
               <button type="button" className={`ck-kids-open${kidsDone ? " done" : ""}`} onClick={() => setKidsOpen(true)}>
                 <span className="ck-kids-open-icon" aria-hidden="true">{kidsDone ? "✓" : "🧒"}</span>
                 <span>
@@ -472,7 +472,6 @@ export function CheckinFlow({
       {kidsOpen && (
         <KidsGuide
           rules={PIC_RULES[data.brand]}
-          lang={lang}
           onClose={() => setKidsOpen(false)}
           onDone={() => setKidsDone(true)}
         />

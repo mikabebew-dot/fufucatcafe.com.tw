@@ -1,13 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { T, tr, type L10n, type Lang, type PicRule } from "@/lib/checkin/content";
+import { T, type L10n, type PicRule } from "@/lib/checkin/content";
+
+/** 小朋友版固定中英對照（不跟著介面語言） */
+function Both({ t, className }: { t: Partial<L10n>; className: string }) {
+  return (
+    <p className={className}>
+      <span lang="zh-Hant">{t.zh}</span>
+      {t.en && <span lang="en" className="ck-kids-en">{t.en}</span>}
+    </p>
+  );
+}
 
 /**
- * 小朋友版入場說明（NUKUNUKU）：一次一張大圖＋一句簡單的話，
+ * 小朋友版入場說明（NUKUNUKU）：主要靠大圖，一張配一句很短的中英文，
  * 按「我會做到！」蓋一個貓掌印，6 張看完後提醒「要和爸爸媽媽待在同一層樓」。
  */
-export function KidsGuide({ rules, lang, onClose, onDone }: { rules: PicRule[]; lang: Lang; onClose: () => void; onDone: () => void }) {
+export function KidsGuide({ rules, onClose, onDone }: { rules: PicRule[]; onClose: () => void; onDone: () => void }) {
   const [i, setI] = useState(0);
   const done = i >= rules.length;
   const r = rules[Math.min(i, rules.length - 1)];
@@ -30,10 +40,10 @@ export function KidsGuide({ rules, lang, onClose, onDone }: { rules: PicRule[]; 
   };
 
   return (
-    <div className="ck-kids" role="dialog" aria-modal="true" aria-label={tr(T.kidsTitle, lang)}>
+    <div className="ck-kids" role="dialog" aria-modal="true" aria-label={`${T.kidsTitle.zh} ${T.kidsTitle.en}`}>
       <div className="ck-kids-top">
-        <p className="ck-kids-title">{tr(T.kidsTitle, lang)}</p>
-        <button type="button" className="ck-kids-x" onClick={onClose} aria-label={tr(T.close, lang)}>×</button>
+        <Both t={T.kidsTitle} className="ck-kids-title" />
+        <button type="button" className="ck-kids-x" onClick={onClose} aria-label={`${T.close.zh} ${T.close.en}`}>×</button>
       </div>
 
       <ol className="ck-kids-paws" aria-label={`${Math.min(i, rules.length)} / ${rules.length}`}>
@@ -45,25 +55,25 @@ export function KidsGuide({ rules, lang, onClose, onDone }: { rules: PicRule[]; 
       {!done ? (
         <div className="ck-kids-card" key={i}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={r.img} alt={tr(r.title, lang)} />
-          <p className="ck-kids-line">{tr((r.kid ?? r.title) as L10n, lang)}</p>
+          <img src={r.img} alt={`${r.title.zh} ${r.title.en}`} />
+          <Both t={r.kid ?? r.title} className="ck-kids-line" />
         </div>
       ) : (
         <div className="ck-kids-card ck-kids-done">
           <p className="ck-kids-badge" aria-hidden="true">🐾🐾🐾<br />🐾🐾🐾</p>
-          <p className="ck-kids-big">{tr(T.kidsDoneTitle, lang)}</p>
-          <p className="ck-kids-line">{tr(T.kidsDoneBody, lang)}</p>
+          <Both t={T.kidsDoneTitle} className="ck-kids-big" />
+          <Both t={T.kidsDoneBody} className="ck-kids-line" />
         </div>
       )}
 
       <div className="ck-kids-foot">
         {!done ? (
           <>
-            {i > 0 && <button type="button" className="btn btn-ghost" onClick={() => setI(i - 1)}>‹</button>}
-            <button type="button" className="btn ck-kids-do" onClick={next}>{tr(T.kidsDo, lang)} 🐾</button>
+            {i > 0 && <button type="button" className="btn btn-ghost" onClick={() => setI(i - 1)} aria-label="Back">‹</button>}
+            <button type="button" className="btn ck-kids-do" onClick={next}>{T.kidsDo.zh} {T.kidsDo.en} 🐾</button>
           </>
         ) : (
-          <button type="button" className="btn ck-kids-do" onClick={onClose}>{tr(T.kidsBack, lang)} ›</button>
+          <button type="button" className="btn ck-kids-do" onClick={onClose}>{T.kidsBack.zh}・{T.kidsBack.en} ›</button>
         )}
       </div>
     </div>
