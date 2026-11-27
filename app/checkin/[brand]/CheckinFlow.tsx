@@ -7,6 +7,7 @@ import {
   isLang, perPerson, tr, type Lang,
 } from "@/lib/checkin/content";
 import type { BrandId } from "@/lib/constants";
+import { PictureGuide } from "./PictureGuide";
 import { WaitPanel, loadTicket, type Status, type Ticket } from "./WaitPanel";
 
 type Result = { code: string; at: string; short: number; long: number; online: boolean };
@@ -58,6 +59,7 @@ export function CheckinFlow({
   const [short, setShort] = useState(0);
   const [long, setLong] = useState(0);
   const [minutes, setMinutes] = useState(60);
+  const [picOpen, setPicOpen] = useState(false);
   const [agree, setAgree] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
@@ -158,6 +160,7 @@ export function CheckinFlow({
     setShort(0);
     setLong(0);
     setAgree(false);
+    setPicOpen(false);
     setMinutes(60);
     setBypass(false);
     setStep(0);
@@ -333,6 +336,15 @@ export function CheckinFlow({
                 <p className="ck-small">{tr(T.longMin, lang, { v: data.longMin })}</p>
               </div>
             </div>
+            {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
+            <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
+              <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
+              <span>
+                <strong>{tr(T.picGuideOpen, lang)}</strong>
+                <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
+              </span>
+              <span aria-hidden="true">›</span>
+            </button>
             </div>
 
             <div className="ck-card ck-calc">
@@ -428,6 +440,8 @@ export function CheckinFlow({
           </section>
         )}
       </main>
+
+      {picOpen && <PictureGuide brand={data.brand} lang={lang} onClose={() => setPicOpen(false)} />}
 
       {step === 3 && kiosk && (
         <footer className="ck-foot">
