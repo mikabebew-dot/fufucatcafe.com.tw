@@ -545,3 +545,9 @@
 .ck-pg[data-brand="fufu"] .ck-kids-big { color: #3f6560; }
 .ck-pg[data-brand="fufu"] .ck-kids-do { background: #4f7a72 !important; }
 .ck-pg[data-brand="fufu"] .ck-kids-card img { box-shadow: 0 6px 20px rgb(40 80 70 / .15); }
+/* 平板橫向：按鈕放在左欄「停留時間費用試算」正下方 */
+@media (min-width: 900px) and (orientation: landscape) {
+  .ck-stack:has(> .ck-planbox) { grid-template-rows: auto auto auto 1fr; }
+  .ck-stack:has(> .ck-planbox) > .ck-planbox { grid-row: 2 / span 3; }
+  .ck-stack:has(> .ck-planbox) > .ck-pg-open { grid-column: 1; grid-row: 4; align-self: start; }
+}
