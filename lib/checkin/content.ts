@@ -224,9 +224,9 @@ export const PIC_RULES: Record<BrandId, PicRule[]> = {
     { img: pic("nukunuku", "1493,854,669,591"), title: CHASE, kid: KID.chase },
   ],
   fufu: [
-    { img: pic("fufu", "96,269,651,591"), title: RULES[0].title, strong: true, kid: STEP_FUFU.hug },
-    { img: pic("fufu", "765,269,699,591"), title: RULES[4].title, kid: STEP_FUFU.flash },
-    { img: pic("fufu", "1469,269,681,591"), title: RULES[5].title, kid: STEP_FUFU.door },
+    { img: pic("fufu", "96,288,651,572"), title: RULES[0].title, strong: true, kid: STEP_FUFU.hug },
+    { img: pic("fufu", "765,288,699,572"), title: RULES[4].title, kid: STEP_FUFU.flash },
+    { img: pic("fufu", "1469,288,681,572"), title: RULES[5].title, kid: STEP_FUFU.door },
     { img: pic("fufu", "96,872,651,573"), title: RULES[3].title, kid: STEP_FUFU.feed },
     { img: pic("fufu", "765,872,699,573"), title: ESCAPE, kid: STEP_FUFU.escape },
     { img: pic("fufu", "1469,872,681,573"), title: CHASE, kid: STEP_FUFU.chase },
