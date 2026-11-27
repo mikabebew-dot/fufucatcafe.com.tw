@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CheckinData } from "@/lib/checkin/data";
 import {
-  LANGS, LANG_LABEL, LOCALE_PREFIX, MORE_RULES, PIC_RULES, PRICE_CAP_MIN, T,
+  EXTRA_RULES, LANGS, LANG_LABEL, LOCALE_PREFIX, PRICE_CAP_MIN, RULES, T,
   isLang, perPerson, tr, type Lang,
 } from "@/lib/checkin/content";
-import { KidsGuide } from "./KidsGuide";
 import type { BrandId } from "@/lib/constants";
+import { PictureGuide } from "./PictureGuide";
 import { WaitPanel, loadTicket, type Status, type Ticket } from "./WaitPanel";
 
 type Result = { code: string; at: string; short: number; long: number; online: boolean };
@@ -59,9 +59,7 @@ export function CheckinFlow({
   const [short, setShort] = useState(0);
   const [long, setLong] = useState(0);
   const [minutes, setMinutes] = useState(60);
-  const [kidsOpen, setKidsOpen] = useState(false);
-  const [kidsDone, setKidsDone] = useState(false);
-  const [zoom, setZoom] = useState<number | null>(null);
+  const [picOpen, setPicOpen] = useState(false);
   const [agree, setAgree] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
@@ -162,9 +160,7 @@ export function CheckinFlow({
     setShort(0);
     setLong(0);
     setAgree(false);
-    setKidsOpen(false);
-    setKidsDone(false);
-    setZoom(null);
+    setPicOpen(false);
     setMinutes(60);
     setBypass(false);
     setStep(0);
@@ -293,6 +289,15 @@ export function CheckinFlow({
               <p className="ck-eyebrow2" data-text="STEP 02 · MINIMUM CHARGE & DRINKS" />
               <h1>{tr(T.priceTitle, lang)}</h1>
               <p className="ck-sub">{tr(T.priceSub, lang)}</p>
+              {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
+              <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
+                <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
+                <span>
+                  <strong>{tr(T.picGuideOpen, lang)}</strong>
+                  <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
+                </span>
+                <span aria-hidden="true">›</span>
+              </button>
             </header>
             <div className="ck-card ck-price">
               <p className="ck-price-head">{tr(T.priceHead, lang, { p: data.per10, cap })}</p>
@@ -370,43 +375,18 @@ export function CheckinFlow({
               <p className="ck-sub">{tr(T.rulesSub, lang)}</p>
             </header>
             <p className="ck-muted">{tr(T.rulesLead, lang)}</p>
-
-            {/* NUKUNUKU 可以帶小朋友：小朋友版一張一張看（中英對照，主要看圖） */}
-            {data.brand === "nukunuku" && (
-              <button type="button" className={`ck-kids-open${kidsDone ? " done" : ""}`} onClick={() => setKidsOpen(true)}>
-                <span className="ck-kids-open-icon" aria-hidden="true">{kidsDone ? "✓" : "🧒"}</span>
-                <span>
-                  <strong>{tr(T.kidsOpen, lang)}</strong>
-                  <small>{kidsDone ? tr(T.kidsDoneTag, lang) : tr(T.kidsOpenSub, lang)}</small>
-                </span>
-                <span aria-hidden="true">›</span>
-              </button>
-            )}
-
-            {/* 圖片版約定：插圖上已有中英文，其他語言在圖下顯示翻譯 */}
-            <ol className="ck-pics">
-              {PIC_RULES[data.brand].map((r, i) => (
-                <li key={i} className={r.strong ? "ck-pic-strong" : undefined}>
-                  <button type="button" onClick={() => setZoom(i)} aria-label={tr(r.title, lang)}>
-                    {r.strong && <span className="ck-rule-key">{tr(T.ruleKey, lang)}</span>}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={r.img} alt={tr(r.title, lang)} loading={i < 2 ? "eager" : "lazy"} />
-                    {lang !== "zh" && lang !== "en" && <span className="ck-pic-cap">{tr(r.title, lang)}</span>}
-                  </button>
+            <ol className="ck-rules">
+              {[...RULES, ...EXTRA_RULES[data.brand]].map((r, i) => (
+                <li key={i} className={r.strong ? "ck-rule-strong" : undefined}>
+                  <span className="ck-num mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    {r.strong && <p className="ck-rule-key">{tr(T.ruleKey, lang)}</p>}
+                    <p className="ck-rule-title">{tr(r.title, lang)}</p>
+                    <p className="ck-muted">{highlight(tr(r.body, lang))}</p>
+                  </div>
                 </li>
               ))}
             </ol>
-            <p className="ck-small ck-pic-hint">{tr(T.picHint, lang)}</p>
-
-            <h2>{tr(T.moreTitle, lang)}</h2>
-            <ul className="ck-more">
-              {MORE_RULES[data.brand].map((r, i) => (
-                <li key={i}>
-                  <p className="ck-rule-title">{tr(r.title, lang)}</p>
-                  <p className="ck-muted">{highlight(tr(r.body, lang))}</p>
-                </li>
-              ))}
-            </ul>
             <div className="ck-card ck-notes">
               <p>{tr(T.scratch, lang)}</p>
               {data.entryNote && <p>{data.entryNote[lang]}</p>}
@@ -461,21 +441,7 @@ export function CheckinFlow({
         )}
       </main>
 
-      {zoom !== null && (
-        <div className="ck-zoom" role="dialog" aria-modal="true" onClick={() => setZoom(null)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={PIC_RULES[data.brand][zoom].img} alt={tr(PIC_RULES[data.brand][zoom].title, lang)} />
-          <p>{tr(PIC_RULES[data.brand][zoom].title, lang)}</p>
-          <button type="button" className="btn btn-ghost">{tr(T.close, lang)}</button>
-        </div>
-      )}
-      {kidsOpen && (
-        <KidsGuide
-          rules={PIC_RULES[data.brand]}
-          onClose={() => setKidsOpen(false)}
-          onDone={() => setKidsDone(true)}
-        />
-      )}
+      {picOpen && <PictureGuide brand={data.brand} lang={lang} onClose={() => setPicOpen(false)} />}
 
       {step === 3 && kiosk && (
         <footer className="ck-foot">

@@ -404,6 +404,11 @@ export const T = {
   partyTotal: { zh: "共 {n} 人", en: "{n} people in total", ja: "合計 {n} 名", ko: "총 {n}명", th: "รวม {n} คน", vi: "Tổng {n} người", id: "Total {n} orang" },
   needPeople: { zh: "請至少選 1 人", en: "Choose at least 1 person", ja: "1名以上を選んでください", ko: "1명 이상 선택해 주세요", th: "กรุณาเลือกอย่างน้อย 1 คน", vi: "Vui lòng chọn ít nhất 1 người", id: "Pilih minimal 1 orang" },
 
+  picGuideOpen: { zh: "看圖片版說明", en: "See the picture guide", ja: "イラストで見る", ko: "그림으로 보기", th: "ดูคำอธิบายแบบรูปภาพ", vi: "Xem hướng dẫn bằng hình", id: "Lihat panduan bergambar" },
+  picGuideOpenSub: { zh: "和貓咪的約定・一看就懂", en: "Cat rules at a glance", ja: "猫との約束がひと目でわかる", ko: "고양이와의 약속을 한눈에", th: "ข้อตกลงกับแมวแบบเข้าใจง่าย", vi: "Lời hứa với mèo, nhìn là hiểu", id: "Aturan kucing sekilas pandang" },
+  picGuideOpenSubKids: { zh: "和貓咪的約定・有小朋友版", en: "Cat rules, with a kids' version", ja: "猫との約束・こども版あり", ko: "고양이와의 약속・어린이 버전 있음", th: "ข้อตกลงกับแมว・มีเวอร์ชันเด็ก", vi: "Lời hứa với mèo・có bản cho bé", id: "Aturan kucing・ada versi anak" },
+  picGuideTitle: { zh: "圖片版說明", en: "Picture guide", ja: "イラストでご案内", ko: "그림으로 보는 안내", th: "คำอธิบายแบบรูปภาพ", vi: "Hướng dẫn bằng hình", id: "Panduan bergambar" },
+  picGuideBack: { zh: "看完了，回到入場確認", en: "Done, back to check-in", ja: "読みました・入場確認に戻る", ko: "다 봤어요, 입장 확인으로", th: "ดูแล้ว กลับไปยืนยันการเข้าร้าน", vi: "Xem xong, quay lại xác nhận", id: "Selesai, kembali ke check-in" },
   picHint: { zh: "點圖片可以放大", en: "Tap a picture to enlarge", ja: "画像をタップすると拡大します", ko: "그림을 누르면 크게 볼 수 있어요", th: "แตะรูปเพื่อขยาย", vi: "Chạm vào hình để phóng to", id: "Ketuk gambar untuk memperbesar" },
   moreTitle: { zh: "還有這些提醒", en: "A few more things", ja: "そのほかのお願い", ko: "그 밖의 안내", th: "ข้อควรทราบเพิ่มเติม", vi: "Thêm vài lưu ý", id: "Beberapa hal lainnya" },
   close: { zh: "關閉", en: "Close", ja: "閉じる", ko: "닫기", th: "ปิด", vi: "Đóng", id: "Tutup" },
