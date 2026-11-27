@@ -289,15 +289,6 @@ export function CheckinFlow({
               <p className="ck-eyebrow2" data-text="STEP 02 · MINIMUM CHARGE & DRINKS" />
               <h1>{tr(T.priceTitle, lang)}</h1>
               <p className="ck-sub">{tr(T.priceSub, lang)}</p>
-              {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
-              <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
-                <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
-                <span>
-                  <strong>{tr(T.picGuideOpen, lang)}</strong>
-                  <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
-                </span>
-                <span aria-hidden="true">›</span>
-              </button>
             </header>
             <div className="ck-card ck-price">
               <p className="ck-price-head">{tr(T.priceHead, lang, { p: data.per10, cap })}</p>
@@ -330,6 +321,15 @@ export function CheckinFlow({
                 </p>
                 <p className="ck-small">{tr(T.shortUpgrade, lang)}</p>
               </div>
+                {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
+                <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
+                  <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
+                  <span>
+                    <strong>{tr(T.picGuideOpen, lang)}</strong>
+                    <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
+                  </span>
+                  <span aria-hidden="true">›</span>
+                </button>
               <div className={`ck-plan${long ? " on" : ""}`}>
                 <p className="ck-plan-tag mono">PLAN B</p>
                 <div className="ck-plan-head">
