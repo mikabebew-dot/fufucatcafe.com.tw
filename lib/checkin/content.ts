@@ -173,6 +173,62 @@ export const EXTRA_RULES: Record<BrandId, Rule[]> = {
   ],
 };
 
+/**
+ * 圖片版約定（插圖來自 Canva「入場規定」設計，已上傳到後台圖片庫，這裡依格子裁切）。
+ * 圖上已有中英文字，所以中、英文不另外顯示標題；其他語言在圖片下方顯示翻譯。
+ */
+const PIC_SRC: Record<BrandId, string> = {
+  nukunuku: "https://cdn.sanity.io/images/z4pcrrck/production/6b05aa16d24548e24d5b4eec086eee8fddd5d106-2240x3178.png",
+  fufu: "https://cdn.sanity.io/images/z4pcrrck/production/82426ab059815427b8f416bc9008f2d10d4f4183-2240x3178.png",
+};
+const pic = (brand: BrandId, rect: string) => `${PIC_SRC[brand]}?rect=${rect}&w=720&auto=format&q=80`;
+
+export type PicRule = { img: string; title: L10n; strong?: boolean; kid?: Partial<L10n> };
+
+const CHASE: L10n = {
+  zh: "禁止追趕或限制貓咪行動", en: "Don't chase, grab or restrict the cats", ja: "猫を追いかけたり、動きを妨げたりしない", ko: "고양이를 쫓거나 움직임을 막지 않기",
+  th: "ห้ามไล่ตาม จับ หรือขวางทางแมว", vi: "Không đuổi theo, níu giữ hay cản đường mèo", id: "Jangan mengejar, menangkap, atau menghalangi kucing",
+};
+const ESCAPE: L10n = {
+  zh: "進出貓室門注意腳邊，避免貓咪逃脫", en: "Watch your step at the cat-room door so no cat escapes", ja: "猫部屋の出入りは足元に注意し、脱走を防いでください", ko: "고양이 방을 드나들 때 발밑을 살펴 탈출을 막아 주세요",
+  th: "เข้าออกห้องแมวระวังเท้า อย่าให้แมวหลุดออกไป", vi: "Ra vào phòng mèo chú ý dưới chân, tránh để mèo chạy thoát", id: "Perhatikan kaki saat keluar masuk ruang kucing agar kucing tidak kabur",
+};
+
+/** 小朋友版的一句話（NUKUNUKU，只有中文） */
+const KID = {
+  hug: { zh: "貓咪不喜歡被抱抱。用眼睛看，等牠自己走過來就好。" },
+  flash: { zh: "拍照時要關掉閃光燈，不然會嚇到貓咪。" },
+  door: { zh: "進出門要馬上關起來，貓咪才不會跑出去迷路。" },
+  feed: { zh: "我們的點心和飲料，貓咪吃了會肚子痛，不可以給牠吃。" },
+  wand: { zh: "逗貓棒請爸爸媽媽陪貓咪玩，小朋友在旁邊看就好。" },
+  chase: { zh: "貓咪走開的時候不要追，讓牠去休息。" },
+};
+
+export const PIC_RULES: Record<BrandId, PicRule[]> = {
+  nukunuku: [
+    { img: pic("nukunuku", "78,251,657,597"), title: RULES[0].title, strong: true, kid: KID.hug },
+    { img: pic("nukunuku", "765,251,711,597"), title: RULES[4].title, kid: KID.flash },
+    { img: pic("nukunuku", "1493,251,669,597"), title: RULES[5].title, kid: KID.door },
+    { img: pic("nukunuku", "78,854,657,591"), title: RULES[3].title, kid: KID.feed },
+    { img: pic("nukunuku", "765,854,711,591"), title: EXTRA_RULES.nukunuku[0].title, kid: KID.wand },
+    { img: pic("nukunuku", "1493,854,669,591"), title: CHASE, kid: KID.chase },
+  ],
+  fufu: [
+    { img: pic("fufu", "96,269,651,591"), title: RULES[0].title, strong: true },
+    { img: pic("fufu", "765,269,699,591"), title: RULES[4].title },
+    { img: pic("fufu", "1469,269,681,591"), title: RULES[5].title },
+    { img: pic("fufu", "96,872,651,573"), title: RULES[3].title },
+    { img: pic("fufu", "765,872,699,573"), title: ESCAPE },
+    { img: pic("fufu", "1469,872,681,573"), title: CHASE },
+  ],
+};
+
+/** 插圖沒有畫到、用文字補充的提醒 */
+export const MORE_RULES: Record<BrandId, Rule[]> = {
+  nukunuku: [RULES[2]],
+  fufu: [RULES[2], ...EXTRA_RULES.fufu],
+};
+
 export const T = {
   welcome: { zh: "歡迎光臨", en: "Welcome to", ja: "ようこそ", ko: "어서 오세요", th: "ยินดีต้อนรับสู่", vi: "Chào mừng đến với", id: "Selamat datang di" },
   intro: {
@@ -348,6 +404,17 @@ export const T = {
   partyTotal: { zh: "共 {n} 人", en: "{n} people in total", ja: "合計 {n} 名", ko: "총 {n}명", th: "รวม {n} คน", vi: "Tổng {n} người", id: "Total {n} orang" },
   needPeople: { zh: "請至少選 1 人", en: "Choose at least 1 person", ja: "1名以上を選んでください", ko: "1명 이상 선택해 주세요", th: "กรุณาเลือกอย่างน้อย 1 คน", vi: "Vui lòng chọn ít nhất 1 người", id: "Pilih minimal 1 orang" },
 
+  picHint: { zh: "點圖片可以放大", en: "Tap a picture to enlarge", ja: "画像をタップすると拡大します", ko: "그림을 누르면 크게 볼 수 있어요", th: "แตะรูปเพื่อขยาย", vi: "Chạm vào hình để phóng to", id: "Ketuk gambar untuk memperbesar" },
+  moreTitle: { zh: "還有這些提醒", en: "A few more things", ja: "そのほかのお願い", ko: "그 밖의 안내", th: "ข้อควรทราบเพิ่มเติม", vi: "Thêm vài lưu ý", id: "Beberapa hal lainnya" },
+  close: { zh: "關閉", en: "Close", ja: "閉じる", ko: "닫기", th: "ปิด", vi: "Đóng", id: "Tutup" },
+  kidsOpen: { zh: "有小朋友一起來嗎？和小朋友一起看", en: "With kids? Read it together", ja: "お子さま連れの方へ：いっしょに見よう", ko: "아이와 함께 오셨나요? 같이 봐요", th: "มากับเด็กไหม? ดูด้วยกันเลย", vi: "Đi cùng bé? Cùng xem nhé", id: "Bersama anak? Lihat bersama" },
+  kidsOpenSub: { zh: "小朋友版：一張一張看，蓋滿 6 個貓掌印", en: "Kids' version: one picture at a time, collect 6 paw stamps", ja: "こども版：1まいずつ見て、肉球スタンプを6こ集めよう", ko: "어린이 버전: 한 장씩 보고 발도장 6개 모으기", th: "เวอร์ชันเด็ก: ดูทีละรูป สะสมรอยเท้าแมว 6 อัน", vi: "Bản cho bé: xem từng hình, sưu tập 6 dấu chân mèo", id: "Versi anak: satu gambar per halaman, kumpulkan 6 cap kaki" },
+  kidsTitle: { zh: "和貓咪做好朋友", en: "Be the cats' friend", ja: "ねこと なかよく なろう", ko: "고양이랑 친구 되기", th: "มาเป็นเพื่อนกับแมวกัน", vi: "Làm bạn với mèo nhé", id: "Ayo berteman dengan kucing" },
+  kidsDo: { zh: "我會做到！", en: "I can do it!", ja: "まもれるよ！", ko: "할 수 있어요!", th: "ทำได้!", vi: "Con làm được!", id: "Aku bisa!" },
+  kidsDoneTitle: { zh: "你是貓咪的好朋友！", en: "You're a friend of the cats!", ja: "きみは ねこの ともだちだね！", ko: "너는 고양이의 친구야!", th: "หนูเป็นเพื่อนของแมวแล้ว!", vi: "Con là bạn của các bé mèo rồi!", id: "Kamu teman kucing!" },
+  kidsDoneBody: { zh: "最後一個約定：要和爸爸媽媽待在同一層樓喔。", en: "One last promise: stay on the same floor as your grown-up.", ja: "さいごの やくそく：おうちの ひとと おなじ かいに いてね。", ko: "마지막 약속: 엄마 아빠랑 같은 층에 있어요.", th: "สัญญาข้อสุดท้าย: อยู่ชั้นเดียวกับผู้ปกครองนะ", vi: "Lời hứa cuối: luôn ở cùng tầng với bố mẹ nhé.", id: "Janji terakhir: tetap di lantai yang sama dengan orang tuamu." },
+  kidsBack: { zh: "交給大人完成確認", en: "Hand back to a grown-up", ja: "おとなの ひとに わたしてね", ko: "어른에게 돌려주기", th: "ส่งให้ผู้ใหญ่ยืนยัน", vi: "Đưa lại cho người lớn", id: "Serahkan ke orang dewasa" },
+  kidsDoneTag: { zh: "小朋友已看完", en: "Kids have read it", ja: "こども版 読みました", ko: "어린이 버전 완료", th: "เด็กดูครบแล้ว", vi: "Bé đã xem xong", id: "Anak sudah membaca" },
   ruleKey: { zh: "特別注意", en: "Important", ja: "特に大切", ko: "특히 중요", th: "สำคัญมาก", vi: "Đặc biệt lưu ý", id: "Penting" },
   rulesTitle: { zh: "和貓咪的約定", en: "With the cats", ja: "猫との約束", ko: "고양이와의 약속", th: "ข้อตกลงกับแมว", vi: "Lời hứa với các bé mèo", id: "Janji dengan kucing" },
   rulesSub: { zh: "相處禮儀・安全規範", en: "Cat etiquette and safety", ja: "猫とのマナーと安全のために", ko: "고양이 예절과 안전 수칙", th: "มารยาทและความปลอดภัย", vi: "Phép lịch sự và an toàn", id: "Etika dan keselamatan" },
