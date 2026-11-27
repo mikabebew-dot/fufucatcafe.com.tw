@@ -336,6 +336,15 @@ export function CheckinFlow({
                 <p className="ck-small">{tr(T.longMin, lang, { v: data.longMin })}</p>
               </div>
             </div>
+            {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
+            <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
+              <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
+              <span>
+                <strong>{tr(T.picGuideOpen, lang)}</strong>
+                <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
+              </span>
+              <span aria-hidden="true">›</span>
+            </button>
             </div>
 
             <div className="ck-card ck-calc">
@@ -355,15 +364,6 @@ export function CheckinFlow({
               </div>
               <p className="ck-small ck-calc-note">{tr(T.calcNote, lang)}</p>
             </div>
-            {/* 圖片版說明（Canva 店規插圖；NUKUNUKU 含小朋友版） */}
-            <button type="button" className="ck-pg-open" onClick={() => setPicOpen(true)}>
-              <span className="ck-pg-open-icon" aria-hidden="true">🖼️</span>
-              <span>
-                <strong>{tr(T.picGuideOpen, lang)}</strong>
-                <small>{tr(data.brand === "nukunuku" ? T.picGuideOpenSubKids : T.picGuideOpenSub, lang)}</small>
-              </span>
-              <span aria-hidden="true">›</span>
-            </button>
           </section>
         )}
 
